@@ -1,0 +1,46 @@
+body{
+	font-family: 'Nunito Sans', san serif;
+	background-color: #fff;
+}
+
+.btn{
+	font-size: 0.8 rem;
+	font-weight: 700;
+}
+.btn {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
+.login-img{
+	width: 100%;
+	position: absolute;
+	min-height: 100%;
+	top: 0;
+	left: 0;
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+.divider{
+	margin: 2rem 0;	
+}
+.divider-content-center{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	padding-left: 0.5rem;
+	padding-right: 0.5rem;
+	font-size: 0.8 rem;
+	font-weight: 500;
+	background-color: #fff;
+	color: #999;
+}
+a{
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: underline;
+}
