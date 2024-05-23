@@ -19,7 +19,7 @@
         <title>Login Form</title>
         <style>
             body {
-                background: url('${pageContext.request.contextPath}/img/danang.jpg') no-repeat center center fixed;
+                background: url('${pageContext.request.contextPath}/img/login/signup_bg.jpg') no-repeat center center fixed;
                 background-size: cover;
                 font-family: 'Open Sans', sans-serif;
             }
@@ -41,6 +41,7 @@
                 justify-content: space-between;
                 text-align: center;
                 margin-bottom: 20px;
+                
             }
             .form-control input {
                 width: 100%;
@@ -94,7 +95,7 @@
                     <div>
                         <input name="last_name" type="text" placeholder="Last name" value="${last_name}" required>
                     </div>
-                    <small></small>
+                    
                 </div>
                 <c:set var="email" value="${requestScope.email}"/>
                 <c:set var="email_error" value="${requestScope.email_error}"/>
@@ -104,14 +105,14 @@
                 <p class="error">${email_error}</p>
                 <c:set var="pass" value="${requestScope.pass}"/>
                 <div class="form-control">
-                    <input name="pass" type="password" placeholder="Password" value="${pass}" required>
-                    <small></small>
+                    <input name="pass" type="password" placeholder="Password" value="${pass}" required>                   
                 </div>
                 <c:set var="pass_conf" value="${requestScope.pass_conf}"/>
                 <c:set var="pass_conf_error" value="${requestScope.pass_conf_error}"/>
                 <div class="form-control">
                     <input name="pass_conf" type="password" placeholder="Confirm password" value="${pass_conf}" required>
                     <small class="error"></small>
+                    
                 </div>
                 <p class="error">${pass_conf_error}</p>
                 <div class="input-group mb-3 d-flex justify-content-between">
