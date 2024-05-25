@@ -128,9 +128,87 @@ public class AccountDAO extends DAO {
             System.out.println(e.getMessage());
         }
         return false;
-    }   
+    }
+    // Account
+
+    public  Account checkAcc(String email, String password) {
+        String sql = "SELECT * FROM tblAccount WHERE email = ? AND password = ?";
+                
+        try (Connection con = getConnection()) {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, email);
+            ps.setString(2, password);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Account c = new Account(//0, email, password, sql, password, email, sql, sql, email, password, 0, registration_date)
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getString(9),
+                        rs.getString(10),
+                        rs.getInt(11),
+                        rs.getDate(12)
+                );
+                return c;
+            }
+        } catch (SQLException e) {
+            System.out.println("Err check acc");
+        }
+        return null;
+    }
+    
+
+    public static void changePass(Account c) {
+        String sql = """
+                     UPDATE tblAccount
+                        SET password = ?
+                        WHERE email = ?""";
+        try (Connection con = getConnection()) {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, c.getPassword());
+            ps.setString(2, c.getEmail());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
+    }
+
+   public static void updateProfile(Account c) {
+    String sql = "UPDATE tblAccount\n"
+            + "   SET "
+            + "[first_name] = ?,\n"  
+            + "[last_name] = ?,\n"
+            + "[gender] = ?,\n"
+            + "[email] = ?,\n"
+            + "[phone] = ?,\n"
+            + "[address] = ?\n"
+            + "WHERE account_id = ?";
+   try (Connection con = getConnection()) {
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setString(1, c.getFirst_name());
+        ps.setString(2, c.getLast_name());
+        ps.setString(3, c.getGender());
+        ps.setString(4, c.getEmail());
+        ps.setString(5, c.getPhone());
+        ps.setString(6, c.getAddress());
+        ps.setInt(7, c.getAccount_id());
+        ps.executeUpdate();
+    } catch (SQLException e) {
+        System.out.println(e.toString());
+    }
+}
+
     public static void main(String[] args) {
+       
         getConnection();
+        //updateProfile(c);
+
+                
     }
 
 }
