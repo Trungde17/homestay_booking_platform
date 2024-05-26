@@ -18,9 +18,10 @@ public class Account {
     private String first_name;
     private String last_name;
     private String gender;
+    private Date date_of_birth;
     private String phone;
     private String address;
-    private String avatar_img;
+    private byte[] avatar_img;
     private String payment_account;
     private int role_account;
     private Date registration_date;
@@ -29,6 +30,13 @@ public class Account {
         // TODO Auto-generated constructor stub
     }
 
+    public Account(String email, String password, String first_name, String last_name) {
+        this.email = email;
+        this.password = password;
+        this.first_name = first_name;
+        this.last_name = last_name;
+    }
+    
     public Account(int account_id, String email, String password, String first_name, String last_name, int role_account,
             Date registration_date) {
         this.account_id = account_id;
@@ -40,8 +48,21 @@ public class Account {
         this.registration_date = registration_date;
     }
 
+    public Account(int account_id, String email, String first_name, String last_name, String gender, String phone, String address) {
+        this.account_id = account_id;
+        this.email = email;
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.gender = gender;
+        this.phone = phone;
+        this.address = address;
+    }
+    
+    
+
     public Account(int account_id, String email, String password, String first_name, String last_name, String gender,
-            String phone, String address, String avatar_img, String payment_account, int role_account,
+            Date date_of_birth,
+            String phone, String address, byte[] avatar_img, String payment_account, int role_account,
             Date registration_date) {
         this.account_id = account_id;
         this.email = email;
@@ -49,6 +70,7 @@ public class Account {
         this.first_name = first_name;
         this.last_name = last_name;
         this.gender = gender;
+        this.date_of_birth=date_of_birth;
         this.phone = phone;
         this.address = address;
         this.avatar_img = avatar_img;
@@ -145,14 +167,22 @@ public class Account {
         this.gender = gender;
     }
 
-    public String getAvatar_img() {
+    public byte[]getAvatar_img() {
         return avatar_img;
     }
 
-    public void setAvatar_img(String avatar_img) {
+    public void setAvatar_img(byte[] avatar_img) {
         this.avatar_img = avatar_img;
     }
 
+    public Date getDate_of_birth() {
+        return date_of_birth;
+    }
+
+    public void setDate_of_birth(Date date_of_birth) {
+        this.date_of_birth = date_of_birth;
+    }
+    
     @Override
     public String toString() {
         return "Account [account_id=" + account_id + ", email=" + email + ", password=" + password + ", first_name="

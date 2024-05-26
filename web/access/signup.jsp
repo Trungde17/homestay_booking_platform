@@ -83,29 +83,26 @@
         </style>
     </head>
     <body>
+        <c:set var="acc_signup" value="${sessionScope.acc_signup}"/>
         <div class="container">
             <h1 class="mt-5 mb-5">Sign Up</h1>
-            <form action="${pageContext.request.contextPath}/sigupservlet" method="post" class="form-signup">
+            <form action="${pageContext.request.contextPath}/checksignupinfor" method="post" class="form-signup">
                 <div class="form-control">
-                    <c:set var="first_name" value="${requestScope.first_name}"/>
                     <div >
-                        <input name="first_name" type="text" placeholder="First name" value="${first_name}" required>
-                    </div>
-                    <c:set var="last_name" value="${requestScope.last_name}"/>
+                        <input name="first_name" type="text" placeholder="First name" value="${acc_signup.getFirst_name()}" required>
+                    </div>                
                     <div>
-                        <input name="last_name" type="text" placeholder="Last name" value="${last_name}" required>
+                        <input name="last_name" type="text" placeholder="Last name" value="${acc_signup.getLast_name()}" required>
                     </div>
                     
                 </div>
-                <c:set var="email" value="${requestScope.email}"/>
                 <c:set var="email_error" value="${requestScope.email_error}"/>
                 <div class="form-control">
-                    <input name="email" class="input_email" type="email" placeholder="Email" value="${email}" required>
+                    <input name="email" class="input_email" type="email" placeholder="Email" value="${acc_signup.getEmail()}" required>
                 </div>
                 <p class="error">${email_error}</p>
-                <c:set var="pass" value="${requestScope.pass}"/>
                 <div class="form-control">
-                    <input name="pass" type="password" placeholder="Password" value="${pass}" required>                   
+                    <input name="pass" type="password" placeholder="Password" value="${acc_signup.getPassword()}" required>                   
                 </div>
                 <c:set var="pass_conf" value="${requestScope.pass_conf}"/>
                 <c:set var="pass_conf_error" value="${requestScope.pass_conf_error}"/>

@@ -112,7 +112,7 @@
                 </ol>
 
             </div>
-            <form action="${pageContext.request.contextPath}/sendotpemail" method="POST">               
+            <form action="${pageContext.request.contextPath}/checkemailforgotpass" method="POST">               
                 <div class="">
                     <c:set var="email" value="${requestScope.email}"/>
                     <c:set var="fail_request" value="${requestScope.fail_request}"/>    

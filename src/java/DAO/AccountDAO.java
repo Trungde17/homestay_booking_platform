@@ -1,6 +1,7 @@
 package DAO;
 
 import static DAO.DAO.getConnection;
+import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
 import model.Account;
@@ -28,7 +29,7 @@ public class AccountDAO extends DAO {
                     try {
                         result.add(new Account(
                                 rs.getInt("account_id"), rs.getString("email"), rs.getString("password"), rs.getString("first_name"), rs.getString("last_name"),
-                                rs.getString("gender"), rs.getString("phone"), rs.getString("address"), rs.getString("avatar_img"),
+                                rs.getString("gender"), rs.getDate("date_of_birth"), rs.getString("phone"), rs.getString("address"), rs.getBytes("avatar_img"),
                                 rs.getString("payment_account"), rs.getInt("roles_account"), rs.getDate("registration_date")));
                     } catch (Exception e) {
                         System.out.println(e.getMessage());
@@ -129,6 +130,42 @@ public class AccountDAO extends DAO {
         }
         return false;
     }   
+    
+    public static boolean changeAvatar(int account_id, InputStream inputStream){
+        try (Connection con = getConnection()){
+            PreparedStatement stmt = con.prepareStatement("UPDATE tblAccount set avatar_img=? where account_id =? ");
+            stmt.setBytes(1, inputStream.readAllBytes());
+            stmt.setInt(2, account_id);
+            stmt.executeUpdate();
+            return true;
+        } catch (Exception e) {
+        }
+        return false;
+    }
+    public static void updateProfile(Account c) {
+        String sql = "UPDATE tblAccount\n"
+                + "   SET "
+                + "[first_name] = ?,\n"
+                + "[last_name] = ?,\n"
+                + "[gender] = ?,\n"
+                + "[email] = ?,\n"
+                + "[phone] = ?,\n"
+                + "[address] = ?\n"
+                + "WHERE account_id = ?";
+        try (Connection con = getConnection()) {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, c.getFirst_name());
+            ps.setString(2, c.getLast_name());
+            ps.setString(3, c.getGender());
+            ps.setString(4, c.getEmail());
+            ps.setString(5, c.getPhone());
+            ps.setString(6, c.getAddress());
+            ps.setInt(7, c.getAccount_id());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
+    }
     public static void main(String[] args) {
         getConnection();
     }
