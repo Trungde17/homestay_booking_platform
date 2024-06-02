@@ -1,15 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package model;
 
+import java.util.ArrayList;
 import java.util.Date;
 
-/**
- *
- * @author PC
- */
+
 public class Account {
 
     private int account_id;
@@ -22,7 +17,7 @@ public class Account {
     private String phone;
     private String address;
     private byte[] avatar_img;
-    private String payment_account;
+    private ArrayList<Payment>payments;
     private int role_account;
     private Date registration_date;
 
@@ -62,7 +57,7 @@ public class Account {
 
     public Account(int account_id, String email, String password, String first_name, String last_name, String gender,
             Date date_of_birth,
-            String phone, String address, byte[] avatar_img, String payment_account, int role_account,
+            String phone, String address, byte[] avatar_img, ArrayList<Payment> payments, int role_account,
             Date registration_date) {
         this.account_id = account_id;
         this.email = email;
@@ -74,7 +69,7 @@ public class Account {
         this.phone = phone;
         this.address = address;
         this.avatar_img = avatar_img;
-        this.payment_account = payment_account;
+        this.payments = payments;
         this.role_account = role_account;
         this.registration_date = registration_date;
     }
@@ -135,12 +130,12 @@ public class Account {
         this.address = address;
     }
 
-    public String getPayment_account() {
-        return payment_account;
+    public ArrayList<Payment> getPayments() {
+        return payments;
     }
 
-    public void setPayment_account(String payment_account) {
-        this.payment_account = payment_account;
+    public void setPayment_account(ArrayList<Payment> payments) {
+        this.payments = payments;
     }
 
     public int getRole_account() {
@@ -187,7 +182,7 @@ public class Account {
     public String toString() {
         return "Account [account_id=" + account_id + ", email=" + email + ", password=" + password + ", first_name="
                 + first_name + ", last_name=" + last_name + ", gender=" + gender + ", phone=" + phone + ", address="
-                + address + ", avatar_img=" + avatar_img + ", payment_account=" + payment_account + ", role_account="
+                + address + ", avatar_img=" + avatar_img + ", payment_account=" + payments + ", role_account="
                 + role_account + ", registration_date=" + registration_date + "]";
     }
 }

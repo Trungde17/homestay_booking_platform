@@ -31,7 +31,7 @@
                         <!-- logo -->
                         <a href="#" class="d-flex justify-content-center"> <img
                                 alt="Healing land"
-                                src="${pageContext.request.contextPath}/img/project_logo.png"
+                                src="${pageContext.request.contextPath}/img/project_logo.jpg"
                                 width="120">
                         </a>
                         <!-- /logo -->
