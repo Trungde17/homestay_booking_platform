@@ -11,7 +11,7 @@
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
         <link rel="stylesheet"
-              href="${pageContext.request.contextPath}/css/homestay/register/step1.css" />  
+              href="${pageContext.request.contextPath}/css/homestay/register/homestay_register.css" />  
         <link rel="stylesheet"
               href="${pageContext.request.contextPath}/css/homestay/register/header.css" /> 
     </head>
