@@ -11,6 +11,7 @@ import model.HomestayType;
 import model.Neighbourhood;
 import model.Payment;
 import model.Room;
+import model.Rule;
 
 public class HomestayDAO extends DAO{
     public static Homestay getHomestayById(int homestay_id){
@@ -36,6 +37,7 @@ public class HomestayDAO extends DAO{
                 String address_detail = rs.getString("address_detail");
                 Payment payment=PaymentDAO.getPaymentById(rs.getInt("address_id"));
                 String rules = rs.getString("ht_rules");
+                ArrayList<Rule>commonRules=RuleDAO.getHomestayRules(id);
                 ArrayList<HomestayImg>imgs=HomestayImgDAO.getHomestayImgs(id);
                 ArrayList<HomestayFacilities>facilities=HomestayFacilitiesDAO.getHomestayFacilities(id);
                 ArrayList<Neighbourhood>neighbourhoods=NeighbourhoodDAO.getNeighbourhoods(id);
@@ -43,7 +45,7 @@ public class HomestayDAO extends DAO{
                 Date registration_date=rs.getDate("registration_date");
                 Account admin=AccountDAO.getAccountById(rs.getInt("admin_id"));
                 boolean status = rs.getBoolean("ht_status");
-                result.add(new Homestay(id, name, owner, type, dsr, district, address_detail, payment, rules, imgs, 
+                result.add(new Homestay(id, name, owner, type, dsr, district, address_detail, payment, rules, commonRules, imgs, 
                         facilities, neighbourhoods, registration_date, rooms, admin, status ));
             }
         } catch (Exception e) {

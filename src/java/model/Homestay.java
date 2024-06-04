@@ -13,6 +13,7 @@ public class Homestay {
     private String address_detail;
     private Payment payment;
     private String homestay_rules;
+    private ArrayList<Rule> commonRules;
     private ArrayList<HomestayImg>img;
     private ArrayList<HomestayFacilities>facilities;
     private ArrayList<Neighbourhood>neighbourhoods;
@@ -25,7 +26,7 @@ public class Homestay {
     }
 
     public Homestay(int ht_id, String ht_name, Account owner, HomestayType homestayType, String describe, 
-            District district, String address_detail, Payment payment, String homestay_rules, 
+            District district, String address_detail, Payment payment, String homestay_rules, ArrayList<Rule>commonRules,
             ArrayList<HomestayImg> img, ArrayList<HomestayFacilities> facilities, ArrayList<Neighbourhood> neighbourhoods, 
             Date registration_date, ArrayList<Room>rooms,Account admin, boolean status)
     {
@@ -37,6 +38,7 @@ public class Homestay {
         this.district = district;
         this.payment = payment;
         this.homestay_rules = homestay_rules;
+        this.commonRules=commonRules;
         this.img = img;
         this.facilities = facilities;
         this.neighbourhoods = neighbourhoods;
@@ -120,6 +122,15 @@ public class Homestay {
         this.homestay_rules = homestay_rules;
     }
 
+    public ArrayList<Rule> getCommonRules() {
+        return commonRules;
+    }
+
+    public void setCommonRules(ArrayList<Rule> commonRules) {
+        this.commonRules = commonRules;
+    }
+
+    
     public ArrayList<HomestayImg> getImg() {
         return img;
     }
