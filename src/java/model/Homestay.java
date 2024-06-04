@@ -9,7 +9,8 @@ public class Homestay {
     private Account owner;
     private HomestayType homestayType;
     private String describe;
-    private HomestayAddress homestayAddress;
+    private District district;
+    private String address_detail;
     private Payment payment;
     private String homestay_rules;
     private ArrayList<HomestayImg>img;
@@ -23,13 +24,17 @@ public class Homestay {
     public Homestay() {
     }
 
-    public Homestay(int ht_id, String ht_name, Account owner, HomestayType homestayType, String describe, HomestayAddress homestayAddress, Payment payment, String homestay_rules, ArrayList<HomestayImg> img, ArrayList<HomestayFacilities> facilities, ArrayList<Neighbourhood> neighbourhoods, Date registration_date, ArrayList<Room>rooms,Account admin, boolean status) {
+    public Homestay(int ht_id, String ht_name, Account owner, HomestayType homestayType, String describe, 
+            District district, String address_detail, Payment payment, String homestay_rules, 
+            ArrayList<HomestayImg> img, ArrayList<HomestayFacilities> facilities, ArrayList<Neighbourhood> neighbourhoods, 
+            Date registration_date, ArrayList<Room>rooms,Account admin, boolean status)
+    {
         this.ht_id = ht_id;
         this.ht_name = ht_name;
         this.owner = owner;
         this.homestayType = homestayType;
         this.describe = describe;
-        this.homestayAddress = homestayAddress;
+        this.district = district;
         this.payment = payment;
         this.homestay_rules = homestay_rules;
         this.img = img;
@@ -81,13 +86,23 @@ public class Homestay {
         this.describe = describe;
     }
 
-    public HomestayAddress getHomestayAddress() {
-        return homestayAddress;
+    public District getDistrict() {
+        return district;
     }
 
-    public void setHomestayAddress(HomestayAddress homestayAddress) {
-        this.homestayAddress = homestayAddress;
+    public void setDistrict(District district) {
+        this.district = district;
     }
+
+    public String getAddress_detail() {
+        return address_detail;
+    }
+
+    public void setAddress_detail(String address_detail) {
+        this.address_detail = address_detail;
+    }
+
+    
 
     public Payment getPayment() {
         return payment;

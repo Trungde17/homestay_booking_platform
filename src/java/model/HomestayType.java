@@ -1,10 +1,12 @@
 package model;
 
+
 public class HomestayType {
     private int homestay_type_id;
     private String homestay_type_name;
 
     public HomestayType() {
+     
     }
 
     public HomestayType(int homestay_type_id, String homestay_type_name) {

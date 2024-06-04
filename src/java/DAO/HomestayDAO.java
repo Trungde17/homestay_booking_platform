@@ -3,8 +3,8 @@ package DAO;
 import java.sql.*;
 import java.util.ArrayList;
 import model.Account;
+import model.District;
 import model.Homestay;
-import model.HomestayAddress;
 import model.HomestayFacilities;
 import model.HomestayImg;
 import model.HomestayType;
@@ -32,7 +32,8 @@ public class HomestayDAO extends DAO{
                 Account owner=AccountDAO.getAccountById(rs.getInt("owner_id"));
                 HomestayType type = HomestayTypeDAO.getHomestayTypeById(rs.getInt("ht_type_id"));
                 String dsr = rs.getString("describe");
-                HomestayAddress address = HomestayAddressDAO.getAddressById(rs.getInt("address_id"));
+                District district = DistrictDAO.getDistrictById(rs.getInt("district_id"));
+                String address_detail = rs.getString("address_detail");
                 Payment payment=PaymentDAO.getPaymentById(rs.getInt("address_id"));
                 String rules = rs.getString("ht_rules");
                 ArrayList<HomestayImg>imgs=HomestayImgDAO.getHomestayImgs(id);
@@ -42,7 +43,8 @@ public class HomestayDAO extends DAO{
                 Date registration_date=rs.getDate("registration_date");
                 Account admin=AccountDAO.getAccountById(rs.getInt("admin_id"));
                 boolean status = rs.getBoolean("ht_status");
-                result.add(new Homestay(id, name, owner, type, dsr, address, payment, rules, imgs, facilities, neighbourhoods, registration_date, rooms, admin, status ));
+                result.add(new Homestay(id, name, owner, type, dsr, district, address_detail, payment, rules, imgs, 
+                        facilities, neighbourhoods, registration_date, rooms, admin, status ));
             }
         } catch (Exception e) {
             System.out.println("");

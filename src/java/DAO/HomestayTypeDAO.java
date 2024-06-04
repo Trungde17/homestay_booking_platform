@@ -19,6 +19,17 @@ public class HomestayTypeDAO extends DAO{
         }
         return null;
     }
+    
+    public static ArrayList<HomestayType>getAll(){
+        try (Connection con=getConnection()){
+            PreparedStatement stmt=con.prepareStatement("select * from tblHomestayType");
+            return createHomestayTypeBaseResultSet(stmt.executeQuery());
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+    
     private static ArrayList<HomestayType>createHomestayTypeBaseResultSet(ResultSet rs){
         try (Connection con = getConnection()){
             ArrayList<HomestayType>result = new ArrayList<>();
@@ -32,6 +43,7 @@ public class HomestayTypeDAO extends DAO{
         return null;
     }
     public static void main(String[] args) {
-        System.out.println(getHomestayTypeById(1).getHomestay_type_name());
+        ArrayList<HomestayType>arr=getAll();
+        arr.forEach(i -> System.out.println(i.getHomestay_type_name()));
     }
 }

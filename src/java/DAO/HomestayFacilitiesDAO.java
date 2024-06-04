@@ -17,6 +17,16 @@ public class HomestayFacilitiesDAO extends DAO{
         return null;
     }
     
+    public static ArrayList<HomestayFacilities>getAll(){
+        try(Connection con = getConnection()) {
+            PreparedStatement stmt=con.prepareStatement("select * from tblHomestayFacilities");
+            return createHomestayFacilitiesBaseResultset(stmt.executeQuery());
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+    
     private static ArrayList<HomestayFacilities>createHomestayFacilitiesBaseResultset(ResultSet rs){
         try {
             ArrayList<HomestayFacilities>result=new ArrayList<>();
@@ -29,4 +39,9 @@ public class HomestayFacilitiesDAO extends DAO{
         }
         return null;
     }
+    
+    public static void main(String[] args) {
+        getAll().forEach(i-> System.out.println(i.getFacilities_name()));
+    }
+    
 }

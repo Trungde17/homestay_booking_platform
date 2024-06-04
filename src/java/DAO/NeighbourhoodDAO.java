@@ -13,6 +13,16 @@ public class NeighbourhoodDAO extends DAO{
         }
         return null;
     }
+    
+    public static ArrayList<Neighbourhood>getAll(){
+        try (Connection con=getConnection()){
+            PreparedStatement stmt=con.prepareStatement("select * from tblNeighbourhood");
+            return createNeighbourhoodsBaseResultSet(stmt.executeQuery());
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
     private static ArrayList<Neighbourhood>createNeighbourhoodsBaseResultSet(ResultSet rs){
         try {
             ArrayList<Neighbourhood>result=new ArrayList<>();

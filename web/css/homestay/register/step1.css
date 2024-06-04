@@ -1,0 +1,91 @@
+body {
+    background-color: #f1f1f1;
+}
+.listing-setup {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    margin-top: 20px;
+}
+.form-group label {
+    font-weight: bold;
+}
+.btn-primary {
+    background-color: #2c99ed;
+
+}
+.btn-primary:hover {
+    background-color: #1645ef;
+    border-color: #c2185b;
+}
+.header {
+    background-color: #2c99ed;
+    color: white;
+    padding: 10px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    font-size: 20px;
+    text-align: center;
+}
+.progress-indicator {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0;
+}
+.progress-indicator .step {
+    text-align: center;
+    position: relative;
+}
+.progress-indicator .step .icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #f1f1f1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 10px auto;
+}
+.progress-indicator .step.active .icon {
+    background-color: #2c99ed;
+    color: white;
+}
+.progress-indicator .step::after {
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    width: calc(100% - 50px);
+    height: 2px;
+    background-color: #ddd;
+    z-index: -1;
+}
+.progress-indicator .step:last-child::after {
+    content: none;
+}
+.sidebar {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    margin-top: 20px;
+}
+.info-box {
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+.info-box h6 {
+    font-weight: bold;
+}
+.tips-list {
+    list-style-type: none;
+    padding-left: 0;
+}
+.tips-list li {
+    margin-bottom: 10px;
+}
