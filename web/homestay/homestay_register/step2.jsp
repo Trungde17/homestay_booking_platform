@@ -2,6 +2,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@page import="DAO.NeighbourhoodDAO"%>
+<%@page import="DAO.DistrictDAO"%>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
@@ -13,6 +14,8 @@
               href="${pageContext.request.contextPath}/css/homestay/register/homestay_register.css" /> 
         <link rel="stylesheet"
               href="${pageContext.request.contextPath}/css/homestay/register/header.css" /> 
+        <link rel="stylesheet"
+              href="${pageContext.request.contextPath}/css/main.css" />
     </head>
     <body>
         <%@include file="header.jsp" %>
@@ -49,29 +52,21 @@
             <div class="row">
                 <div class="col-md-8">
                     <div class="listing-setup mx-auto">
-                        <form>
+                        <form action="${pageContext.request.contextPath}/register_step2_controll" method="POST">
                             <div class="form-row">
                                 <div class="form-group col-md-6">
+                                    <c:set var="district_list" value="${DistrictDAO.getAll()}"/>
                                     <label for="district">District *</label>
-                                    <select class="form-control" id="district">
-                                        <option value=""></option>                                    
+                                    <select name="district" class="form-control" id="district">
+                                        <c:forEach var="district" items="${district_list}">
+                                            <option value="${district.getDistrict_id()}">${district.getDistrict_name()}</option> 
+                                        </c:forEach>
                                     </select>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="ward">Ward *</label>
-                                    <select class="form-control" id="ward">
-                                        <option value=""></option>                                    
-                                    </select>                                   
                                 </div>
                             </div>
                             <div class="form-group mb-5">
                                 <label for="address-detail">Address detail *</label>
-                                <input type="text" class="form-control" id="address-detail" placeholder="Please fill in your homestay address detail!">
-                            </div>
-                            <div class="form-group">
-                                <label for="aboutArea">About the Area *</label>
-                                <textarea class="form-control" id="aboutArea" rows="4" placeholder="Tell us about the area" minlength="100"></textarea>
-                                <small class="form-text text-muted">Minimum 100 characters (100 remaining)</small>
+                                <input name="address_detail" type="text" class="form-control" id="address-detail" placeholder="Example: 108 Võ Nguyên Giáp, Phước Mỹ" required>
                             </div>
                             <div class="form-group">
                                 <label>Neighbourhood</label>
@@ -82,7 +77,7 @@
                                             <c:when test="${status.index % 2 == 0}">
                                                 <div class="col-md-4">
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" id="${neighbourhood.getNeighbourhood_id()}">
+                                                        <input name="neighbourhood" class="form-check-input" type="checkbox" id="${neighbourhood.getNeighbourhood_id()}">
                                                         <label class="form-check-label text-muted" for="${neighbourhood.getNeighbourhood_id()}">${neighbourhood.getNeighbourhood_name()}</label>
                                                     </div>
                                                 </div>
@@ -90,7 +85,7 @@
                                             <c:otherwise>
                                                 <div class="col-md-4">
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" id="${neighbourhood.getNeighbourhood_id()}">
+                                                        <input name="neighbourhood" class="form-check-input" type="checkbox" id="${neighbourhood.getNeighbourhood_id()}">
                                                         <label class="form-check-label text-muted" for="${neighbourhood.getNeighbourhood_id()}">${neighbourhood.getNeighbourhood_name()}</label>
                                                     </div>
                                                 </div>
@@ -98,7 +93,9 @@
                                         </c:choose>
                                     </c:forEach>
                                 </div>
-                            </div>                           
+                            </div>  
+                                    <c:set var="fail_reuqest" value="${requestScope.fail_request}"/>
+                                    <h4 class="error">${fail_request}</h4>
                             <button type="submit" class="btn btn-primary btn-block">Continue</button>
                         </form>
                     </div>

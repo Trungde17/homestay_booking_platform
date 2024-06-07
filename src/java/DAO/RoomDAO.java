@@ -2,6 +2,8 @@
 package DAO;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Map;
+import model.Bed;
 import model.Img;
 import model.Room;
 import model.RoomFacilities;
@@ -18,6 +20,7 @@ public class RoomDAO extends DAO{
         }
         return null;
     }
+    
     private static ArrayList<Room>createRoomsBaseResultset(ResultSet rs){
         try {
             ArrayList<Room>rooms=new ArrayList<>();
@@ -27,12 +30,12 @@ public class RoomDAO extends DAO{
                 String dsr=rs.getString("room_description");
                 int capacity=rs.getInt("capacity");
                 String size=rs.getString("size");
-                String bed_type=rs.getString("bed_type");
+                Map<Bed, Integer>beds=BedDAO.getBedsOfRoom(id);
                 ArrayList<Img>imgs=RoomImgDAO.getRoomImgs(id);
                 ArrayList<RoomFacilities>facilities=RoomFacilitiesDAO.getRoomFacilities(id);
                 ArrayList<RoomPrice>prices=RoomPriceDAO.getRoomPrices(id);
                 boolean status=rs.getBoolean("room_status");
-                rooms.add(new Room(id, room_name, room_name, capacity, size, bed_type, imgs, facilities, prices, status));
+                rooms.add(new Room(id, room_name, room_name, capacity, size, beds, imgs, facilities, prices, status));
             }
             return rooms;
         } catch (Exception e) {

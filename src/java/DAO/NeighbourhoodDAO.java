@@ -14,6 +14,21 @@ public class NeighbourhoodDAO extends DAO{
         return null;
     }
     
+    public static int insertNeighbourhoodOfHomestay(int homestay_id, int[]neighbourhoods){
+        int number=0;
+        try(Connection con=getConnection()) {
+            PreparedStatement stmt=con.prepareStatement("insert into tblNeighbourhoodOfHomestay(ht_id, neighbourhood_id)"
+                    + "values(?, ?)");
+            stmt.setInt(1, homestay_id);
+            for(int id :neighbourhoods){
+                stmt.setInt(2, id);
+                stmt.executeUpdate();
+                number++;
+            }
+        } catch (Exception e) {
+        }
+        return number;
+    }
     public static ArrayList<Neighbourhood>getAll(){
         try (Connection con=getConnection()){
             PreparedStatement stmt=con.prepareStatement("select * from tblNeighbourhood");

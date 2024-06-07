@@ -2,6 +2,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 
 public class Room {
@@ -10,7 +11,7 @@ public class Room {
     private String room_description;
     private int capacity;
     private String size;
-    private String bed_type;
+    private Map<Bed, Integer>beds;
     private ArrayList<Img>img;
     private ArrayList<RoomFacilities>facilities;
     private ArrayList<RoomPrice>prices;
@@ -19,13 +20,13 @@ public class Room {
     public Room() {
     }
 
-    public Room(int room_id, String room_name, String room_description, int capacity, String size, String bed_type, ArrayList<Img> img, ArrayList<RoomFacilities> facilities, ArrayList<RoomPrice>prices, boolean status) {
+    public Room(int room_id, String room_name, String room_description, int capacity, String size, Map<Bed, Integer>beds, ArrayList<Img> img, ArrayList<RoomFacilities> facilities, ArrayList<RoomPrice>prices, boolean status) {
         this.room_id = room_id;
         this.room_name = room_name;
         this.room_description = room_description;
         this.capacity = capacity;
         this.size = size;
-        this.bed_type = bed_type;
+        this.beds = beds;
         this.img = img;
         this.facilities = facilities;
         this.prices = prices;
@@ -73,13 +74,14 @@ public class Room {
         this.size = size;
     }
 
-    public String getBed_type() {
-        return bed_type;
+    public Map<Bed, Integer> getBeds() {
+        return beds;
     }
 
-    public void setBed_type(String bed_type) {
-        this.bed_type = bed_type;
+    public void setBeds(Map<Bed, Integer> beds) {
+        this.beds = beds;
     }
+
 
     public ArrayList<Img> getImg() {
         return img;

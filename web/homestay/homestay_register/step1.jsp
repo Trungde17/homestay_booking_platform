@@ -14,6 +14,8 @@
               href="${pageContext.request.contextPath}/css/homestay/register/homestay_register.css" />  
         <link rel="stylesheet"
               href="${pageContext.request.contextPath}/css/homestay/register/header.css" /> 
+        <link rel="stylesheet"
+              href="${pageContext.request.contextPath}/css/main.css" />
     </head>
     <body>
         <%@include file="header.jsp"%>
@@ -50,32 +52,32 @@
             <div class="row">
                 <div class="col-md-8">
                     <div class="listing-setup mx-auto">
-                        <form action="" method="POST">
+                        <form action="${pageContext.request.contextPath}/register_step1_controll" method="POST">
+                            
                             <c:set var="ht_type_list" value="${HomestayTypeDAO.getAll()}"/>
                             <div class="form-group mt-3">
                                 <label for="homeType">Home Type *</label>
-                                <select class="form-control" id="homeType">             
+                                <select name="homestay_type" class="form-control" id="homeType">             
                                     <c:forEach var="ht_type" items="${ht_type_list}">
                                         <option value="${ht_type.getHomestay_type_id()}">${ht_type.getHomestay_type_name()}</option>      
                                     </c:forEach>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="listingTitle">Your Homestay Name*</label>
-                                <input type="text" class="form-control" id="listingTitle" placeholder="Homestay name!" maxlength="30" required>
+                                <label for="homestay_name">Your Homestay Name*</label>
+                                <input name="homestay_name" type="text" class="form-control" id="homestay_name" placeholder="Homestay name!" maxlength="30" required>
                                 <small class="form-text text-muted">Maximum 30 characters (30 remaining)</small>
                             </div>
                             <div class="form-group">
                                 <label>House Facilities</label>
                                 <c:set var="facilities_list" value="${HomestayFacilitiesDAO.getAll()}"/>
-                                <c:set var="index" value="${0}"/>
                                 <div class="row"> 
                                     <c:forEach var="facilities" items="${facilities_list}" varStatus="status">
                                         <c:choose>
                                             <c:when test="${status.index % 2 == 0}">
                                                 <div class="col-md-6">                                        
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" id="${facilities.getFacilities_id()}" name="facility" value="${facilities.getFacilities_id()}">
+                                                        <input name="facilities" class="form-check-input" type="checkbox" id="${facilities.getFacilities_id()}" name="facility" value="${facilities.getFacilities_id()}">
                                                         <label class="form-check-label text-muted" for="${facilities.getFacilities_id()}">${facilities.getFacilities_name()}</label>
                                                     </div>                                               
                                                 </div>
@@ -83,7 +85,7 @@
                                             <c:otherwise>
                                                 <div class="col-md-6">
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" id="${facilities.getFacilities_id()}" name="facility" value="${facilities.getFacilities_id()}">
+                                                        <input name="facilities" class="form-check-input" type="checkbox" id="${facilities.getFacilities_id()}" name="facility" value="${facilities.getFacilities_id()}">
                                                         <label class="form-check-label text-muted" for="${facilities.getFacilities_id()}">${facilities.getFacilities_name()}</label>
                                                     </div>
                                                 </div>
@@ -95,10 +97,26 @@
                             </div>
                             <div class="form-group">
                                 <label for="aboutHomestay">About the Homestay *</label>
-                                <textarea class="form-control" id="aboutHomestay" rows="4" placeholder="Tell us about your homestay" minlength="100" required></textarea>
+                                <textarea name="homestay_about" class="form-control" id="aboutHomestay" rows="4" placeholder="Tell us about your homestay" minlength="100" required></textarea>
                                 <small class="form-text text-muted">Minimum 100 characters (100 remaining)</small>
                             </div>
-                            <button type="submit" class="btn btn-primary btn-block">Continue</button>
+                            <div class="row">
+                                <c:set var="account" value="${sessionScope.account}"/>
+                                <div class="col-md-8">
+                                    <label for="payment-number" class="font-weight-bold">Payment number *</label>
+
+                                    <select name="payment" class="form-control" id="payment-number"> 
+                                        <c:forEach var="payment_number" items="${account.getPayments()}">
+                                            <option value="${payment_number.getPayment_id()}">${payment_number.getPayment_number()}</option>  
+                                        </c:forEach>
+                                    </select>
+
+                                </div>
+                            </div>
+                                <c:set var="error" value="${requestScope.fail_request}"/>
+                                <p class="error"> ${error}</p>
+                            <button type="submit" class="btn btn-primary btn-block mt-5">Continue</button>
+
                         </form>
                     </div>
                 </div>
