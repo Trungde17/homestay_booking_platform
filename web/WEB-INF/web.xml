@@ -4,16 +4,37 @@
         <filter-name>AuthCheck</filter-name>
         <filter-class>filter.AuthCheck</filter-class>
     </filter>
-    <filter>
-        <filter-name>Ht_register_step1</filter-name>
-        <filter-class>filter.Ht_register_step1</filter-class>
-    </filter>
     <filter-mapping>
         <filter-name>AuthCheck</filter-name>
         <url-pattern>/account/personal_profile.jsp</url-pattern>
     </filter-mapping>
     <filter-mapping>
-        <filter-name>Ht_register_step1</filter-name>
+        <filter-name>AuthCheck</filter-name>
         <url-pattern>/homestay/homestay_register/step1.jsp</url-pattern>
     </filter-mapping>
+    <filter-mapping>
+        <filter-name>AuthCheck</filter-name>
+        <url-pattern>/homestay/homestay_register/step2.jsp</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AuthCheck</filter-name>
+        <url-pattern>/homestay/homestay_register/step3.jsp</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AuthCheck</filter-name>
+        <url-pattern>/homestay/homestay_register/step4.jsp</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AuthCheck</filter-name>
+        <url-pattern>/homestay/homestay_register/step5.jsp</url-pattern>
+    </filter-mapping>
+    <filter>
+        <filter-name>Homestay_register_filter</filter-name>
+        <filter-class>filter.Homestay_register_filter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>Homestay_register_filter</filter-name>
+        <url-pattern>/homestay/homestay_register/step1.jsp</url-pattern>
+    </filter-mapping>
+   
 </web-app>

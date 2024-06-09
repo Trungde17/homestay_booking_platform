@@ -20,4 +20,32 @@ public class RoomImgDAO extends DAO{
         }
         return null;
     }
+    public static int insertRoomImg(int room_id, String url){
+        try (Connection con=getConnection()){
+            PreparedStatement stmt=con.prepareStatement("insert tblRoomImg(room_id, img_id, img_url) values(?, ?, ?)");
+            stmt.setInt(1, room_id);
+            stmt.setInt(2, count()+1);
+            stmt.setString(3, url);
+            stmt.executeUpdate();
+            return 1;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return 0;
+    }
+    public static int count(){
+        int number=0;
+        try (Connection con=getConnection()){
+            PreparedStatement stmt=con.prepareStatement("select COUNT(*) number from tblRoomImg");
+            ResultSet rs=stmt.executeQuery();
+            if(rs.next())return rs.getInt("number");
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return number;
+    }
+    
+    public static void main(String[] args) {
+        System.out.println(count());
+    }
 }

@@ -21,6 +21,45 @@ public class RoomDAO extends DAO{
         return null;
     }
     
+    public static ArrayList<Room> getAllHomestayRooms(int homestay_id){
+        try(Connection con=getConnection()) {
+            PreparedStatement stmt=con.prepareStatement("select * from tblRoom where ht_id=?");
+            stmt.setInt(1, homestay_id);
+            return createRoomsBaseResultset(stmt.executeQuery());
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+    public static int insertRoomOfHomestay(int homestay_id, int room_id, String room_name, int capacity){
+        try (Connection con=getConnection()){
+            PreparedStatement stmt=con.prepareStatement("insert into tblRoom(room_id, room_name, ht_id, capacity)"
+                    + "values(?, ?, ?, ?)");
+            stmt.setInt(1, room_id);
+            stmt.setString(2, room_name);
+            stmt.setInt(3, homestay_id);
+            stmt.setInt(4, capacity);
+            stmt.executeUpdate();
+            return 1;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return 0;
+    }
+    
+    public static int count(){
+        
+        try (Connection con=getConnection()){
+            PreparedStatement stmt=con.prepareStatement("select count(*) number from tblRoom");
+            ResultSet rs=stmt.executeQuery();
+            if(rs.next()){
+                return rs.getInt("number");
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return 0;
+    }
     private static ArrayList<Room>createRoomsBaseResultset(ResultSet rs){
         try {
             ArrayList<Room>rooms=new ArrayList<>();
@@ -42,5 +81,8 @@ public class RoomDAO extends DAO{
             System.out.println(e);
         }
         return null;
+    }
+    public static void main(String[] args) {
+        System.out.println(count());
     }
 }

@@ -17,6 +17,18 @@ public class RoomPriceDAO extends DAO {
         return null;
     }
     
+    public static int insertRoomPrice(int room_id, int price_id, double amount){
+        try(Connection con=getConnection()) {
+            PreparedStatement stmt=con.prepareStatement("insert into tblRoomPrice values(?, ?, ?)");
+            stmt.setInt(1, price_id);
+            stmt.setInt(2, room_id);
+            stmt.setDouble(3, amount);
+            stmt.executeUpdate();
+            return 1;           
+        } catch (Exception e) {
+        }
+        return 0;
+    }
     public static ArrayList<RoomPrice>createRoomPricesBaseResultset( ResultSet rs){
         try {
             ArrayList<RoomPrice>result=new ArrayList<>();

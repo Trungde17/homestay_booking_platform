@@ -27,7 +27,23 @@ public class RuleDAO extends DAO {
         }
         return null;
     }
-
+    
+    public static int insertHomestayRules(int homestay_id, int[]rules){
+        int number=0;
+        try (Connection con=getConnection()){
+            PreparedStatement stmt=con.prepareStatement("insert into tblHomestayRules(ht_id, rule_id) values(?, ?)");
+            stmt.setInt(1, homestay_id);
+            for(int rule_id : rules ){
+                stmt.setInt(2, rule_id);
+                stmt.executeUpdate();
+                number++;
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return number;
+    }
+    
     private static ArrayList<Rule> createRulesBaseResultset(ResultSet rs) {
         try {
             ArrayList<Rule> result = new ArrayList<>();
@@ -42,9 +58,6 @@ public class RuleDAO extends DAO {
     }
 
     public static void main(String[] args) {
-        ArrayList<Rule> arr = getAll();
-        for (Rule r : arr) {
-            System.out.println(r.getRule_name());
-        }
+        insertHomestayRules(1, new int[]{1, 2});
     }
 }

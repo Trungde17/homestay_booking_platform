@@ -2,6 +2,8 @@
 package utilities;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 
 public class Int {
@@ -22,12 +24,22 @@ public class Int {
         }
         return null;
     }
-    
+    public static Map<Integer, Integer> countIntegers(int[] array) {
+        Map<Integer, Integer> frequencyMap = new LinkedHashMap<>();
+
+        for (Integer obj : array) {
+            if (obj instanceof Integer) {
+                int number = (Integer) obj;
+                frequencyMap.put(number, frequencyMap.getOrDefault(number, 0) + 1);
+            }
+        }
+        return frequencyMap;
+    }
     public static void main(String[] args) {
-        String[]ss = new String[]{"1", "2", "4"};
-        int[]nn=convertStringListToIntegerList(ss);
-        for(int n:nn){
-            System.out.println(n);
+        int[]arr=new int[]{1, 3, 6, 3, 3, 4, 5, 6, 5, 1};
+        Map<Integer, Integer>map=countIntegers(arr);
+        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+            System.out.println(entry.getKey()+" " + entry.getValue());      
         }
     }
 }

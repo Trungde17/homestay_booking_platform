@@ -61,6 +61,18 @@ public class HomestayDAO extends DAO {
         return false;
     }
     
+    public static boolean update(int homestay_id,String homestay_rules){
+        try(Connection con=getConnection()) {
+            PreparedStatement stmt=con.prepareStatement("UPDATE tblHomestay set ht_rules=? where ht_id=?");
+            stmt.setString(1, homestay_rules);
+            stmt.setInt(2, homestay_id);
+            stmt.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
     public static boolean update(int homestay_id, int district_id, String address_detail){
         try(Connection con=getConnection()) {
             PreparedStatement stmt = con.prepareStatement("UPDATE tblHomestay set district_id=?, address_detail=? where ht_id=?");

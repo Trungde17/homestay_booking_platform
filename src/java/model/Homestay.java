@@ -36,6 +36,7 @@ public class Homestay {
         this.homestayType = homestayType;
         this.describe = describe;
         this.district = district;
+        this.address_detail=address_detail;
         this.payment = payment;
         this.homestay_rules = homestay_rules;
         this.commonRules=commonRules;

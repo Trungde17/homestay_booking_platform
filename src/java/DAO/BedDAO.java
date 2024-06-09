@@ -22,6 +22,24 @@ public class BedDAO extends DAO{
         }
         return null;
     }
+    
+    public static int insertRoomBeds(int room_id, Map<Integer, Integer>beds){
+        int number=0;
+        try (Connection con=getConnection()){
+            PreparedStatement stmt=con.prepareStatement("insert into tblRoomBed values(?, ?, ?)");
+            stmt.setInt(2, room_id);
+            for (Map.Entry<Integer, Integer> entry : beds.entrySet()) {
+                stmt.setInt(1, entry.getKey());
+                stmt.setInt(3, entry.getValue());
+                stmt.executeUpdate();
+                number++;
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return number;
+    }
+    
     public static Map<Bed, Integer> getBedsOfRoom(int room_id){
         try (Connection con=getConnection()){
             PreparedStatement stmt=con.prepareStatement("select * from tblRoomBed r join tblBedType bt "
