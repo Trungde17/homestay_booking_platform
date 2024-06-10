@@ -28,6 +28,7 @@
         <filter-name>AuthCheck</filter-name>
         <url-pattern>/homestay/homestay_register/step5.jsp</url-pattern>
     </filter-mapping>
+    
     <filter>
         <filter-name>Homestay_register_filter</filter-name>
         <filter-class>filter.Homestay_register_filter</filter-class>
@@ -35,6 +36,5 @@
     <filter-mapping>
         <filter-name>Homestay_register_filter</filter-name>
         <url-pattern>/homestay/homestay_register/step1.jsp</url-pattern>
-    </filter-mapping>
-   
+    </filter-mapping>   
 </web-app>

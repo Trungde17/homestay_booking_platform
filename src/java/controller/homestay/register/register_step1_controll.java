@@ -60,6 +60,8 @@ public class register_step1_controll extends HttpServlet {
                     int ht_id = HomestayDAO.countHomesaty() + 1;
                     if (HomestayDAO.insert(ht_id, homestay_name, ht_type_id, homestay_about,account.getAccount_id(), payment_id)) {
                         HomestayFacilitiesDAO.insertIntoHomestayFacilities(ht_id, facilities_list); 
+                        Homestay homestay_register=HomestayDAO.getHomestayById(ht_id);
+                        session.setAttribute("homestay_register", homestay_register);
                     }
                 }
                 else isError=true;

@@ -23,14 +23,14 @@ import model.Account;
 import model.Homestay;
 
 public class Homestay_register_filter implements Filter {
-    
+
     private static final boolean debug = true;
 
     private FilterConfig filterConfig = null;
-    
+
     public Homestay_register_filter() {
-    }    
-    
+    }
+
     private void doBeforeProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
@@ -57,8 +57,8 @@ public class Homestay_register_filter implements Filter {
 	    log(buf.toString());
 	}
          */
-    }    
-    
+    }
+
     private void doAfterProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
@@ -96,35 +96,39 @@ public class Homestay_register_filter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain)
             throws IOException, ServletException {
-        
+
         if (debug) {
             log("Homestay_register_filter:doFilter()");
         }
-        
+
         doBeforeProcessing(request, response);
-        
+
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpSession session = httpRequest.getSession();
         Account owner = (Account) session.getAttribute("account");
         String url = httpRequest.getContextPath() + "/homestay/homestay_register/step1.jsp";
         Homestay homestay_regiter = HomestayDAO.findHomestayAwaitingApproval(owner.getAccount_id());
-        if(homestay_regiter!=null){
+        if (homestay_regiter != null) {
             session.setAttribute("homestay_register", homestay_regiter);
-            if(homestay_regiter.getAddress_detail()!=null && homestay_regiter.getDistrict()!=null && homestay_regiter.getNeighbourhoods()!=null){
-                url=httpRequest.getContextPath() + "/homestay/homestay_register/step3.jsp";
-                if(homestay_regiter.getCommonRules()!=null && homestay_regiter.getHomestay_rules()!=null){
-                   url=httpRequest.getContextPath() + "/homestay/homestay_register/step2.jsp";
-                   if(homestay_regiter.getImg()!=null && homestay_regiter.getRooms().get(0).getImg()!=null){
-                       url=httpRequest.getContextPath() + "/index.jsp";
-                   }
-                   else url=httpRequest.getContextPath() + "/homestay/homestay_register/step5.jsp";
+            if (homestay_regiter.getAddress_detail() != null && homestay_regiter.getDistrict() != null && homestay_regiter.getNeighbourhoods() != null) {
+                url = httpRequest.getContextPath() + "/homestay/homestay_register/step3.jsp";
+                if (homestay_regiter.getCommonRules() != null && homestay_regiter.getHomestay_rules() != null) {
+                    url = httpRequest.getContextPath() + "/homestay/homestay_register/step2.jsp";
+                    if (homestay_regiter.getImg() != null && homestay_regiter.getRooms().get(0).getImg() != null) {
+                        url = httpRequest.getContextPath() + "/index.jsp";
+                    } else {
+                        url = httpRequest.getContextPath() + "/homestay/homestay_register/step5.jsp";
+                    }
+                } else {
+                    url = httpRequest.getContextPath() + "/homestay/homestay_register/step4.jsp";
                 }
-                else url=httpRequest.getContextPath() + "/homestay/homestay_register/step4.jsp";
+            } else {
+                url = httpRequest.getContextPath() + "/homestay/homestay_register/step2.jsp";
             }
-            else url=httpRequest.getContextPath() + "/homestay/homestay_register/step2.jsp";
+            HttpServletResponse httpRespone = (HttpServletResponse) response;
+            httpRespone.sendRedirect(url);
         }
-        HttpServletResponse httpRespone = (HttpServletResponse) response;
-        httpRespone.sendRedirect(url);
+
         Throwable problem = null;
         try {
             chain.doFilter(request, response);
@@ -135,7 +139,7 @@ public class Homestay_register_filter implements Filter {
             problem = t;
             t.printStackTrace();
         }
-        
+
         doAfterProcessing(request, response);
 
         // If there was a problem, we want to rethrow it if it is
@@ -170,16 +174,16 @@ public class Homestay_register_filter implements Filter {
     /**
      * Destroy method for this filter
      */
-    public void destroy() {        
+    public void destroy() {
     }
 
     /**
      * Init method for this filter
      */
-    public void init(FilterConfig filterConfig) {        
+    public void init(FilterConfig filterConfig) {
         this.filterConfig = filterConfig;
         if (filterConfig != null) {
-            if (debug) {                
+            if (debug) {
                 log("Homestay_register_filter:Initializing filter");
             }
         }
@@ -198,20 +202,20 @@ public class Homestay_register_filter implements Filter {
         sb.append(")");
         return (sb.toString());
     }
-    
+
     private void sendProcessingError(Throwable t, ServletResponse response) {
-        String stackTrace = getStackTrace(t);        
-        
+        String stackTrace = getStackTrace(t);
+
         if (stackTrace != null && !stackTrace.equals("")) {
             try {
                 response.setContentType("text/html");
                 PrintStream ps = new PrintStream(response.getOutputStream());
-                PrintWriter pw = new PrintWriter(ps);                
+                PrintWriter pw = new PrintWriter(ps);
                 pw.print("<html>\n<head>\n<title>Error</title>\n</head>\n<body>\n"); //NOI18N
 
                 // PENDING! Localize this for next official release
-                pw.print("<h1>The resource did not process correctly</h1>\n<pre>\n");                
-                pw.print(stackTrace);                
+                pw.print("<h1>The resource did not process correctly</h1>\n<pre>\n");
+                pw.print(stackTrace);
                 pw.print("</pre></body>\n</html>"); //NOI18N
                 pw.close();
                 ps.close();
@@ -228,7 +232,7 @@ public class Homestay_register_filter implements Filter {
             }
         }
     }
-    
+
     public static String getStackTrace(Throwable t) {
         String stackTrace = null;
         try {
@@ -242,9 +246,9 @@ public class Homestay_register_filter implements Filter {
         }
         return stackTrace;
     }
-    
+
     public void log(String msg) {
-        filterConfig.getServletContext().log(msg);        
+        filterConfig.getServletContext().log(msg);
     }
-    
+
 }
