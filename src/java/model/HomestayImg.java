@@ -18,6 +18,7 @@ public class HomestayImg extends Img{
 
     public void setImg_role(int img_role) {
         this.img_role = img_role;
-    }   
+    } 
+    
     
 }
