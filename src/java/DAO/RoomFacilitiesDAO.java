@@ -7,7 +7,7 @@ import model.RoomFacilities;
 public class RoomFacilitiesDAO extends DAO{
     public static ArrayList<RoomFacilities>getRoomFacilities(int room_id){
         try (Connection con=getConnection()){
-            PreparedStatement stmt=con.prepareStatement("select * from c as rf join tblFacilitiesOfRoom as fr "
+            PreparedStatement stmt=con.prepareStatement("select * from tblRoomFacilities as rf join tblFacilitiesOfRoom as fr "
                     + "on rf.facility_id=fr.facility_id where room_id=?");
             stmt.setInt(1, room_id);
             return createRoomFacilitiesBaseResultset(stmt.executeQuery());

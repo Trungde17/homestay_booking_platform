@@ -17,7 +17,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 import java.io.InputStream;
+import java.util.Map;
 import model.Account;
+import utilities.CloudinaryConfig1;
 
 @WebServlet(name = "UploadImg", urlPatterns = {"/uploadimg"})
 @MultipartConfig(maxFileSize = 16177215)
@@ -49,23 +51,21 @@ public class UploadImg extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        InputStream inputStream = null;
         Part filePart = request.getPart("img_file");
         HttpSession session = request.getSession();
         if (filePart != null) {
-            inputStream = filePart.getInputStream();           
             Account account = (Account) session.getAttribute("account");
-            if (account!=null) {
-                boolean rs = AccountDAO.changeAvatar(account.getAccount_id(), inputStream);
-                if(rs){
-                    account = AccountDAO.getAccountById(account.getAccount_id());
-                    session.setAttribute("account", account);
-                }
+            String fileName = filePart.getSubmittedFileName();
+            Map mapResult = CloudinaryConfig1.upLoadFile(filePart.getInputStream(), fileName);
+            if (mapResult != null) {
+                String img_url = (String) mapResult.get("url");
+                CloudinaryConfig1.deleteCloundinary(account.getAvatar_img());
+                AccountDAO.changeAvatar(account.getAccount_id(), img_url); 
+                account.setAvatar_img(img_url);
             }
+            RequestDispatcher rd = getServletContext().getRequestDispatcher("/account/personal_profile.jsp");
+            rd.forward(request, response);
         }
-        RequestDispatcher rd = getServletContext().getRequestDispatcher("/account/personal_profile.jsp");
-        rd.forward(request, response);
-
     }
 
     @Override

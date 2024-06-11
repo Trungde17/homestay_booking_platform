@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.net.URL;
 import java.util.Map;
 
@@ -49,8 +50,24 @@ public class CloudinaryConfig1 {
         }
         return null;
     }
-
+    private static String extractPublicIdFromUrl(String url) {
+        String[] parts = url.split("/");
+        String publicIdWithVersion = parts[parts.length - 1];
+        String publicId = publicIdWithVersion.split("\\.")[0];
+        return publicId;
+    }
+    public static String deleteCloundinary(String url){
+        String id=extractPublicIdFromUrl(url);
+        String result="";
+        try {
+            Map deleteResult = cloudinary.uploader().destroy(id, ObjectUtils.emptyMap());
+            result=deleteResult.toString();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return result;
+    }
     public static void main(String[] args) {
-        System.out.println();
+        
     }
 }

@@ -32,7 +32,7 @@ public class AccountDAO extends DAO {
                         ArrayList<Payment>payments=PaymentDAO.getPaymentsOfAccount(account_id);
                         result.add(new Account(
                                 account_id, rs.getString("email"), rs.getString("password"), rs.getString("first_name"), rs.getString("last_name"),
-                                rs.getString("gender"), rs.getDate("date_of_birth"), rs.getString("phone"), rs.getString("address"), rs.getBytes("avatar_img"),
+                                rs.getString("gender"), rs.getDate("date_of_birth"), rs.getString("phone"), rs.getString("address"), rs.getString("avatar_img"),
                                 payments, rs.getInt("roles_account"), rs.getDate("registration_date")));
                     } catch (Exception e) {
                         System.out.println(e.getMessage());
@@ -134,10 +134,10 @@ public class AccountDAO extends DAO {
         return false;
     }   
     
-    public static boolean changeAvatar(int account_id, InputStream inputStream){
+    public static boolean changeAvatar(int account_id, String avatar_img){
         try (Connection con = getConnection()){
             PreparedStatement stmt = con.prepareStatement("UPDATE tblAccount set avatar_img=? where account_id =? ");
-            stmt.setBytes(1, inputStream.readAllBytes());
+            stmt.setString(1, avatar_img);
             stmt.setInt(2, account_id);
             stmt.executeUpdate();
             return true;

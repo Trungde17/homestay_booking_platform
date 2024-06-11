@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Filter.java to edit this template
- */
+
 package filter;
 
 import java.io.IOException;
@@ -20,16 +17,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import model.Account;
 
-/**
- *
- * @author PC
- */
-@WebFilter(filterName = "AuthCheck", urlPatterns = {"/account/personal_profile.jsp", 
-    "/homestay/homestay_register/step1.jsp", "/homestay/homestay_register/step2.jsp", "/homestay/homestay_register/step3.jsp", 
-    "/homestay/homestay_register/step4.jsp", "/homestay/homestay_register/step5.jsp",
-    "/admin/ht_register_approve/request_detail.jsp", "/admin/ht_register_approve/list_request.jsp"
-})
-public class AuthCheck implements Filter {
+
+@WebFilter(filterName = "Admin", urlPatterns = {"/admin/ht_register_approve/request_detail.jsp", "/admin/ht_register_approve/list_request.jsp"})
+public class Admin implements Filter {
     
     private static final boolean debug = true;
 
@@ -38,13 +28,13 @@ public class AuthCheck implements Filter {
     // configured. 
     private FilterConfig filterConfig = null;
     
-    public AuthCheck() {
+    public Admin() {
     }    
     
     private void doBeforeProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
-            log("AuthCheck:DoBeforeProcessing");
+            log("Admin:DoBeforeProcessing");
         }
 
         // Write code here to process the request and/or response before
@@ -72,7 +62,7 @@ public class AuthCheck implements Filter {
     private void doAfterProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
-            log("AuthCheck:DoAfterProcessing");
+            log("Admin:DoAfterProcessing");
         }
 
         // Write code here to process the request and/or response after
@@ -108,15 +98,15 @@ public class AuthCheck implements Filter {
             throws IOException, ServletException {
         
         if (debug) {
-            log("AuthCheck:doFilter()");
+            log("Admin:doFilter()");
         }
         
         doBeforeProcessing(request, response);
         HttpServletRequest rq = (HttpServletRequest)request;
         HttpServletResponse rp = (HttpServletResponse)response;
         HttpSession session = rq.getSession();
-        Account account = (Account)session.getAttribute("account");
-        if(account==null)rp.sendRedirect(rq.getContextPath() +"/access/login.jsp");
+        Account account=(Account)session.getAttribute("account");
+        if(account.getRole_account()!=1)rp.sendRedirect(rq.getContextPath() +"/index.jsp");
         Throwable problem = null;
         try {
             chain.doFilter(request, response);
@@ -172,7 +162,7 @@ public class AuthCheck implements Filter {
         this.filterConfig = filterConfig;
         if (filterConfig != null) {
             if (debug) {                
-                log("AuthCheck:Initializing filter");
+                log("Admin:Initializing filter");
             }
         }
     }
@@ -183,9 +173,9 @@ public class AuthCheck implements Filter {
     @Override
     public String toString() {
         if (filterConfig == null) {
-            return ("AuthCheck()");
+            return ("Admin()");
         }
-        StringBuffer sb = new StringBuffer("AuthCheck(");
+        StringBuffer sb = new StringBuffer("Admin(");
         sb.append(filterConfig);
         sb.append(")");
         return (sb.toString());

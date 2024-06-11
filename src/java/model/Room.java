@@ -1,26 +1,25 @@
-
 package model;
 
 import java.util.ArrayList;
 import java.util.Map;
 
-
 public class Room {
+
     private int room_id;
     private String room_name;
     private String room_description;
     private int capacity;
     private String size;
-    private Map<Bed, Integer>beds;
-    private ArrayList<Img>img;
-    private ArrayList<RoomFacilities>facilities;
-    private ArrayList<RoomPrice>prices;
+    private Map<Bed, Integer> beds;
+    private ArrayList<Img> img;
+    private ArrayList<RoomFacilities> facilities;
+    private ArrayList<RoomPrice> prices;
     private boolean status;
 
     public Room() {
     }
 
-    public Room(int room_id, String room_name, String room_description, int capacity, String size, Map<Bed, Integer>beds, ArrayList<Img> img, ArrayList<RoomFacilities> facilities, ArrayList<RoomPrice>prices, boolean status) {
+    public Room(int room_id, String room_name, String room_description, int capacity, String size, Map<Bed, Integer> beds, ArrayList<Img> img, ArrayList<RoomFacilities> facilities, ArrayList<RoomPrice> prices, boolean status) {
         this.room_id = room_id;
         this.room_name = room_name;
         this.room_description = room_description;
@@ -32,8 +31,7 @@ public class Room {
         this.prices = prices;
         this.status = status;
     }
-    
-    
+
     public int getRoom_id() {
         return room_id;
     }
@@ -82,7 +80,6 @@ public class Room {
         this.beds = beds;
     }
 
-
     public ArrayList<Img> getImg() {
         return img;
     }
@@ -115,6 +112,38 @@ public class Room {
         this.status = status;
     }
 
+    public String getBedNameString() {
+        String result = "";
+        if (beds != null && beds.size() > 0) {
+            int i = 0;
+            for (Map.Entry<Bed, Integer> entry : beds.entrySet()) {
+                if (i < beds.size() - 1) {
+                    result += entry.getValue() + " " + entry.getKey().getBed_type() + ", ";
+                    i++;
+                }
+            }
+            if (i == 0) {
+                Map.Entry<Bed, Integer> firstEntry = beds.entrySet().iterator().next();
+                result += firstEntry.getValue() + " " + firstEntry.getKey().getBed_type() + ".";
+            }
+        }
+        return result;
+    }
+    
+    public String getRoomFacilitiesString(){
+        String result="";
+        if (facilities != null && facilities.size()>0) {
+            int i =0;
+            while(i < facilities.size()-1){
+                result+=facilities.get(i).getFacilities_name()+", ";
+                i++;
+            }
+            result += facilities.get(i).getFacilities_name()+".";
+        }
+        return result;
+    }
+    
+
     @Override
     public int hashCode() {
         int hash = 7;
@@ -135,6 +164,5 @@ public class Room {
         final Room other = (Room) obj;
         return this.room_id == other.room_id;
     }
-    
-    
+
 }

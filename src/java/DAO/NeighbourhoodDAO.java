@@ -17,7 +17,7 @@ public class NeighbourhoodDAO extends DAO{
     public static int insertNeighbourhoodOfHomestay(int homestay_id, int[]neighbourhoods){
         int number=0;
         try(Connection con=getConnection()) {
-            PreparedStatement stmt=con.prepareStatement("insert into tblNeighbourhoodOfHomestay(ht_id, neighbourhood_id)"
+            PreparedStatement stmt=con.prepareStatement("insert into tblNeighbourhoodOfHomestay(ht_id, neighhourhood_id)"
                     + "values(?, ?)");
             stmt.setInt(1, homestay_id);
             for(int id :neighbourhoods){
@@ -26,6 +26,7 @@ public class NeighbourhoodDAO extends DAO{
                 number++;
             }
         } catch (Exception e) {
+            System.out.println(e);
         }
         return number;
     }
@@ -49,5 +50,11 @@ public class NeighbourhoodDAO extends DAO{
             System.out.println(e);
         }
         return null;
+    }
+    public static void main(String[] args) {
+        ArrayList<Neighbourhood>ns=getNeighbourhoods(4);
+        for(Neighbourhood n:ns){
+            System.out.println(n.getNeighbourhood_name());
+        }
     }
 }

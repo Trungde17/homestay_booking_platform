@@ -157,7 +157,6 @@ public class HomestayDAO extends DAO {
         return true;
     }
     public static void main(String[] args) {
-        Homestay ht=getHomestayById(3);
-        System.out.println(ht.getHt_name());
+        Homestay ht=getHomestayById(4);
     }
 }

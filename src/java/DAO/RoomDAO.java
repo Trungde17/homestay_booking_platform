@@ -83,6 +83,9 @@ public class RoomDAO extends DAO{
         return null;
     }
     public static void main(String[] args) {
-        System.out.println(count());
+        ArrayList<Room>rooms=getRoomsOfHomestay(4);
+        for(Room room:rooms){
+            System.out.println(room.getRoomFacilitiesString());
+        }
     }
 }

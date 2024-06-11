@@ -46,6 +46,9 @@ public class RoomImgDAO extends DAO{
     }
     
     public static void main(String[] args) {
-        System.out.println(count());
+        ArrayList<Img>imgs=getRoomImgs(4);
+        for(Img img:imgs){
+            System.out.println(img.getImg_url());
+        }
     }
 }

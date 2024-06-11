@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Homestay {
+
     private int ht_id;
     private String ht_name;
     private Account owner;
@@ -14,32 +15,31 @@ public class Homestay {
     private Payment payment;
     private String homestay_rules;
     private ArrayList<Rule> commonRules;
-    private ArrayList<HomestayImg>img;
-    private ArrayList<HomestayFacilities>facilities;
-    private ArrayList<Neighbourhood>neighbourhoods;
+    private ArrayList<HomestayImg> img;
+    private ArrayList<HomestayFacilities> facilities;
+    private ArrayList<Neighbourhood> neighbourhoods;
     private Date registration_date;
     private Account admin;
     private boolean status;
-    private ArrayList<Room>rooms;
+    private ArrayList<Room> rooms;
 
     public Homestay() {
     }
 
-    public Homestay(int ht_id, String ht_name, Account owner, HomestayType homestayType, String describe, 
-            District district, String address_detail, Payment payment, String homestay_rules, ArrayList<Rule>commonRules,
-            ArrayList<HomestayImg> img, ArrayList<HomestayFacilities> facilities, ArrayList<Neighbourhood> neighbourhoods, 
-            Date registration_date, ArrayList<Room>rooms,Account admin, boolean status)
-    {
+    public Homestay(int ht_id, String ht_name, Account owner, HomestayType homestayType, String describe,
+            District district, String address_detail, Payment payment, String homestay_rules, ArrayList<Rule> commonRules,
+            ArrayList<HomestayImg> img, ArrayList<HomestayFacilities> facilities, ArrayList<Neighbourhood> neighbourhoods,
+            Date registration_date, ArrayList<Room> rooms, Account admin, boolean status) {
         this.ht_id = ht_id;
         this.ht_name = ht_name;
         this.owner = owner;
         this.homestayType = homestayType;
         this.describe = describe;
         this.district = district;
-        this.address_detail=address_detail;
+        this.address_detail = address_detail;
         this.payment = payment;
         this.homestay_rules = homestay_rules;
-        this.commonRules=commonRules;
+        this.commonRules = commonRules;
         this.img = img;
         this.facilities = facilities;
         this.neighbourhoods = neighbourhoods;
@@ -105,8 +105,6 @@ public class Homestay {
         this.address_detail = address_detail;
     }
 
-    
-
     public Payment getPayment() {
         return payment;
     }
@@ -131,7 +129,6 @@ public class Homestay {
         this.commonRules = commonRules;
     }
 
-    
     public ArrayList<HomestayImg> getImg() {
         return img;
     }
@@ -188,6 +185,35 @@ public class Homestay {
         this.rooms = rooms;
     }
 
+    public String getFacilitiesString() {
+        String result = "";
+        if (facilities != null && facilities.size() > 0) {
+            int i = 0;
+            while (i < facilities.size() - 1) {
+                result += facilities.get(i).getFacilities_name() + ", ";
+                i++;
+            }
+            result += facilities.get(i).getFacilities_name() + ".";
+        }
+        return result;
+    }
+
+    public String getNeighbourhoodsString() {
+        String result = "";
+        if (neighbourhoods != null && neighbourhoods.size() > 0) {
+            int i = 0;
+            while (i < neighbourhoods.size() - 1) {
+                result += neighbourhoods.get(i).getNeighbourhood_name() + ", ";
+                i++;
+            }
+            result += neighbourhoods.get(i).getNeighbourhood_name() + ".";
+        }
+        return result;
+    }
+    
+    public String getFullAddress(){
+        return getAddress_detail() + ", " + district.getDistrict_name();
+    }
     @Override
     public int hashCode() {
         int hash = 7;
@@ -208,7 +234,5 @@ public class Homestay {
         final Homestay other = (Homestay) obj;
         return this.ht_id == other.ht_id;
     }
-    
-    
-}
 
+}

@@ -16,7 +16,7 @@ public class Account {
     private Date date_of_birth;
     private String phone;
     private String address;
-    private byte[] avatar_img;
+    private String avatar_img;
     private ArrayList<Payment>payments;
     private int role_account;
     private Date registration_date;
@@ -57,7 +57,7 @@ public class Account {
 
     public Account(int account_id, String email, String password, String first_name, String last_name, String gender,
             Date date_of_birth,
-            String phone, String address, byte[] avatar_img, ArrayList<Payment> payments, int role_account,
+            String phone, String address, String avatar_img, ArrayList<Payment> payments, int role_account,
             Date registration_date) {
         this.account_id = account_id;
         this.email = email;
@@ -162,11 +162,11 @@ public class Account {
         this.gender = gender;
     }
 
-    public byte[]getAvatar_img() {
+    public String getAvatar_img() {
         return avatar_img;
     }
 
-    public void setAvatar_img(byte[] avatar_img) {
+    public void setAvatar_img(String avatar_img) {
         this.avatar_img = avatar_img;
     }
 
@@ -177,7 +177,7 @@ public class Account {
     public void setDate_of_birth(Date date_of_birth) {
         this.date_of_birth = date_of_birth;
     }
-    
+      
     @Override
     public String toString() {
         return "Account [account_id=" + account_id + ", email=" + email + ", password=" + password + ", first_name="

@@ -3,7 +3,6 @@ package model;
 
 public class HomestayImg extends Img{
     private int img_role;
-
     public HomestayImg() {
     }
 
@@ -12,6 +11,7 @@ public class HomestayImg extends Img{
         this.img_role = img_role;
     }
 
+    
     public int getImg_role() {
         return img_role;
     }

@@ -39,13 +39,13 @@
                         <div class="tab-content">
                             <div class="tab-pane fade ${param.tab == 'info' || param.tab == null ? 'active show' : ''}" id="account-info">
                                 <div class="card-body media align-items-cente">
-                                    <img id="avatar_img" src="${pageContext.request.contextPath}/processimg" alt="alt" class="d-block ui-w-80"/>
+                                    <img id="avatar_img" src="${sessionScope.account.getAvatar_img()}" alt="alt" class="d-block ui-w-80"/>
                                     <form action="${pageContext.request.contextPath}/uploadimg" method="post" class="media-body ml-4" enctype="multipart/form-data">
                                         <label class="btn btn-outline-primary">
                                             Upload new photo
                                             <input type="file" name="img_file" id="input_file" class="account-settings-fileinput">
                                         </label>&nbsp;
-                                        <button type="submit" class="btn btn-default md-btn-flat">Change</button>                                   
+                                        <button type="submit" class="btn btn-default md-btn-flat" onclick="disableButton(event)">Change</button>                                   
                                     </form>
                                 </div>
                                 <hr class="border-light m-0">
@@ -141,11 +141,21 @@
             <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
             <script>
-                avatar_img = document.getElementById("avatar_img");
-                input_file = document.getElementById("input_file");
-                input_file.onchange = function () {
-                    avatar_img.src = URL.createObjectURL(input_file.files[0]);
-                }
+                                            avatar_img = document.getElementById("avatar_img");
+                                            input_file = document.getElementById("input_file");
+                                            input_file.onchange = function () {
+                                                avatar_img.src = URL.createObjectURL(input_file.files[0]);
+                                            }
+                                            function disableButton(event) {
+                                                var inputFile = document.getElementById("input_file");
+                                                if (inputFile.files.length === 0) {
+                                                    alert("Please select a file before submitting.");
+                                                    event.preventDefault();  // Ngăn chặn việc gửi form nếu không có tệp nào được chọn
+                                                } else {
+                                                    document.getElementById("changeButton").disabled = true;
+                                                    document.getElementById("changeButton").innerText = "Processing...";
+                                                }
+                                            }
             </script>
     </body>
 </html>
