@@ -27,6 +27,9 @@
                         <option value="2">2 Guests</option>
                         <option value="3">3 Guests</option>
                         <option value="4">4 Guests</option>
+                        <option value="4">5 Guests</option>
+                        <option value="4">6 Guests</option>
+                        
                     </select>
                 </div>
                 <div class="col-md-1">
