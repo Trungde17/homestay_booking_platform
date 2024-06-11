@@ -1,5 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">    
+  
+    <filter>
+        <filter-name>AuthCheck</filter-name>
+        <filter-class>filter.AuthCheck</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AuthCheck</filter-name>
+        <url-pattern>/account/personal_profile.jsp</url-pattern>
+    </filter-mapping> 
+    <filter-mapping>
+        <filter-name>AuthCheck</filter-name>
+        <url-pattern>/homestay/homestay_register/step1.jsp</url-pattern>
+    </filter-mapping> 
+    <filter-mapping>
+        <filter-name>AuthCheck</filter-name>
+        <url-pattern>/homestay/homestay_register/step2.jsp</url-pattern>
+    </filter-mapping> 
+    <filter-mapping>
+        <filter-name>AuthCheck</filter-name>
+        <url-pattern>/homestay/homestay_register/step3.jsp</url-pattern>
+    </filter-mapping> 
+    <filter-mapping>
+        <filter-name>AuthCheck</filter-name>
+        <url-pattern>/homestay/homestay_register/step4.jsp</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AuthCheck</filter-name>
+        <url-pattern>/homestay/homestay_register/step5.jsp</url-pattern>
+    </filter-mapping> 
+    <filter-mapping>
+        <filter-name>AuthCheck</filter-name>
+        <url-pattern>/admin/ht_register_approve/request_detail.jsp</url-pattern>
+    </filter-mapping>  
+    <filter-mapping>
+        <filter-name>AuthCheck</filter-name>
+        <url-pattern>/admin/ht_register_approve/list_request.jsp</url-pattern>
+    </filter-mapping> 
+    
+    <filter>
+        <filter-name>Admin</filter-name>
+        <filter-class>filter.Admin</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>Admin</filter-name>
+        <url-pattern>/admin/ht_register_approve/request_detail.jsp</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>Admin</filter-name>
+        <url-pattern>/admin/ht_register_approve/list_request.jsp</url-pattern>
+    </filter-mapping>
     
     
     <filter>

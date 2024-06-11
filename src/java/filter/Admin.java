@@ -18,7 +18,6 @@ import jakarta.servlet.http.HttpSession;
 import model.Account;
 
 
-@WebFilter(filterName = "Admin", urlPatterns = {"/admin/ht_register_approve/request_detail.jsp", "/admin/ht_register_approve/list_request.jsp"})
 public class Admin implements Filter {
     
     private static final boolean debug = true;

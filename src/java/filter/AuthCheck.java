@@ -20,15 +20,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import model.Account;
 
-/**
- *
- * @author PC
- */
-@WebFilter(filterName = "AuthCheck", urlPatterns = {"/account/personal_profile.jsp", 
-    "/homestay/homestay_register/step1.jsp", "/homestay/homestay_register/step2.jsp", "/homestay/homestay_register/step3.jsp", 
-    "/homestay/homestay_register/step4.jsp", "/homestay/homestay_register/step5.jsp",
-    "/admin/ht_register_approve/request_detail.jsp", "/admin/ht_register_approve/list_request.jsp"
-})
+
 public class AuthCheck implements Filter {
     
     private static final boolean debug = true;
