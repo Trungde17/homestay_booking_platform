@@ -186,7 +186,29 @@
 
 
         <!-- Homestay Listings -->
-        <div class="container mt-5">
+            <div class="container mt-5">
+                <div class="row">
+                    <c:forEach var="homestay" items="${homestays}">
+                        <div class="col-md-4">
+                            <a href="${pageContext.request.contextPath}/booking/block.jsp?homestayId=${homestay.ht_id}" class="text-decoration-none text-dark">
+                                <div class="card hotel-card">
+                                    <c:forEach var="image" items="${homestay.img}">
+                                        <img src="${image.img_url}" class="card-img-top" alt="Homestay Image">
+                                    </c:forEach>
+                                    <div class="card-body">
+                                        <h5 class="card-title"><c:out value="${homestay.ht_name}" /></h5>
+                                        <p class="card-text">Owner: <c:out value="${homestay.owner.last_name} ${homestay.owner.first_name}" /></p>
+                                        <p class="card-text">Description: <c:out value="${homestay.describe}" /></p>
+                                        <p class="card-text">Address: <c:out value="${homestay.address_detail} ${homestay.district.district_name}" /></p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </c:forEach>
+                </div>
+            </div>
+
+<%--<div class="container mt-5">
             <div class="row">
                 <c:forEach var="homestay" items="${homestays}">
                     <div class="col-md-4">
@@ -204,16 +226,12 @@
                                 <p class="card-text">Description: <c:out value="${homestay.getDescribe()}" /></p>
 
                                 <p class="card-text">Address: <c:out value="${homestay.getAddress_detail()} ${homestay.getDistrict().getDistrict_name()}" /></p>
-                                <%-- <p class="card-text">Payment: <c:out value="${homestay.getPayment()}" /></p> --%>
-                                <!-- Loop through and display all images -->
-                                <%-- <p class="card-text">Facilities: <c:out value="${homestay.getFacilities().toString()}" /></p> --%>
-                                <!-- You can add more properties here as needed -->
                             </div>
                         </div>
                     </div>
                 </c:forEach>    
             </div>
-        </div>
+        </div>--%>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
         <script>
             document.addEventListener('DOMContentLoaded', function () {

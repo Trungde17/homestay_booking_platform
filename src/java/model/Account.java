@@ -24,7 +24,11 @@ public class Account {
     public Account() {
         // TODO Auto-generated constructor stub
     }
-
+     public Account(int account_id, String first_name, String last_name) {
+         this.account_id = account_id;
+         this.first_name = first_name;
+        this.last_name = last_name;
+    }
     public Account(String email, String password, String first_name, String last_name) {
         this.email = email;
         this.password = password;
