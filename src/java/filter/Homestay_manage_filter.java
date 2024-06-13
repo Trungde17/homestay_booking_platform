@@ -4,6 +4,7 @@
  */
 package filter;
 
+import DAO.BookingDAO;
 import DTO.homestay.HomestaySummaryDTO;
 import java.io.IOException;
 import java.io.PrintStream;
@@ -19,12 +20,10 @@ import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.ArrayList;
+import model.Booking;
 
-/**
- *
- * @author PC
- */
-@WebFilter(filterName = "Homestay_manage_filter", urlPatterns = {"/homestay/homestay_manage/layout.jsp"})
+
 public class Homestay_manage_filter implements Filter {
 
     private static final boolean debug = true;
@@ -111,7 +110,6 @@ public class Homestay_manage_filter implements Filter {
         
         HttpServletRequest rq = (HttpServletRequest) request;
         HttpServletResponse rp = (HttpServletResponse)response;
-        HttpSession session=rq.getSession();
         boolean isError=false;
         try {
             int ht_id=Integer.parseInt(rq.getParameter("ht_id"));
@@ -119,7 +117,11 @@ public class Homestay_manage_filter implements Filter {
             if(htsDTO.getStatus()==0)rp.sendRedirect(rq.getContextPath() +"/S");
             else if(htsDTO.getStatus()==1)rp.sendRedirect(rq.getContextPath() +"/homestay/homestay_register/step1.jsp");
             else if(htsDTO.getStatus()==2)rp.sendRedirect(rq.getContextPath() +"/homestay/homestay_register/wait.jsp");
-            else if(htsDTO.getStatus()==3)session.setAttribute("homestay_summary", htsDTO);
+            else if(htsDTO.getStatus()==3){
+                rq.setAttribute("homestay_summary", htsDTO);
+                ArrayList<Booking> bookings = BookingDAO.getAllUnapprovedBookingsOfHomestay(htsDTO.getHomestay_id());
+                rq.setAttribute("bookings", bookings); 
+            }
         } catch (Exception e) {
             System.out.println(e);
         }

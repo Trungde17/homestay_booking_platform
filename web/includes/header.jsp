@@ -58,7 +58,7 @@
     function postToManageHomestay(homestayId) {
         const form = document.createElement('form');
         form.method = 'POST';
-        form.action = `${window.location.origin}${pageContext.request.contextPath}/homestay/homestay_manage/layout.jsp`;
+        form.action = `${window.location.origin}${pageContext.request.contextPath}/homestay/homestay_manage/approveBookings.jsp`;
 
         const hiddenField = document.createElement('input');
         hiddenField.type = 'hidden';

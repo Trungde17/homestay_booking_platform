@@ -26,10 +26,24 @@ public class BookingDAO extends DAO {
         }
         return null;
     }
+    
+    public static boolean changeStatusBooking(int booking_id, boolean status){
+        try (Connection con=getConnection()){
+            PreparedStatement stmt=con.prepareStatement("update tblBooking set booking_status=? where booking_id=?");
+            stmt.setBoolean(1, status);
+            stmt.setInt(2, booking_id);
+            stmt.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
     public static void main(String[] args) {
         ArrayList<Booking>list=getAllUnapprovedBookingsOfHomestay(2);
+        
         for(Booking b:list){
-            System.out.println(b.getRooms().size());
+            System.out.println(b.getRooms().get(0).getCapacity());
         }
         getAllUnapprovedBookingsOfHomestay(2);
     }

@@ -23,7 +23,7 @@ public class RoomDAO extends DAO{
     
     public static ArrayList<Room>getRoomBookingBasicInfor(int booking_id){
         try (Connection con=getConnection()){
-            PreparedStatement stmt = con.prepareStatement("select * from tblBooking_detail where booking_id=?");
+            PreparedStatement stmt = con.prepareStatement("select * from tblBooking_detail bd join tblRoom r on bd.room_id=r.room_id where booking_id=?");
             stmt.setInt(1, booking_id);
             ResultSet rs=stmt.executeQuery();
             ArrayList<Room>rooms=new ArrayList<>();
@@ -101,9 +101,9 @@ public class RoomDAO extends DAO{
         return null;
     }
     public static void main(String[] args) {
-        ArrayList<Room>rooms=getRoomsOfHomestay(4);
+        ArrayList<Room>rooms=getRoomBookingBasicInfor(1);
         for(Room room:rooms){
-            System.out.println(room.getRoomFacilitiesString());
+            System.out.println(room.getCapacity());
         }
     }
 }

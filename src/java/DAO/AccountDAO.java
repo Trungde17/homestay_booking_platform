@@ -29,7 +29,7 @@ public class AccountDAO extends DAO {
             ResultSet rs=stmt.executeQuery();
             if(rs.next()){
                 return new Account(rs.getInt("account_id"), rs.getString("email"), rs.getString("first_name"), rs.getString("last_name"), 
-                        rs.getString("gender"), rs.getString("phone"), rs.getString("address"));
+                        rs.getString("gender"), rs.getDate("date_of_birth"), rs.getString("phone"), rs.getString("address"), rs.getString("avatar_img"));
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());

@@ -2,7 +2,9 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Scanner;
 
 
 public class Account {
@@ -193,11 +195,42 @@ public class Account {
     public String getFullName(){
         return first_name + " " + last_name;
     }
+     public String getAge() {
+        if (date_of_birth != null) {
+            // Tạo đối tượng Calendar cho ngày hiện tại
+            Calendar calCurrent = Calendar.getInstance();
+            calCurrent.setTime(new Date());
+
+            // Tạo đối tượng Calendar cho ngày sinh
+            Calendar calBirth = Calendar.getInstance();
+            calBirth.setTime(date_of_birth);
+
+            // Lấy năm hiện tại và năm sinh
+            int yearCurrent = calCurrent.get(Calendar.YEAR);
+            int yearBirth = calBirth.get(Calendar.YEAR);
+
+            // Tính tuổi
+            int age = yearCurrent - yearBirth;
+
+            // Kiểm tra nếu tháng hoặc ngày sinh chưa đến trong năm hiện tại, trừ tuổi đi 1
+            int monthCurrent = calCurrent.get(Calendar.MONTH);
+            int monthBirth = calBirth.get(Calendar.MONTH);
+            if (monthCurrent < monthBirth || (monthCurrent == monthBirth && calCurrent.get(Calendar.DAY_OF_MONTH) < calBirth.get(Calendar.DAY_OF_MONTH))) {
+                age--;
+            }
+
+            return String.valueOf(age);
+        }
+        return "";
+    }
     @Override
     public String toString() {
         return "Account [account_id=" + account_id + ", email=" + email + ", password=" + password + ", first_name="
                 + first_name + ", last_name=" + last_name + ", gender=" + gender + ", phone=" + phone + ", address="
                 + address + ", avatar_img=" + avatar_img + ", payment_account=" + payments + ", role_account="
                 + role_account + ", registration_date=" + registration_date + "]";
+    }
+    
+    public static void main(String[] args) {
     }
 }
