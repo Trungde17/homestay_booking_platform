@@ -7,6 +7,7 @@ import java.util.Date;
 public class Booking {
     private int booking_id;
     private Account guest;
+    private int ht_id;
     private Homestay homestay;
     private int guest_number;
     private Date date_booked;
@@ -32,6 +33,14 @@ public class Booking {
         this.outstanding_amount = outstanding_amount;
         this.rooms = rooms;
         this.booking_status = booking_status;
+    }
+
+    public int getHt_id() {
+        return ht_id;
+    }
+
+    public void setHt_id(int ht_id) {
+        this.ht_id = ht_id;
     }
     
     

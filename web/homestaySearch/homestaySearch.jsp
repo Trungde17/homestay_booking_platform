@@ -121,6 +121,7 @@
                                 <img src="${image.getImg_url()}" class="card-img-top" alt="Homestay Image">
                             </c:forEach>                        
                             <div class="card-body">
+                                <a class="btn btn-primary" href="./customer/homestay/view.jsp?ht_id=${homestay.getHt_id()}">View Details</a>
                                 <h5 class="card-title"><c:out value="${homestay.getHt_name()}" /></h5>
                                 <p class="card-text">Owner: <c:out value="${homestay.getOwner().getLast_name()} ${homestay.getOwner().getFirst_name()}" /></p>
                                 <p class="card-text">Description: <c:out value="${homestay.getDescribe()}" /></p>

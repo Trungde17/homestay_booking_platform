@@ -60,5 +60,44 @@
         <filter-name>Homestay_register_filter</filter-name>
         <url-pattern>/homestay/homestay_register/step1.jsp</url-pattern>
     </filter-mapping>   
-    
+    <servlet>
+        <servlet-name>CreateFeedbackServlet</servlet-name>
+        <servlet-class>controller.feedback.CreateFeedbackServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GetFeedbacksServlet</servlet-name>
+        <servlet-class>controller.feedback.GetFeedbacksServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteFeedbackServlet</servlet-name>
+        <servlet-class>controller.feedback.DeleteFeedbackServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditFeedbackServlet</servlet-name>
+        <servlet-class>controller.feedback.EditFeedbackServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GetFeedbackServlet</servlet-name>
+        <servlet-class>controller.feedback.GetFeedbackServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CreateFeedbackServlet</servlet-name>
+        <url-pattern>/customer/feedback/create</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetFeedbacksServlet</servlet-name>
+        <url-pattern>/customer/feedback/getall</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteFeedbackServlet</servlet-name>
+        <url-pattern>/customer/feedback/delete</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditFeedbackServlet</servlet-name>
+        <url-pattern>/customer/feedback/edit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetFeedbackServlet</servlet-name>
+        <url-pattern>/customer/feedback/get</url-pattern>
+    </servlet-mapping>
 </web-app>
