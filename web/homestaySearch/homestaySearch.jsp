@@ -1,4 +1,3 @@
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@page import="DAO.HomestayDAO"%>
@@ -16,9 +15,7 @@
         <link rel="stylesheet"
               href="${pageContext.request.contextPath}/css/Search_homestay.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
-
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
     </head>
 
     <body>
@@ -44,12 +41,11 @@
                                 <li><a class="dropdown-item" href="#">Hòa Vang</a></li>
                             </ul>
                         </li>
-
                         <li class="nav-item">
                             <a class="nav-link" href="#">Contact Host</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="helpDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+<a class="nav-link dropdown-toggle" href="#" id="helpDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Help
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="helpDropdown">
@@ -88,7 +84,7 @@
                                     <a class="dropdown-item" href="#">Invite Friends</a>
                                     <a class="dropdown-item" href="#">List a Room</a>
                                     <a class="dropdown-item" href="${pageContext.request.contextPath}/account/personal_profile.jsp">Account</a>
-                                    <div class="dropdown-divider"></div>
+<div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="${pageContext.request.contextPath}/access/logout.jsp">Logout</a>
                                 </div>
                             </li>      
@@ -99,12 +95,14 @@
         </nav>
 
         <!-- Hero Section -->
-        <section>
-            <div class="container mt-4">
-                <form action="${pageContext.request.contextPath}/searchServlet" method="post">
-                    <div class="search-bar row g-2">
-                        <div class="col-md-3 select-wrapper">
-                            <i class="fas fa-map-marker-alt"></i>
+        <section class="hero-section d-flex align-items-center">
+            <div class="container text-center">
+                 <h1 class="welcome-text">Welcome To HealingLand</h1>
+                <h1 class="hero-content">Find Your Perfect Homestay</h1>
+                <form action="${pageContext.request.contextPath}/searchServlet" method="post" class="search-bar mt-4">
+                    <div class="row g-2 align-items-center">
+                        <div class="col-md-3 select-wrapper position-relative">
+                            <i class="fas fa-map-marker-alt position-absolute"></i>
                             <select class="form-select" name="district">
                                 <option value="Hải Châu" ${districtName == 'Hải Châu' ? 'selected' : ''}>Hải Châu</option>
                                 <option value="Sơn Trà" ${districtName == 'Sơn Trà' ? 'selected' : ''}>Sơn Trà</option>
@@ -117,17 +115,17 @@
                         </div>
                         <div class="col-md-3">
                             <input type="date" id="checkIn" class="form-control" value="${checkin}" name="checkIn" placeholder="Check-in">
+                            
                         </div>
                         <div class="col-md-3">
                             <input type="date" id="checkOut" class="form-control" value="${checkout}" name="checkOut" placeholder="Check-out">
                         </div>
-
-                        <div class="col-md-2 select-wrapper">
-                            <i class="bi bi-person"></i>
-                            <select class="form-select" id="guest" name="guests" >
+                        <div class="col-md-2 select-wrapper position-relative">
+                            <i class="bi bi-person position-absolute"></i>
+                            <select class="form-select" id="guest" name="guests">
                                 <option value="1" ${guests == 1 ? "selected" : ""}>1 Guest</option>
                                 <option value="2" ${guests == 2 ? "selected" : ""}>2 Guests</option>
-                                <option value="3" ${guests == 3 ? "selected" : ""}>3 Guests</option>
+<option value="3" ${guests == 3 ? "selected" : ""}>3 Guests</option>
                                 <option value="4" ${guests == 4 ? "selected" : ""}>4 Guests</option>
                                 <option value="5" ${guests == 5 ? "selected" : ""}>5 Guests</option>
                                 <option value="6" ${guests == 6 ? "selected" : ""}>6 Guests</option>
@@ -163,6 +161,8 @@
                 </c:forEach>    
             </div>
         </div>
+
+
         <!-- Hidden form for pagination -->
         <form id="paginationForm" action="${pageContext.request.contextPath}/searchServlet" method="post">
             <input type="hidden" name="district" value="${districtName}">
@@ -171,12 +171,13 @@
             <input type="hidden" name="guests" value="${guests}">
             <input type="hidden" name="page" id="pageInput" value="${currentPage}">
         </form>
+
         <!-- Pagination links -->
         <nav aria-label="Page navigation">
             <ul class="pagination justify-content-center">
                 <li class="page-item ${currentPage == 1 ? 'disabled' : ''}">
                     <a class="page-link" href="javascript:submitPaginationForm(${currentPage - 1})" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
+<span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
                 <c:forEach var="i" begin="1" end="${endPage}">
@@ -191,6 +192,7 @@
                 </li>
             </ul>
         </nav>
+
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
         <script>
             document.addEventListener('DOMContentLoaded', function () {
@@ -222,12 +224,10 @@
                 }
             });
 
-
             function submitPaginationForm(page) {
                 document.getElementById('pageInput').value = page;
                 document.getElementById('paginationForm').submit();
             }
-
         </script>
     </body>
 </html>

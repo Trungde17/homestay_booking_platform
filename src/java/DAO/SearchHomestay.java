@@ -36,7 +36,8 @@ public class SearchHomestay {
                      "    FROM dbo.tblDnDistrict " +
                      "    WHERE district_name LIKE ? " +
                      ") " +
-                     "AND rc.total_capacity >= ? ";
+                     "AND rc.total_capacity >= ? "+
+                "AND h.ht_status = 3 " ;
 
         // If both checkIn and checkOut are not null, add date conditions to the query
         if (checkIn != null && checkOut != null) {
@@ -117,7 +118,8 @@ public static int count(String district, Date checkIn, Date checkOut, int number
                      "    FROM dbo.tblDnDistrict " +
                      "    WHERE district_name LIKE ? " +
                      ") " +
-                     "AND rc.total_capacity >= ? ";
+                     "AND rc.total_capacity >= ? "+
+                       "AND h.ht_status = 3 " ;
 
         // If both checkIn and checkOut are not null, add date conditions to the query
         if (checkIn != null && checkOut != null) {

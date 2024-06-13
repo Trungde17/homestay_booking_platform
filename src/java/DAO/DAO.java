@@ -13,7 +13,7 @@ public class DAO{
 		try {
 			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 			String url="jdbc:sqlserver://LAPTOP-JFP2HOT9\\SQLEXPRESS"
-                                + ";databaseName=BAITAP;encrypt=true;trustServerCertificate=true";
+                                + ";databaseName=BAITAP4;encrypt=true;trustServerCertificate=true";
 			String userName="sa";
 			String password="2411";
 			Connection connection = DriverManager.getConnection(url, userName, password);
