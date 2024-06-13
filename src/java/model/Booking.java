@@ -20,6 +20,18 @@ public class Booking {
     public Booking() {
     }
 
+    public Booking(int booking_id, Account guest, int guest_number, Date date_booked, Date check_in, Date check_out, ArrayList<Room> rooms, boolean booking_status) {
+        this.booking_id = booking_id;
+        this.guest = guest;
+        this.guest_number = guest_number;
+        this.date_booked = date_booked;
+        this.check_in = check_in;
+        this.check_out = check_out;
+        this.rooms = rooms;
+        this.booking_status = booking_status;
+    }
+    
+    
     public Booking(int booking_id, Account guest, Homestay homestay, int guest_number, Date date_booked, Date check_in, Date check_out, double paid_amount, double outstanding_amount, ArrayList<Room> rooms, boolean booking_status) {
         this.booking_id = booking_id;
         this.guest = guest;

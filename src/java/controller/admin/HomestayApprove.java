@@ -56,9 +56,9 @@ public class HomestayApprove extends HttpServlet {
         String action = request.getParameter("action");
         int ht_id = Integer.parseInt(request.getParameter("homestayId"));
         if (action.equalsIgnoreCase("approve")) {
-            HomestayDAO.insertAdminForHomestay(ht_id, admin.getAccount_id());
+            HomestayDAO.changeStatus(ht_id, 3);
         } else if (action.equalsIgnoreCase("reject")) {
-            HomestayDAO.insertAdminForHomestay(ht_id, 0);
+            HomestayDAO.changeStatus(ht_id, 0);
         }
         ArrayList<Homestay> homestayList = HomestayDAO.findAllHomestayAwaitingApproval();
         session.setAttribute("homestays_approve", homestayList);

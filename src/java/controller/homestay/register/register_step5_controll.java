@@ -75,6 +75,7 @@ public class register_step5_controll extends HttpServlet {
                 String img_url = (String) mapResult.get("url");
                 RoomImgDAO.insertRoomImg(room.getRoom_id(), img_url);
             }
+            HomestayDAO.changeStatus(ht.getHt_id(), 2);
         } catch (Exception e) {
             System.out.println(e);
             isError = true;

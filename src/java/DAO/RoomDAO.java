@@ -21,6 +21,23 @@ public class RoomDAO extends DAO{
         return null;
     }
     
+    public static ArrayList<Room>getRoomBookingBasicInfor(int booking_id){
+        try (Connection con=getConnection()){
+            PreparedStatement stmt = con.prepareStatement("select * from tblBooking_detail where booking_id=?");
+            stmt.setInt(1, booking_id);
+            ResultSet rs=stmt.executeQuery();
+            ArrayList<Room>rooms=new ArrayList<>();
+            while(rs.next()){
+                rooms.add(new Room(rs.getString("room_name"), rs.getInt("capacity"), rs.getString("size"), 
+                        RoomImgDAO.getRoomImgs(rs.getInt("room_id")), RoomPriceDAO.getRoomPrices(rs.getInt("room_id"))));
+            }
+            return rooms;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+    
     public static ArrayList<Room> getAllHomestayRooms(int homestay_id){
         try(Connection con=getConnection()) {
             PreparedStatement stmt=con.prepareStatement("select * from tblRoom where ht_id=?");
@@ -31,6 +48,7 @@ public class RoomDAO extends DAO{
         }
         return null;
     }
+    
     public static int insertRoomOfHomestay(int homestay_id, int room_id, String room_name, int capacity){
         try (Connection con=getConnection()){
             PreparedStatement stmt=con.prepareStatement("insert into tblRoom(room_id, room_name, ht_id, capacity)"

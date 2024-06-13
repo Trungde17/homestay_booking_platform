@@ -27,7 +27,19 @@ public class HomestayDAO extends DAO {
         return null;
         
     }
-
+    
+    public static boolean changeStatus(int homestay_id, int status){
+        try(Connection con=getConnection()) {
+            PreparedStatement stmt=con.prepareStatement("update tblHomestay set ht_status=? where ht_id=?");
+            stmt.setInt(1, status);
+            stmt.setInt(2, homestay_id);
+            stmt.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
     public static int countHomesaty() {
         int number = 0;
         try (Connection con = getConnection()) {
@@ -89,10 +101,11 @@ public class HomestayDAO extends DAO {
         return false;
     }
 
-    public static Homestay findHomestayAwaitingApproval(int owner_id) {
+    public static Homestay findRegisteredHomestays(int owner_id) {
         try (Connection con = getConnection()) {
-            PreparedStatement stmt = con.prepareStatement("select * from tblHomestay where owner_id=? AND admin_id is null");
+            PreparedStatement stmt = con.prepareStatement("select * from tblHomestay where owner_id=? AND ht_status=?");
             stmt.setInt(1, owner_id);
+            stmt.setInt(2, 1);
             ArrayList<Homestay> homestays = createHomestayBaseResultSet(stmt.executeQuery());
             if (!homestays.isEmpty()) {
                 return homestays.get(0);
@@ -102,10 +115,11 @@ public class HomestayDAO extends DAO {
         }
         return null;
     }
-
+    
     public static ArrayList<Homestay> findAllHomestayAwaitingApproval() {
         try (Connection con = getConnection()) {
-            PreparedStatement stmt = con.prepareStatement("select * from tblHomestay where admin_id is null");
+            PreparedStatement stmt = con.prepareStatement("select * from tblHomestay where ht_status=?");
+            stmt.setInt(1, 2);
             return createHomestayBaseResultSet(stmt.executeQuery());
         } catch (Exception e) {
             System.out.println(e);
@@ -132,10 +146,9 @@ public class HomestayDAO extends DAO {
                 ArrayList<Neighbourhood> neighbourhoods = NeighbourhoodDAO.getNeighbourhoods(id);
                 ArrayList<Room> rooms = RoomDAO.getRoomsOfHomestay(id);
                 Date registration_date = rs.getDate("registration_date");
-                Account admin = AccountDAO.getAccountById(rs.getInt("admin_id"));
-                boolean status = rs.getBoolean("ht_status");
+                int status = rs.getInt("ht_status");
                 result.add(new Homestay(id, name, owner, type, dsr, district, address_detail, payment, rules, commonRules, imgs,
-                        facilities, neighbourhoods, registration_date, rooms, admin, status));
+                        facilities, neighbourhoods, registration_date, rooms, status));
             }
             return result;
         } catch (Exception e) {
@@ -143,20 +156,8 @@ public class HomestayDAO extends DAO {
         }
         return null;
     }
-    
-    public static boolean insertAdminForHomestay(int homestay_id, int admin_id){
-        try (Connection con=getConnection()){
-            PreparedStatement stmt=con.prepareStatement("Update tblHomestay set admin_id=? where ht_id=?");
-            stmt.setInt(1, admin_id);
-            stmt.setInt(2, homestay_id);
-            stmt.executeUpdate();
-            return false;
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return true;
-    }
+        
     public static void main(String[] args) {
-        Homestay ht=getHomestayById(4);
+        System.out.println(changeStatus(1, 1));
     }
 }

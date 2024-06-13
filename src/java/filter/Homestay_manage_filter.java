@@ -4,7 +4,7 @@
  */
 package filter;
 
-import DAO.HomestayDAO;
+import DTO.homestay.HomestaySummaryDTO;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
@@ -19,22 +19,28 @@ import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import model.Account;
-import model.Homestay;
 
-public class Homestay_register_filter implements Filter {
+/**
+ *
+ * @author PC
+ */
+@WebFilter(filterName = "Homestay_manage_filter", urlPatterns = {"/homestay/homestay_manage/layout.jsp"})
+public class Homestay_manage_filter implements Filter {
 
     private static final boolean debug = true;
 
+    // The filter configuration object we are associated with.  If
+    // this value is null, this filter instance is not currently
+    // configured. 
     private FilterConfig filterConfig = null;
 
-    public Homestay_register_filter() {
+    public Homestay_manage_filter() {
     }
 
     private void doBeforeProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
-            log("Homestay_register_filter:DoBeforeProcessing");
+            log("Homestay_manage_filter:DoBeforeProcessing");
         }
 
         // Write code here to process the request and/or response before
@@ -62,7 +68,7 @@ public class Homestay_register_filter implements Filter {
     private void doAfterProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
-            log("Homestay_register_filter:DoAfterProcessing");
+            log("Homestay_manage_filter:DoAfterProcessing");
         }
 
         // Write code here to process the request and/or response after
@@ -98,37 +104,26 @@ public class Homestay_register_filter implements Filter {
             throws IOException, ServletException {
 
         if (debug) {
-            log("Homestay_register_filter:doFilter()");
+            log("Homestay_manage_filter:doFilter()");
         }
 
         doBeforeProcessing(request, response);
-
-        HttpServletRequest httpRequest = (HttpServletRequest) request;
-        HttpSession session = httpRequest.getSession();
-        Account owner = (Account) session.getAttribute("account");
-        String url = httpRequest.getContextPath() + "/homestay/homestay_register/step1.jsp";
-        Homestay homestay_regiter = HomestayDAO.findRegisteredHomestays(owner.getAccount_id());
-        if (homestay_regiter != null) {
-            session.setAttribute("homestay_register", homestay_regiter);
-            if (homestay_regiter.getAddress_detail() != null && homestay_regiter.getDistrict() != null && homestay_regiter.getNeighbourhoods() != null) {
-                url = httpRequest.getContextPath() + "/homestay/homestay_register/step3.jsp";
-                if (homestay_regiter.getCommonRules() != null && homestay_regiter.getHomestay_rules() != null) {
-                    url = httpRequest.getContextPath() + "/homestay/homestay_register/step2.jsp";
-                    if (homestay_regiter.getImg() != null && homestay_regiter.getRooms().get(0).getImg() != null) {
-                        url = httpRequest.getContextPath() + "/index.jsp";
-                    } else {
-                        url = httpRequest.getContextPath() + "/homestay/homestay_register/step5.jsp";
-                    }
-                } else {
-                    url = httpRequest.getContextPath() + "/homestay/homestay_register/step4.jsp";
-                }
-            } else {
-                url = httpRequest.getContextPath() + "/homestay/homestay_register/step2.jsp";
-            }
-            HttpServletResponse httpRespone = (HttpServletResponse) response;
-            httpRespone.sendRedirect(url);
+        
+        HttpServletRequest rq = (HttpServletRequest) request;
+        HttpServletResponse rp = (HttpServletResponse)response;
+        HttpSession session=rq.getSession();
+        boolean isError=false;
+        try {
+            int ht_id=Integer.parseInt(rq.getParameter("ht_id"));
+            HomestaySummaryDTO htsDTO = HomestaySummaryDTO.getHomestaySummaryDTOById(ht_id);
+            if(htsDTO.getStatus()==0)rp.sendRedirect(rq.getContextPath() +"/S");
+            else if(htsDTO.getStatus()==1)rp.sendRedirect(rq.getContextPath() +"/homestay/homestay_register/step1.jsp");
+            else if(htsDTO.getStatus()==2)rp.sendRedirect(rq.getContextPath() +"/homestay/homestay_register/wait.jsp");
+            else if(htsDTO.getStatus()==3)session.setAttribute("homestay_summary", htsDTO);
+        } catch (Exception e) {
+            System.out.println(e);
         }
-
+            
         Throwable problem = null;
         try {
             chain.doFilter(request, response);
@@ -184,7 +179,7 @@ public class Homestay_register_filter implements Filter {
         this.filterConfig = filterConfig;
         if (filterConfig != null) {
             if (debug) {
-                log("Homestay_register_filter:Initializing filter");
+                log("Homestay_manage_filter:Initializing filter");
             }
         }
     }
@@ -195,9 +190,9 @@ public class Homestay_register_filter implements Filter {
     @Override
     public String toString() {
         if (filterConfig == null) {
-            return ("Homestay_register_filter()");
+            return ("Homestay_manage_filter()");
         }
-        StringBuffer sb = new StringBuffer("Homestay_register_filter(");
+        StringBuffer sb = new StringBuffer("Homestay_manage_filter(");
         sb.append(filterConfig);
         sb.append(")");
         return (sb.toString());

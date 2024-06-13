@@ -31,6 +31,18 @@ public class Account {
         this.first_name = first_name;
         this.last_name = last_name;
     }
+
+    public Account(int account_id, String email, String first_name, String last_name, String gender, Date date_of_birth, String phone, String address, String avatar_img) {
+        this.account_id = account_id;
+        this.email = email;
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.gender = gender;
+        this.date_of_birth = date_of_birth;
+        this.phone = phone;
+        this.address = address;
+        this.avatar_img = avatar_img;
+    }
     
     public Account(int account_id, String email, String password, String first_name, String last_name, int role_account,
             Date registration_date) {
@@ -178,6 +190,9 @@ public class Account {
         this.date_of_birth = date_of_birth;
     }
       
+    public String getFullName(){
+        return first_name + " " + last_name;
+    }
     @Override
     public String toString() {
         return "Account [account_id=" + account_id + ", email=" + email + ", password=" + password + ", first_name="

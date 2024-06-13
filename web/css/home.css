@@ -1,3 +1,6 @@
+.body{
+    box-sizing: border-box;
+}
 .navbar .navbar-brand{
     max-height: 100px;
 }
@@ -56,5 +59,33 @@
     text-decoration: none;
     color: #000;
     margin-right: 20px;
+}
+/*Header*/
+.dropdown-menu a{
+    text-align: left;
+}
+.nav-item li{
+    margin-left: 0;
+}
+.nav-item li a{
+    padding-left: 10px;
+    padding-right: 0;
+}
+.homestay-icon{
+    margin-right: 5px;
+}
+.load-icon{
+    margin-left: 10px;
+}
+.nav-content {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.navbar-nav {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
 }
 

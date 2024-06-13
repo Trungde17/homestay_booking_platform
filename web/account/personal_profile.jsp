@@ -5,157 +5,191 @@
 --%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Profile</title>
-        <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-            rel="stylesheet">
-        <!-- Latest compiled JavaScript -->
-        <script
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-        <link rel="stylesheet"
-              href="${pageContext.request.contextPath}/css/main.css" />
-        <link rel="stylesheet"
-              href="${pageContext.request.contextPath}/css/personal_profile.css" />    
-        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'
-              rel='stylesheet'>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css" />
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/personal_profile.css" />
+        <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+        <style>
+            body {
+                background-color: #f8f9fa;
+                font-family: Arial, sans-serif;
+            }
+            .container {
+                margin-top: 50px;
+            }
+            .card {
+                border: none;
+                border-radius: 10px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }
+            .account-settings-links .list-group-item {
+                border: none;
+                border-bottom: 1px solid #e9ecef;
+                color: #007bff;
+                background-color: #f8f9fa;
+            }
+            .account-settings-links .list-group-item.active {
+                background-color: #007bff;
+                color: #fff;
+            }
+            #avatar_img {
+                width: 150px;
+                height: 150px;
+                object-fit: cover;
+                border-radius: 50%;
+                border: 3px solid #007bff;
+                cursor: pointer;
+            }
+            .btn-outline-primary {
+                color: #007bff;
+                border-color: #007bff;
+            }
+            .btn-outline-primary:hover {
+                background-color: #007bff;
+                color: #fff;
+            }
+            .form-label {
+                font-weight: bold;
+            }
+            .form-control {
+                border-radius: 10px;
+                border: 1px solid #007bff;
+            }
+            .btn-success {
+                background-color: #28a745;
+                border: none;
+            }
+            .btn-success:hover {
+                background-color: #218838;
+            }
+            .btn-primary {
+                background-color: #007bff;
+                border: none;
+            }
+            .btn-primary:hover {
+                background-color: #0056b3;
+            }
+            .text-success {
+                font-weight: bold;
+                color: #28a745;
+            }
+        </style>
     </head>
     <body>
-        <div class="container light-style flex-grow-1 container-p-y">
-            <h4 class="mb-4">Account settings</h4>
-            <div class="card overflow-hidden">
-                <div class="row no-gutters row-bordered row-border-light">
-                    <div class="col-md-3 pt-0">
+        <div class="container">
+            <h4 class="mb-4">Account Settings</h4>
+            <div class="card p-4">
+                <div class="row g-0">
+                    <div class="col-md-3">
                         <div class="list-group list-group-flush account-settings-links">
-                            <a href="#account-info" class="list-group-item list-group-item-action active" data-toggle="list">Info</a>
-                            <a href="#change-pass" class="list-group-item list-group-item-action" data-toggle="list">Change password</a>
+                            <a href="#account-info" class="list-group-item list-group-item-action active" data-bs-toggle="tab">Info</a>
+                            <a href="#change-pass" class="list-group-item list-group-item-action" data-bs-toggle="tab">Change Password</a>
                         </div>
                     </div>
                     <div class="col-md-9">
                         <div class="tab-content">
-                            <div class="tab-pane fade ${param.tab == 'info' || param.tab == null ? 'active show' : ''}" id="account-info">
-                                <div class="card-body media align-items-cente">
-                                    <img id="avatar_img" src="${sessionScope.account.getAvatar_img()}" alt="alt" class="d-block ui-w-80"/>
-                                    <form action="${pageContext.request.contextPath}/uploadimg" method="post" class="media-body ml-4" enctype="multipart/form-data">
+                            <div class="tab-pane fade show active" id="account-info">
+                                <div class="card-body d-flex align-items-center">
+                                    <img id="avatar_img" src="${sessionScope.account.getAvatar_img()}" alt="Profile Picture" class="rounded-circle" data-bs-toggle="modal" data-bs-target="#avatarModal">
+                                    <form action="${pageContext.request.contextPath}/uploadimg" method="post" enctype="multipart/form-data" class="ms-4">
                                         <label class="btn btn-outline-primary">
-                                            Upload new photo
-                                            <input type="file" name="img_file" id="input_file" class="account-settings-fileinput">
-                                        </label>&nbsp;
-                                        <button type="submit" class="btn btn-default md-btn-flat" onclick="disableButton(event)">Change</button>                                   
+                                            Upload New Photo
+                                            <input type="file" name="img_file" id="input_file" class="d-none">
+                                        </label>
+                                        <button type="submit" class="btn btn-default ms-2">Change</button>
                                     </form>
                                 </div>
-                                <hr class="border-light m-0">
-
-                                <!--FROM INFOR-->
+                                <hr class="my-4">
                                 <form class="form" action="${pageContext.request.contextPath}/changeProfile" method="post" id="registrationForm">
                                     <input type="hidden" name="account_id" value="${sessionScope.account.account_id}">
-                                    <div class="form-group">
-                                        <div class="col-xs-6">
-                                            <label for="first_name"><h4>First Name</h4></label>
-                                            <input type="text" class="form-control" name="first_name" id="first_name" 
-                                                   value="${sessionScope.account.first_name}" required placeholder="First Name">
-                                        </div>
+                                    <div class="mb-3">
+                                        <label for="first_name" class="form-label">First Name</label>
+                                        <input type="text" class="form-control" name="first_name" id="first_name" value="${sessionScope.account.first_name}" required placeholder="First Name">
                                     </div>
-                                    <div class="form-group">
-                                        <div class="col-xs-6">
-                                            <label for="first_name"><h4>Last Name</h4></label>
-                                            <input type="text" class="form-control" name="last_name" id="last_name" 
-                                                   value="${sessionScope.account.last_name}" required placeholder="Last Name">
-                                        </div>
+                                    <div class="mb-3">
+                                        <label for="last_name" class="form-label">Last Name</label>
+                                        <input type="text" class="form-control" name="last_name" id="last_name" value="${sessionScope.account.last_name}" required placeholder="Last Name">
                                     </div>
-
-                                    <div class="form-group">
-                                        <div class="col-xs-6">
-                                            <label for="gender"><h4>Gender</h4></label>
-                                            <input type="text" class="form-control" name="gender" id="gender" 
-                                                   value="${sessionScope.account.gender}" required placeholder="Gender">
-                                        </div>
+                                    <div class="mb-3">
+                                        <label for="gender" class="form-label">Gender</label>
+                                        <input type="text" class="form-control" name="gender" id="gender" value="${sessionScope.account.gender}" required placeholder="Gender">
                                     </div>
-
-
-                                    <div class="form-group">
-                                        <div class="col-xs-6">
-                                            <label for="phone"><h4>Phone</h4></label>
-                                            <input type="text" class="form-control" name="phone" id="phone" value="${sessionScope.account.phone}"
-                                                   required   placeholder="enter phone">
-                                        </div>
+                                    <div class="mb-3">
+                                        <label for="phone" class="form-label">Phone</label>
+                                        <input type="text" class="form-control" name="phone" id="phone" value="${sessionScope.account.phone}" required placeholder="Phone">
                                     </div>
-
-                                    <div class="form-group">
-                                        <div class="col-xs-6">
-                                            <label for="email"><h4>Email</h4></label>
-                                            <input type="email" class="form-control" name="email" 
-                                                   id="email" placeholder="you@email.com" value="${sessionScope.account.email}" readonly="" title="enter your email.">
-                                        </div>
+                                    <div class="mb-3">
+                                        <label for="email" class="form-label">Email</label>
+                                        <input type="email" class="form-control" name="email" id="email" value="${sessionScope.account.email}" readonly placeholder="Email">
                                     </div>
-                                    <div class="form-group">
-                                        <div class="col-xs-12">
-                                            <label for="address"><h4>Address</h4></label>
-                                            <input type="text" class="form-control" id="location"
-                                                   value="${sessionScope.account.address}" required name="address" placeholder="somewhere" title="enter a location">
-                                        </div>
+                                    <div class="mb-3">
+                                        <label for="address" class="form-label">Address</label>
+                                        <input type="text" class="form-control" id="address" name="address" value="${sessionScope.account.address}" required placeholder="Address">
                                     </div>
-                                    <div class="form-group">
-                                        <div class="col-xs-12">
-                                            <br>
-                                            <button class="btn btn-lg btn-success" type="submit"><i class="glyphicon glyphicon-ok-sign"></i> Save</button>
-                                            <label style="color: green"> ${ms}</label>
-                                        </div>
+                                    <div class="d-grid gap-2">
+                                        <button type="submit" class="btn btn-success">Save</button>
+                                        <small class="text-success">${ms}</small>
                                     </div>
                                 </form>
-
                             </div>
-                            <div class="tab-pane fade tab-pane fade ${param.tab == 'change-pass' ? 'active show' : ''}" id="change-pass">                               
-                                <!--FROM CHANGE PASS-->
+                            <div class="tab-pane fade" id="change-pass">
                                 <form action="${pageContext.request.contextPath}/changePassword" method="post" class="card-body">
-                                    <div class="form-group mb-3">
-                                        <c:set var="old_pass" value="${requestScope.old_pass}"/>
-                                        <c:set var="old_pass_error" value="${requestScope.old_pass_error}"/>
-                                        <input name="old_pass" type="password" value="${old_pass}" class="form-control" placeholder="Old password" required>
-                                        <small class="error">${old_pass_error}</small>
+                                    <div class="mb-3">
+                                        <input name="old_pass" type="password" value="${requestScope.old_pass}" class="form-control" placeholder="Old Password" required>
+                                        <small class="text-danger">${requestScope.old_pass_error}</small>
                                     </div>
-                                    <div class="form-group mb-3">
-                                        <c:set var="new_pass" value="${requestScope.new_pass}"/>
-                                        <input name="new_pass" type="password" value="${new_pass}" class="form-control" placeholder="New password" required>
+                                    <div class="mb-3">
+                                        <input name="new_pass" type="password" value="${requestScope.new_pass}" class="form-control" placeholder="New Password" required>
                                     </div>
-                                    <div class="form-group mb-5">  
-                                        <c:set var="new_pass_confi" value="${requestScope.new_pass_confi}"/>
-                                        <c:set var="new_pass_confi_error" value="${requestScope.new_pass_confi_error}"/>
-                                        <input name="new_pass_confi" type="password" value="${new_pass_confi}" class="form-control" placeholder="Confirm new password" required>
-                                        <small class="error">${new_pass_confi_error}</small>
+                                    <div class="mb-3">
+                                        <input name="new_pass_confi" type="password" value="${requestScope.new_pass_confi}" class="form-control" placeholder="Confirm New Password" required>
+                                        <small class="text-danger">${requestScope.new_pass_confi_error}</small>
                                     </div>
-                                    <input class="btn btn-primary mt-5" type="submit" value="Save change" />
-                                    <c:set var="request_error" value="${requestScope.request_error}"/>
-                                    <small class="error">${request_error}</small>
+                                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                                    <small class="text-danger">${requestScope.request_error}</small>
                                 </form>
-
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
-            <script>
-                                            avatar_img = document.getElementById("avatar_img");
-                                            input_file = document.getElementById("input_file");
-                                            input_file.onchange = function () {
-                                                avatar_img.src = URL.createObjectURL(input_file.files[0]);
-                                            }
-                                            function disableButton(event) {
-                                                var inputFile = document.getElementById("input_file");
-                                                if (inputFile.files.length === 0) {
-                                                    alert("Please select a file before submitting.");
-                                                    event.preventDefault();  // Ngăn chặn việc gửi form nếu không có tệp nào được chọn
-                                                } else {
-                                                    document.getElementById("changeButton").disabled = true;
-                                                    document.getElementById("changeButton").innerText = "Processing...";
-                                                }
-                                            }
-            </script>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="avatarModal" tabindex="-1" aria-labelledby="avatarModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <img id="full_avatar_img" src="${sessionScope.account.getAvatar_img()}" alt="Full Profile Picture" class="img-fluid">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
+            document.getElementById("input_file").onchange = function () {
+                const file = this.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        document.getElementById("avatar_img").src = e.target.result;
+                        document.getElementById("full_avatar_img").src = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            };
+        </script>
     </body>
 </html>

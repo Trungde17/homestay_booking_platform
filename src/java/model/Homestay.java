@@ -19,8 +19,7 @@ public class Homestay {
     private ArrayList<HomestayFacilities> facilities;
     private ArrayList<Neighbourhood> neighbourhoods;
     private Date registration_date;
-    private Account admin;
-    private boolean status;
+    private int status;
     private ArrayList<Room> rooms;
 
     public Homestay() {
@@ -43,7 +42,7 @@ public class Homestay {
     public Homestay(int ht_id, String ht_name, Account owner, HomestayType homestayType, String describe, 
             District district, String address_detail, Payment payment, String homestay_rules, ArrayList<Rule>commonRules,
             ArrayList<HomestayImg> img, ArrayList<HomestayFacilities> facilities, ArrayList<Neighbourhood> neighbourhoods, 
-            Date registration_date, ArrayList<Room>rooms,Account admin, boolean status)
+            Date registration_date, ArrayList<Room>rooms, int status)
     {
         this.ht_id = ht_id;
         this.ht_name = ht_name;
@@ -59,7 +58,6 @@ public class Homestay {
         this.facilities = facilities;
         this.neighbourhoods = neighbourhoods;
         this.registration_date = registration_date;
-        this.admin = admin;
         this.status = status;
         this.rooms = rooms;
     }
@@ -176,19 +174,11 @@ public class Homestay {
         this.registration_date = registration_date;
     }
 
-    public Account getAdmin() {
-        return admin;
-    }
-
-    public void setAdmin(Account admin) {
-        this.admin = admin;
-    }
-
-    public boolean isStatus() {
+    public int isStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 

@@ -21,7 +21,21 @@ public class AccountDAO extends DAO {
         }
         return null;
     }
-
+    public static Account getBasicInforOfAccount(int account_id){
+        try (Connection con = getConnection()) {
+            PreparedStatement stmt = con.prepareStatement("select account_id, email, first_name,"
+                    + "last_name, gender, date_of_birth, phone, address, avatar_img from tblAccount where account_id=?");
+            stmt.setInt(1, account_id);
+            ResultSet rs=stmt.executeQuery();
+            if(rs.next()){
+                return new Account(rs.getInt("account_id"), rs.getString("email"), rs.getString("first_name"), rs.getString("last_name"), 
+                        rs.getString("gender"), rs.getString("phone"), rs.getString("address"));
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
     private static ArrayList<Account> createAccountFromResultSet(ResultSet rs) {
         if (rs != null) {
             ArrayList<Account> result = new ArrayList();
@@ -170,7 +184,7 @@ public class AccountDAO extends DAO {
         }
     }
     public static void main(String[] args) {
-        getConnection();
+        System.out.println(getBasicInforOfAccount(1).getFirst_name());
     }
 
 }
