@@ -5,7 +5,7 @@
             <h1>Find Your Home away from Home</h1>
             <div class="row g-2 search mt-3">
                 <div class="col-md-3" id="district">
-                    <select class="form-select"name="district">
+                    <select class="form-select" name="district">
                         <option value="Hải Châu" selected>Hải Châu</option>
                         <option value="Sơn Trà">Sơn Trà</option>
                         <option value="Ngũ Hành Sơn">Ngũ Hành Sơn</option>

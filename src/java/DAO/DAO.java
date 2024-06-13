@@ -8,7 +8,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 import java.sql.*;
-public class DAO {
+public class DAO{
     public static Connection getConnection() {
 		try {
 			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
@@ -28,4 +28,3 @@ public class DAO {
 	}
 
 }
-
