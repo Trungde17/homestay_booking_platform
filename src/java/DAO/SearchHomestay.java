@@ -1,3 +1,4 @@
+
 package DAO;
 
 import java.sql.Connection;
@@ -18,45 +19,50 @@ import model.Payment;
 
 public class SearchHomestay {
 
-    // Method to search for homestays based on district and availability dates
+    // Method to search for homestays based on district, dates, and number of guests
     public static ArrayList<Homestay> searchHomestay(String district, Date checkIn, Date checkOut, int numberOfPersons) {
         ArrayList<Homestay> homestays = new ArrayList<>();
 
- String sql = "SELECT h.* " +
-             "FROM dbo.tblHomestay h " +
-             "LEFT JOIN ( " +
-             "    SELECT ht_id, SUM(capacity) AS total_capacity " +
-             "    FROM dbo.tblRoom rm " +
-             "    WHERE rm.room_status = 1 " +
-             "    GROUP BY ht_id " +
-             ") rc ON h.ht_id = rc.ht_id " +
-             "WHERE h.district_id IN ( " +
-             "    SELECT district_id " +
-             "    FROM dbo.tblDnDistrict " +
-             "    WHERE district_name LIKE ? " +
-             ") " +
-             "AND EXISTS ( " +
-             "    SELECT 1 " +
-             "    FROM dbo.tblRoom rm " +
-             "    WHERE rm.ht_id = h.ht_id " +
-             "    AND rm.room_id NOT IN ( " +
-             "        SELECT bd.room_id " +
-             "        FROM dbo.tblBooking_detail bd " +
-             "        JOIN dbo.tblBooking bk ON bd.booking_id = bk.booking_id " +
-             "        WHERE (? <= bk.date_checkout OR bk.date_checkout IS NULL) " +
-             "        AND (? >= bk.date_checkin OR bk.date_checkin IS NULL) " +
-             "    ) " +
-             ") " +
-             "AND rc.total_capacity >= ?;";
+        String sql = "SELECT h.* " +
+                     "FROM dbo.tblHomestay h " +
+                     "LEFT JOIN ( " +
+                     "    SELECT ht_id, SUM(capacity) AS total_capacity " +
+                     "    FROM dbo.tblRoom rm " +
+                     "    WHERE rm.room_status = 1 " +
+                     "    GROUP BY ht_id " +
+                     ") rc ON h.ht_id = rc.ht_id " +
+                     "WHERE h.district_id IN ( " +
+                     "    SELECT district_id " +
+                     "    FROM dbo.tblDnDistrict " +
+                     "    WHERE district_name LIKE ? " +
+                     ") " +
+                     "AND rc.total_capacity >= ? ";
 
-
+        // If both checkIn and checkOut are not null, add date conditions to the query
+        if (checkIn != null && checkOut != null) {
+            sql += "AND EXISTS ( " +
+                   "    SELECT 1 " +
+                   "    FROM dbo.tblRoom rm " +
+                   "    WHERE rm.ht_id = h.ht_id " +
+                   "    AND rm.room_id NOT IN ( " +
+                   "        SELECT bd.room_id " +
+                   "        FROM dbo.tblBooking_detail bd " +
+                   "        JOIN dbo.tblBooking bk ON bd.booking_id = bk.booking_id " +
+                   "        WHERE (? <= bk.date_checkout OR bk.date_checkout IS NULL) " +
+                   "        AND (? >= bk.date_checkin OR bk.date_checkin IS NULL) " +
+                   "    ) " +
+                   ")";
+        }
 
         try (Connection conn = DAO.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
             pstmt.setString(1, "%" + district + "%");
-            pstmt.setDate(2, checkIn);
-            pstmt.setDate(3, checkOut);
-            pstmt.setInt(4, numberOfPersons);
+            pstmt.setInt(2, numberOfPersons);
+
+            // If both checkIn and checkOut are not null, set date parameters
+            if (checkIn != null && checkOut != null) {
+                pstmt.setDate(3, checkIn);
+                pstmt.setDate(4, checkOut);
+            }
 
             try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
@@ -91,10 +97,72 @@ public class SearchHomestay {
         return new Homestay(name, owner, type, description, district, addressDetail, payment, imgs, facilities);
     }
 
-    // Method to search for homestays based on district and availability dates (overloaded method)
-    public static List<Homestay> searchHomestay(String district, java.util.Date checkIn, java.util.Date checkOut, int numberOfPersons) {
-        Date sqlCheckIn = new Date(checkIn.getTime());
-        Date sqlCheckOut = new Date(checkOut.getTime());
+  public static List<Homestay> searchHomestay(String district, java.util.Date checkIn, java.util.Date checkOut, int numberOfPersons) {
+        Date sqlCheckIn = checkIn != null ? new Date(checkIn.getTime()) : null;
+        Date sqlCheckOut = checkOut != null ? new Date(checkOut.getTime()) : null;
         return searchHomestay(district, sqlCheckIn, sqlCheckOut, numberOfPersons);
     }
+
+public static int count(String district, Date checkIn, Date checkOut, int numberOfPersons){
+     String sql = " Select count(*)" +
+                     "FROM dbo.tblHomestay h " +
+                     "LEFT JOIN ( " +
+                     "    SELECT ht_id, SUM(capacity) AS total_capacity " +
+                     "    FROM dbo.tblRoom rm " +
+                     "    WHERE rm.room_status = 1 " +
+                     "    GROUP BY ht_id " +
+                     ") rc ON h.ht_id = rc.ht_id " +
+                     "WHERE h.district_id IN ( " +
+                     "    SELECT district_id " +
+                     "    FROM dbo.tblDnDistrict " +
+                     "    WHERE district_name LIKE ? " +
+                     ") " +
+                     "AND rc.total_capacity >= ? ";
+
+        // If both checkIn and checkOut are not null, add date conditions to the query
+        if (checkIn != null && checkOut != null) {
+            sql += "AND EXISTS ( " +
+                   "    SELECT 1 " +
+                   "    FROM dbo.tblRoom rm " +
+                   "    WHERE rm.ht_id = h.ht_id " +
+                   "    AND rm.room_id NOT IN ( " +
+                   "        SELECT bd.room_id " +
+                   "        FROM dbo.tblBooking_detail bd " +
+                   "        JOIN dbo.tblBooking bk ON bd.booking_id = bk.booking_id " +
+                   "        WHERE (? <= bk.date_checkout OR bk.date_checkout IS NULL) " +
+                   "        AND (? >= bk.date_checkin OR bk.date_checkin IS NULL) " +
+                   "    ) " +
+                   ")";
+        }
+
+        try (Connection conn = DAO.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, "%" + district + "%");
+            pstmt.setInt(2, numberOfPersons);
+
+            // If both checkIn and checkOut are not null, set date parameters
+            if (checkIn != null && checkOut != null) {
+                pstmt.setDate(3,  checkIn);
+                pstmt.setDate(4,checkOut);
+            }
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                  return rs.getInt(1);
+                }
+            }
+
+        } catch (SQLException e) {
+            // Handle SQLException properly
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+
+ public static int count (String district, java.util.Date checkIn, java.util.Date checkOut, int numberOfPersons) {
+        Date sqlCheckIn = checkIn != null ? new Date(checkIn.getTime()) : null;
+        Date sqlCheckOut = checkOut != null ? new Date(checkOut.getTime()) : null;
+        return count(district, sqlCheckIn, sqlCheckOut, numberOfPersons);
+    }
 }
+        

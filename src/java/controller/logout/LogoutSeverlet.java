@@ -75,7 +75,7 @@ public class LogoutSeverlet extends HttpServlet {
         HttpSession session = request.getSession();
                 session.removeAttribute("account");
                 //response.sendRedirect("index.jsp");
-                request.getRequestDispatcher("/access/logout.jsp").forward(request, response);
+                request.getRequestDispatcher("index.jsp").forward(request, response);
         processRequest(request, response);
     }
 
