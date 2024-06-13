@@ -99,7 +99,7 @@
                             capacity: "${room.capacity}",
                             img: [
                     <c:forEach var="img" items="${room.img}" varStatus="imgStatus">
-                            "${img}"<c:if test="${!imgStatus.last}">,</c:if>
+                            "${img.img_url}"<c:if test="${!imgStatus.last}">,</c:if>
                     </c:forEach>
                             ]
                     }<c:if test="${!roomStatus.last}">,</c:if>

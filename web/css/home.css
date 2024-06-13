@@ -35,13 +35,14 @@
 .hero-content {
     position: relative;
     text-align: center;
-    color: white;
+   
     width: 60%; /* Increased width */
     margin: 0 auto; /* Center the search form */
 }
 
 .hero-content h1 {
     font-size: 3rem;
+    color: white;
 }
 
 .search-form {
@@ -60,7 +61,7 @@
     color: #000;
     margin-right: 20px;
 }
-/*Header*/
+
 .dropdown-menu a{
     text-align: left;
 }

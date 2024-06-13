@@ -12,7 +12,7 @@ public class DAO{
     public static Connection getConnection() {
 		try {
 			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-			String url="jdbc:sqlserver://LAPTOP-QFLE8Q70\\SQLEXPRESS:1433;databaseName=booking_platform;encrypt=true;trustServerCertificate=true";
+			String url="jdbc:sqlserver://LAPTOP-QFLE8Q70\\SQLEXPRESS:1433;databaseName=homestay_booking;encrypt=true;trustServerCertificate=true";
 			String userName="sa";
 			String password="12345";
 			Connection connection = DriverManager.getConnection(url, userName, password);
