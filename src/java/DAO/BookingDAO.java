@@ -17,7 +17,7 @@ public class BookingDAO extends DAO {
                 bookings.add(new Booking(rs.getInt("booking_id"), AccountDAO.getBasicInforOfAccount(rs.getInt("customer_id")), 
                         rs.getInt("guest_count"), rs.getDate("date_booked"), rs.getDate("date_checkin"),
                         rs.getDate("date_checkout"), RoomDAO.getRoomBookingBasicInfor(rs.getInt("booking_id")), 
-                        rs.getBoolean("booking_status")));
+                        rs.getInt("booking_status")));
             }
             Collections.sort(bookings, (i, j)->i.getDate_booked().compareTo(j.getDate_booked()));
             return bookings;
@@ -27,10 +27,10 @@ public class BookingDAO extends DAO {
         return null;
     }
     
-    public static boolean changeStatusBooking(int booking_id, boolean status){
+    public static boolean changeStatusBooking(int booking_id, int status){
         try (Connection con=getConnection()){
             PreparedStatement stmt=con.prepareStatement("update tblBooking set booking_status=? where booking_id=?");
-            stmt.setBoolean(1, status);
+            stmt.setInt(1, status);
             stmt.setInt(2, booking_id);
             stmt.executeUpdate();
             return true;

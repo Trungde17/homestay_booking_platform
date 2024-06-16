@@ -29,7 +29,7 @@
                     h-100 g-0 px-4 px-sm-0">
                     <div class="col col-sm-6 col-lg-7 col-xl-6">
                         <!-- logo -->
-                        <a href="#" class="d-flex justify-content-center"> <img
+                        <a href="${pageContext.request.contextPath}/index.jsp" class="d-flex justify-content-center"> <img
                                 alt="Healing land"
                                 src="${pageContext.request.contextPath}/img/project_logo.jpg"
                                 width="120">

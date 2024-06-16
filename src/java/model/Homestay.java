@@ -174,7 +174,7 @@ public class Homestay {
         this.registration_date = registration_date;
     }
 
-    public int isStatus() {
+    public int getStatus() {
         return status;
     }
 

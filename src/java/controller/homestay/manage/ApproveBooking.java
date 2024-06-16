@@ -5,6 +5,7 @@
 package controller.homestay.manage;
 
 import DAO.BookingDAO;
+import DAO.RoomDAO;
 import DTO.homestay.HomestaySummaryDTO;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -14,6 +15,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import model.Room;
 
 /**
  *
@@ -53,12 +56,22 @@ public class ApproveBooking extends HttpServlet {
         String action=request.getParameter("action");
         String booking_id_str=request.getParameter("booking_id");
         int hstDto_id=Integer.parseInt(request.getParameter("homestay_id"));
-        
         try {
             int booking_id=Integer.parseInt(booking_id_str);
             if(action.equalsIgnoreCase("approve")){
-                BookingDAO.changeStatusBooking(booking_id, true);
-            }          
+                ArrayList<Room>roomsOverlap=RoomDAO.getRoomsOverlapOfBooking(booking_id);
+                if(roomsOverlap!=null && roomsOverlap.size()>0){
+                    request.setAttribute("roomsOverlap", roomsOverlap);
+                }
+                else{
+                    BookingDAO.changeStatusBooking(booking_id, 2);
+                    request.setAttribute("roomsOverlap", null);
+                }                
+            } 
+            else if(action.equalsIgnoreCase("reject")){
+                BookingDAO.changeStatusBooking(booking_id, 0);
+                request.setAttribute("roomsOverlap", null);
+            }
         } catch (Exception e) {
             System.out.println(e);
         }

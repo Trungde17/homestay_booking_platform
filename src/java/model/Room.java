@@ -19,6 +19,14 @@ public class Room {
     public Room() {
     }
 
+    public Room(int room_id, String room_name, boolean status) {
+        this.room_id = room_id;
+        this.room_name = room_name;
+        this.status = status;
+    }
+
+    
+    
     public Room(String room_name, int capacity, String size, ArrayList<Img> img, ArrayList<RoomPrice> prices) {
         this.room_name = room_name;
         this.capacity = capacity;

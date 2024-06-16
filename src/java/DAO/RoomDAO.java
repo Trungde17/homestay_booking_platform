@@ -78,6 +78,26 @@ public class RoomDAO extends DAO{
         }
         return 0;
     }
+    
+    public static ArrayList<Room>getRoomsOverlapOfBooking(int booking_id){
+        try (Connection con=getConnection()){
+            PreparedStatement stmt=con.prepareStatement("EXEC dbo.CheckRoomOverlap @booking_id=?");
+            stmt.setInt(1, booking_id);
+            ResultSet rs=stmt.executeQuery();
+            ArrayList<Room>roomsOverlap=new ArrayList<>();
+            while(rs.next()){
+                try {
+                    roomsOverlap.add(new Room(rs.getInt("room_id"), rs.getString("room_name"), rs.getBoolean("room_status")));
+                } catch (SQLException sQLException) {
+                    System.out.println(sQLException);
+                }
+            }
+            return roomsOverlap;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
     private static ArrayList<Room>createRoomsBaseResultset(ResultSet rs){
         try {
             ArrayList<Room>rooms=new ArrayList<>();
@@ -101,9 +121,9 @@ public class RoomDAO extends DAO{
         return null;
     }
     public static void main(String[] args) {
-        ArrayList<Room>rooms=getRoomBookingBasicInfor(1);
+        ArrayList<Room>rooms=getRoomsOverlapOfBooking(3);
         for(Room room:rooms){
-            System.out.println(room.getCapacity());
+            System.out.println(room.getRoom_name());
         }
     }
 }

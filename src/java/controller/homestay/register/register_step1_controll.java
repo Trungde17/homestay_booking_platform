@@ -75,7 +75,7 @@ public class register_step1_controll extends HttpServlet {
         }
         if(isError){
             request.setAttribute("step1_error", "Fail request!");
-            url="/homestay/homestay_register/step2.jsp";
+            url="/homestay/homestay_register/step1.jsp";
         }
         RequestDispatcher rd = getServletContext().getRequestDispatcher(url);
         rd.forward(request, response);

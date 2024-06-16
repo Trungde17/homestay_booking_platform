@@ -144,7 +144,7 @@
             <div class="row">
                 <c:forEach var="homestay" items="${homestays}">
                     <div class="col-md-4 mb-4">
-                        <div class="card hotel-card">
+                        <div class="card hotel-card" data-id="${homestay.getHt_id()}" onclick="submitDetailForm(this)">
                             <c:if test="${not empty homestay.getImg()}">
                                 <c:forEach var="image" items="${homestay.getImg()}">
                                     <img src="${image.getImg_url()}" class="card-img-top" alt="Homestay Image">
@@ -152,7 +152,7 @@
                             </c:if>
                             <div class="card-body">
                                 <h5 class="card-title"><c:out value="${homestay.getHt_name()}" /></h5>
-                                <p class="card-text">Owner: <c:out value="${homestay.getOwner().getLast_name()} ${homestay.getOwner().getFirst_name()}" /></p>
+                                <p class="card-text">Owner: <c:out value="${homestay.getOwner().getFullName()}" /></p>
                                 <p class="card-text">Description: <c:out value="${homestay.getDescribe()}" /></p>
                                 <p class="card-text">Address: <c:out value="${homestay.getAddress_detail()} ${homestay.getDistrict().getDistrict_name()}" /></p>                        
                             </div>
@@ -161,7 +161,10 @@
                 </c:forEach>    
             </div>
         </div>
-
+        <!-- Hidden form for detail navigation -->
+        <form id="detailForm" action="${pageContext.request.contextPath}/homestayDetail.jsp" method="post" style="display: none;">
+            <input type="hidden" name="homestay_id" id="hiddenHomestayId">
+        </form>
 
         <!-- Hidden form for pagination -->
         <form id="paginationForm" action="${pageContext.request.contextPath}/searchServlet" method="post">
@@ -195,39 +198,44 @@
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
         <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                const today = new Date().toISOString().split('T')[0];
-                document.getElementById('checkIn').setAttribute('min', today);
-                document.getElementById('checkOut').setAttribute('min', today);
-            });
+                            document.addEventListener('DOMContentLoaded', function () {
+                                const today = new Date().toISOString().split('T')[0];
+                                document.getElementById('checkIn').setAttribute('min', today);
+                                document.getElementById('checkOut').setAttribute('min', today);
+                            });
 
-            document.getElementById('checkIn').addEventListener('change', function () {
-                const checkInDate = new Date(this.value);
-                const checkOutInput = document.getElementById('checkOut');
-                const checkOutDate = new Date(checkOutInput.value);
+                            document.getElementById('checkIn').addEventListener('change', function () {
+                                const checkInDate = new Date(this.value);
+                                const checkOutInput = document.getElementById('checkOut');
+                                const checkOutDate = new Date(checkOutInput.value);
 
-                // Update min attribute of check-out date picker
-                checkOutInput.setAttribute('min', this.value);
+                                // Update min attribute of check-out date picker
+                                checkOutInput.setAttribute('min', this.value);
 
-                if (checkOutDate && checkInDate > checkOutDate) {
-                    checkOutInput.value = '';
-                    alert('Check-in date cannot be later than check-out date. Please reselect the dates.');
-                }
-            });
+                                if (checkOutDate && checkInDate > checkOutDate) {
+                                    checkOutInput.value = '';
+                                    alert('Check-in date cannot be later than check-out date. Please reselect the dates.');
+                                }
+                            });
 
-            document.getElementById('checkOut').addEventListener('change', function () {
-                const checkInDate = new Date(document.getElementById('checkIn').value);
-                const checkOutDate = new Date(this.value);
-                if (checkInDate && checkOutDate < checkInDate) {
-                    document.getElementById('checkIn').value = this.value;
-                    alert('Check-out date cannot be earlier than check-in date. Please reselect the dates.');
-                }
-            });
+                            document.getElementById('checkOut').addEventListener('change', function () {
+                                const checkInDate = new Date(document.getElementById('checkIn').value);
+                                const checkOutDate = new Date(this.value);
+                                if (checkInDate && checkOutDate < checkInDate) {
+                                    document.getElementById('checkIn').value = this.value;
+                                    alert('Check-out date cannot be earlier than check-in date. Please reselect the dates.');
+                                }
+                            });
 
-            function submitPaginationForm(page) {
-                document.getElementById('pageInput').value = page;
-                document.getElementById('paginationForm').submit();
-            }
+                            function submitPaginationForm(page) {
+                                document.getElementById('pageInput').value = page;
+                                document.getElementById('paginationForm').submit();
+                            }
+                            function submitDetailForm(element) {
+                                const homestayId = element.getAttribute('data-id');
+                                document.getElementById('hiddenHomestayId').value = homestayId;
+                                document.getElementById('detailForm').submit();
+                            }
         </script>
     </body>
 </html>
