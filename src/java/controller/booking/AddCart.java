@@ -80,8 +80,8 @@ public class AddCart extends HttpServlet {
         Booking cart=(Booking)session.getAttribute("cart");
         if(cart==null){
             cart=new Booking();
-            Date checkin=(Date)session.getAttribute("checkin_date");
-            Date checkout=(Date)session.getAttribute("checkout_date");
+            Date checkin=(Date)session.getAttribute("checkinDate");
+            Date checkout=(Date)session.getAttribute("checkoutDate");
             cart.setCheck_in(checkin);
             cart.setCheck_out(checkout);
         }
