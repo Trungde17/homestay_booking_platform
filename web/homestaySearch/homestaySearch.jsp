@@ -162,7 +162,7 @@
             </div>
         </div>
         <!-- Hidden form for detail navigation -->
-        <form id="detailForm" action="${pageContext.request.contextPath}/homestayDetail.jsp" method="post" style="display: none;">
+        <form id="detailForm" action="${pageContext.request.contextPath}/gethomestayblog" method="post" style="display: none;">
             <input type="hidden" name="homestay_id" id="hiddenHomestayId">
         </form>
 

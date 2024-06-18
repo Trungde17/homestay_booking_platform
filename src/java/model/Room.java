@@ -18,7 +18,11 @@ public class Room {
 
     public Room() {
     }
-
+    
+    public Room(int room_id, String room_name){
+        this.room_id=room_id;
+        this.room_name=room_name;
+    }
     public Room(int room_id, String room_name, boolean status) {
         this.room_id = room_id;
         this.room_name = room_name;
@@ -129,7 +133,17 @@ public class Room {
     public void setStatus(boolean status) {
         this.status = status;
     }
-
+    public String getPricesString(){
+        String prices_str="";
+        if(prices!=null && prices.size()>0){
+            int i=0;
+            for(; i < prices.size()-1; i++){
+                prices_str+= prices.get(i).getPrice_name()+": "+prices.get(i).getAmount()+"vnd, ";
+            }
+            prices_str+=prices.get(i).getPrice_name()+": "+prices.get(i).getAmount()+"vnd.";
+        }
+        return prices_str;
+    }
     public String getBedNameString() {
         String result = "";
         if (beds != null && beds.size() > 0) {

@@ -40,11 +40,6 @@ public class BookingDAO extends DAO {
         return false;
     }
     public static void main(String[] args) {
-        ArrayList<Booking>list=getAllUnapprovedBookingsOfHomestay(2);
         
-        for(Booking b:list){
-            System.out.println(b.getRooms().get(0).getCapacity());
-        }
-        getAllUnapprovedBookingsOfHomestay(2);
     }
 }

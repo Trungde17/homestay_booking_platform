@@ -1,0 +1,330 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #001f3f;
+    color: #ffffff;
+    overflow-x: hidden;
+}
+
+.inn-body-section {
+    padding: 60px 0;
+    background: linear-gradient(135deg, #001f3f, #005f9e);
+    animation: backgroundAnimation 10s infinite alternate;
+}
+
+@keyframes backgroundAnimation {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 100% 50%;
+    }
+}
+
+.inn-detail-p1 {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    margin-bottom: 20px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    color: #001f3f;
+}
+
+.inn-detail-p1:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+.inn-detail-p1 h1 {
+    font-size: 32px;
+    color: #005f9e;
+    margin-bottom: 15px;
+    animation: slideInLeft 1s ease-in-out;
+}
+
+@keyframes slideInLeft {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+.owner-profile {
+    position: sticky;
+    top: 20px;
+    width: 100%;
+    max-width: 200px;
+    padding: 15px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    margin-bottom: 20px;
+    z-index: 1;
+    transition: transform 0.3s, box-shadow 0.3s;
+    color: #001f3f;
+}
+
+.owner-profile:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+
+.owner-avatar {
+    width: 100%;
+    max-height: 180px;
+    border-radius: 50%;
+    margin-bottom: 15px;
+    object-fit: cover;
+}
+
+
+.owner-info h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #005f9e;
+    animation: fadeInRight 1s ease-in-out;
+}
+
+@keyframes fadeInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        translateX(0);
+        opacity: 1;
+    }
+}
+
+.owner-info p {
+    margin: 0;
+    color: #001f3f;
+    font-size: 12px;
+    animation: fadeInRight 1.2s ease-in-out;
+}
+
+.inn-com h2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: #005f9e;
+    animation: fadeInDown 1s ease-in-out;
+}
+
+@keyframes fadeInDown {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    to {
+        translateY(0);
+        opacity: 1;
+    }
+}
+
+.inn-com ul {
+    list-style: none;
+    padding: 0;
+    animation: fadeInUp 1s ease-in-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    to {
+        translateY(0);
+        opacity: 1;
+    }
+}
+
+.inn-com ul li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: #001f3f;
+}
+
+.inn-com ul li i {
+    margin-right: 8px;
+    color: #4caf50;
+    transition: transform 0.3s, color 0.3s;
+}
+
+.inn-com ul li i:hover {
+    transform: scale(1.2);
+    color: #388e3c;
+}
+
+.room-price-cards .card {
+    margin-bottom: 15px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.room-price-cards .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+.card-img {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.card-body h5 {
+    font-size: 20px;
+    color: #005f9e;
+    transition: color 0.3s;
+}
+
+.card-body h5:hover {
+    color: #003f6e;
+}
+
+.btn-primary {
+    background-color: #005f9e;
+    border: none;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #003f6e;
+    transform: translateY(-2px);
+}
+
+.room-rat-body ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+}
+
+.room-rat-body ul li {
+    margin-right: 10px;
+}
+
+.room-rat-body ul li a {
+    display: flex;
+    align-items: center;
+    color: #001f3f;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.room-rat-body ul li a:hover {
+    color: #005f9e;
+}
+
+.review-actions {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    padding: 0;
+    margin: 10px 0 0 0;
+}
+
+.review-actions li {
+    margin-right: 10px;
+}
+
+.review-actions li a {
+    display: flex;
+    align-items: center;
+    color: #001f3f;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.review-actions li a:hover {
+    color: #005f9e;
+}
+
+.review-actions li a i {
+    margin-left: 3px;
+    transition: transform 0.3s;
+}
+
+.review-actions li a i:hover {
+    transform: scale(1.2);
+}
+
+/* Navigation Section */
+.nav-section {
+    background-color: #4b4b4b;
+    padding: 10px 0;
+    margin-bottom: 20px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.nav-container a {
+    color: white;
+    padding: 8px 12px;
+    background-color: #6d6d6d;
+    text-decoration: none;
+    font-size: 14px;
+    transition: background-color 0.3s, color 0.3s;
+    text-align: center;
+    border-radius: 4px;
+    flex: 1;
+}
+
+.nav-container a:hover {
+    background-color: #ffcc00;
+    color: #3e3e3e;
+}
+
+.checkin-checkout-card {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    margin-bottom: 20px;
+    color: #001f3f;
+}
+
+.pricing-summary {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 10px 0;
+    box-shadow: 0 -2px 15px rgba(0, 0, 0, 0.2);
+    color: #001f3f;
+    z-index: 1000;
+    display: none;
+}
+
+.pricing-summary-content {
+    display: flex;
+    gap: 10px;
+    flex-wrap: nowrap;
+    font-size: 14px;
+    margin-bottom: 0; /* Adjust the margin to reduce the height */
+}
+
+.pricing-summary-content p {
+    margin: 0;
+}
+
+.pricing-summary .btn {
+    margin-left: auto; /* Ensures the button stays on the right side */
+}
+.checkin-checkout-card .col-sm-2 input[type="submit"] {
+    width: 100%;
+}

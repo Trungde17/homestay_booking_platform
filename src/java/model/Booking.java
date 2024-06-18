@@ -3,6 +3,8 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class Booking {
     private int booking_id;
@@ -14,13 +16,14 @@ public class Booking {
     private Date check_out;
     private double paid_amount;
     private double outstanding_amount;
-    private ArrayList<Room>rooms;
+    private Map<Room, Integer>rooms;
     private int booking_status;  
 
     public Booking() {
+        rooms = new LinkedHashMap<>();
     }
 
-    public Booking(int booking_id, Account guest, int guest_number, Date date_booked, Date check_in, Date check_out, ArrayList<Room> rooms, int booking_status) {
+    public Booking(int booking_id, Account guest, int guest_number, Date date_booked, Date check_in, Date check_out, Map<Room, Integer> rooms, int booking_status) {
         this.booking_id = booking_id;
         this.guest = guest;
         this.guest_number = guest_number;
@@ -32,7 +35,7 @@ public class Booking {
     }
     
     
-    public Booking(int booking_id, Account guest, Homestay homestay, int guest_number, Date date_booked, Date check_in, Date check_out, double paid_amount, double outstanding_amount, ArrayList<Room> rooms, int booking_status) {
+    public Booking(int booking_id, Account guest, Homestay homestay, int guest_number, Date date_booked, Date check_in, Date check_out, double paid_amount, double outstanding_amount, Map<Room, Integer> rooms, int booking_status) {
         this.booking_id = booking_id;
         this.guest = guest;
         this.homestay = homestay;
@@ -119,11 +122,11 @@ public class Booking {
         this.outstanding_amount = outstanding_amount;
     }
 
-    public ArrayList<Room> getRooms() {
+    public Map<Room, Integer> getRooms() {
         return rooms;
     }
 
-    public void setRooms(ArrayList<Room> rooms) {
+    public void setRooms(Map<Room, Integer> rooms) {
         this.rooms = rooms;
     }
 
