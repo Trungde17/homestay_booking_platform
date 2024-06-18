@@ -39,7 +39,7 @@ public class SearchRoomsAvailable extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet SearchRoomsAvailable</title>");            
+            out.println("<title>Servlet SearchRoomsAvailable</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet SearchRoomsAvailable at " + request.getContextPath() + "</h1>");
@@ -48,41 +48,39 @@ public class SearchRoomsAvailable extends HttpServlet {
         }
     }
 
-    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
-   
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String checkin_str=request.getParameter("checkin_date");
-        String checkout_str=request.getParameter("checkout_date"); 
-        HttpSession session=request.getSession();
+        String checkin_str = request.getParameter("checkin_date");
+        String checkout_str = request.getParameter("checkout_date");
+        HttpSession session = request.getSession();
         try {
-            String ht_id_str=request.getParameter("homestay_id");
-            int ht_id=Integer.parseInt(ht_id_str);
+            String ht_id_str = request.getParameter("homestay_id");
+            int ht_id = Integer.parseInt(ht_id_str);
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             Date checkinDate = dateFormat.parse(checkin_str);
-            Date checkoutDate = dateFormat.parse(checkout_str);
-            ArrayList<Room>rooms= RoomDAO.getAvailableRoomsOfHomestay(ht_id, checkinDate, checkoutDate);
+            Date checkoutDate = dateFormat.parse(checkout_str);          
+            ArrayList<Room> rooms = RoomDAO.getAvailableRoomsOfHomestay(ht_id, checkinDate, checkoutDate);
             session.setAttribute("available_rooms", rooms);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        session.setAttribute("checkinDate", checkin_str);
-        session.setAttribute("checkoutDate", checkout_str);
+        session.setAttribute("cart", null);
+        session.setAttribute("checkinDate_str", checkin_str);
+        session.setAttribute("checkoutDate_str", checkout_str);
         request.setAttribute("scrollToRooms", true);
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/homestay/view_homestay/homestay_block.jsp");
         rd.forward(request, response);
 
     }
 
-    
     @Override
     public String getServletInfo() {
         return "Short description";

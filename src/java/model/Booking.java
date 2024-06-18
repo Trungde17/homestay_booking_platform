@@ -1,6 +1,7 @@
 
 package model;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -143,7 +144,28 @@ public class Booking {
         int hash = 7;
         return hash;
     }
+    public String getFormattedCheckIn() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        return sdf.format(this.check_in);
+    }
 
+    // Phương thức trả về định dạng ngày ngày/tháng/năm cho check_out
+    public String getFormattedCheckOut() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        return sdf.format(this.check_out);
+    }
+    
+    public double getTotalAmount(){
+         double amount = 0;
+         if(rooms!=null && rooms.size()>1){
+             for (Map.Entry<Room, Integer> entry : rooms.entrySet()) {
+                 int guest_number=entry.getValue();
+                 if(guest_number<2)amount+=entry.getKey().getPrices().get(0).getAmount();
+                 else amount+=entry.getKey().getPrices().get(1).getAmount();
+             }
+         }
+         return amount;
+    }
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

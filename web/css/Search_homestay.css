@@ -2,7 +2,7 @@ body {
     margin: 0;
     font-family: Arial, sans-serif;
     background: linear-gradient(to bottom, #1e3c72, #2a5298);
-    color: white;
+    color: #000;
 }
 
 .hero-section {
@@ -148,4 +148,8 @@ body {
     50% {
         opacity: 0;
     }
+}
+
+.booking-cart{
+    color: #000;
 }

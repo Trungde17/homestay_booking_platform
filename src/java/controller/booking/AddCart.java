@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import model.Booking;
 
@@ -41,7 +42,7 @@ public class AddCart extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AddCart</title>");            
+            out.println("<title>Servlet AddCart</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet AddCart at " + request.getContextPath() + "</h1>");
@@ -76,21 +77,24 @@ public class AddCart extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session=request.getSession();
-        Booking cart=(Booking)session.getAttribute("cart");
-        if(cart==null){
-            cart=new Booking();
-            Date checkin=(Date)session.getAttribute("checkinDate");
-            Date checkout=(Date)session.getAttribute("checkoutDate");
-            cart.setCheck_in(checkin);
-            cart.setCheck_out(checkout);
+        HttpSession session = request.getSession();
+        Booking cart = (Booking) session.getAttribute("cart");
+        if (cart == null) {
+            cart = new Booking();
         }
-        String room_id_str=request.getParameter("room_id");
-        String number_of_get_str=request.getParameter(room_id_str);
+        String room_id_str = request.getParameter("room_id");
+        String number_of_get_str = request.getParameter(room_id_str);
         try {
-            int number_of_get=Integer.parseInt(number_of_get_str);
-            int room_id=Integer.parseInt(room_id_str);
-            cart.getRooms().put(RoomDAO.getBasicRoomInfor(room_id), number_of_get);
+            String checkinDate_str=(String)session.getAttribute("checkinDate_str");
+            String checkoutDate_str =(String)session.getAttribute("checkoutDate_str");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date checkinDate = dateFormat.parse(checkinDate_str);
+            Date checkoutDate = dateFormat.parse(checkoutDate_str);
+            cart.setCheck_in(checkinDate);
+            cart.setCheck_out(checkoutDate);
+            int number_of_get = Integer.parseInt(number_of_get_str);
+            int room_id = Integer.parseInt(room_id_str);
+            cart.getRooms().put(RoomDAO.getRoomById(room_id), number_of_get);
             session.setAttribute("cart", cart);
         } catch (Exception e) {
             System.out.println(e);
@@ -99,7 +103,7 @@ public class AddCart extends HttpServlet {
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/homestay/view_homestay/homestay_block.jsp");
         rd.forward(request, response);
     }
-   
+
     @Override
     public String getServletInfo() {
         return "Short description";

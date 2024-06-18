@@ -1,3 +1,4 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="DAO.HomestayDAO"%>
 <!DOCTYPE html>
@@ -34,7 +35,7 @@
             </div>
         </div>
         <c:set var="homestay" value="${HomestayDAO.getHomestayById(1)}" />
-        <!--HEADER SECTION-->
+        <!--HEADER SECTION-->      
         <section>
             <c:set var="owner" value="${homestay.owner}" />
             <div class="inn-body-section inn-detail">
@@ -142,10 +143,10 @@
                                         <label for="checkoutDate">Check-out Date:</label>
                                     </div>
                                     <div class="col-sm-5">
-                                        <input name="checkin_date" value="${sessionScope.checkinDate}" type="date" class="form-control mb-3" id="checkinDate" required>
+                                        <input name="checkin_date" value="${sessionScope.checkinDate_str}" type="date" class="form-control mb-3" id="checkinDate" required>
                                     </div>
                                     <div class="col-sm-5">
-                                        <input name="checkout_date" value="${sessionScope.checkoutDate}" type="date" class="form-control mb-3" id="checkoutDate" required>
+                                        <input name="checkout_date" value="${sessionScope.checkoutDate_str}" type="date" class="form-control mb-3" id="checkoutDate" required>
                                     </div>
                                     <div class="col-sm-2">
                                         <button name="homestay_id" class="btn btn-primary w-100" type="submit" value="${homestay.ht_id}">Find</button>
@@ -202,7 +203,35 @@
 
                                 </div>
                             </div>
-
+                            <!-- Pricing Summary Section -->
+                            <c:set var="cart" value="${sessionScope.cart}"/>
+                            <c:if test="${cart!=null}">
+                                <div class="fixed-bottom">
+                                    <div class="container">
+                                        <div class="card">
+                                            <div class="card-body d-flex justify-content-between align-items-center booking-cart" style="color: #000;">
+                                                <div>
+                                                    <h5 class="card-title">Pricing Summary</h5>
+                                                    <div class="pricing-summary-content">
+                                                        <c:forEach var="entry" items="${cart.rooms}">
+                                                            <p>Room Name: <span id="roomType">${entry.key.room_name}</span></p>
+                                                                <c:set var="number" value="${entry.value}"/>
+                                                            <p>Number of Guests: <span id="numGuests">${number}</span></p>
+                                                                <c:set var="price" value="${entry.key.prices.get(0)}"/>
+                                                                <c:if test="${number>1}"><c:set var="price" value="${entry.key.prices.get(1)}"/></c:if>
+                                                            <p>Price per night: <span id="pricePerNight">${price.getAmount()}vnd</span></p>
+                                                            </c:forEach>
+                                                        <p>Date Check In: <span id="totalNights">${cart.getFormattedCheckIn()}</span></p>
+                                                        <p>Date Check Out: <span id="totalNights">${cart.getFormattedCheckOut()}</span></p>
+                                                        <p>Total cost: $<span id="totalCost">${cart.getTotalAmount()}vnd</span></p>
+                                                    </div>
+                                                </div>
+                                                <a href="booking.jsp" class="btn btn-primary">Book Now</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </c:if>
                             <!-- User Reviews -->
                         </div>
                     </div>
@@ -210,34 +239,6 @@
             </div>
         </section>
 
-        <!-- Pricing Summary Section -->
-        <c:set var="cart" value="${sessionScope.cart}"/>
-        <c:if test="${pricingSummary!=null}">
-            <div class="pricing-summary fixed-bottom" id="pricingSummary">
-                <div class="container">
-                    <div class="card">
-                        <div class="card-body d-flex justify-content-between align-items-center">
-                            <div>
-                                <h5 class="card-title">Pricing Summary</h5>
-                                <div class="pricing-summary-content">
-                                    <c:forEach var="entry" items="${cart}">
-                                        <p>Room Name: <span id="roomType">${entry.key.room_name}</span></p>
-                                        <c:set var="number" value="${entry.value}"/>
-                                        <p>Number of Guests: <span id="numGuests">${number}</span></p>
-                                        <c:set var="price" value="${entry.key.prices.get(0)}"/>
-                                        <c:if test="${number>1}"><c:set var="price" value="${entry.key.prices.get(1)}"/></c:if>
-                                        <p>Price per night: <span id="pricePerNight">${price}</span></p>
-                                    </c:forEach>
-                                    <p>Total nights: <span id="totalNights">0</span></p>
-                                    <p>Total cost: $<span id="totalCost">0</span></p>
-                                </div>
-                            </div>
-                            <a href="booking.jsp" class="btn btn-primary">Book Now</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </c:if>
 
         <!-- BOOTSTRAP JS -->
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

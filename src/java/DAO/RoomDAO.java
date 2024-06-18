@@ -22,14 +22,11 @@ public class RoomDAO extends DAO{
         }
         return null;
     }
-    public static Room getBasicRoomInfor(int room_id){
+    public static Room getRoomById(int room_id){
         try (Connection con=getConnection()){
             PreparedStatement stmt=con.prepareStatement("select * from tblRoom where room_id=?");
             stmt.setInt(1, room_id);
-            ResultSet rs=stmt.executeQuery();
-            if(rs.next()){
-                return new Room(rs.getInt("room_id"), rs.getString("room_name"));
-            }
+            return createRoomsBaseResultset(stmt.executeQuery()).get(0);
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -147,7 +144,6 @@ public class RoomDAO extends DAO{
         return null;
     }
     public static void main(String[] args) {
-       Room room=getBasicRoomInfor(1);
-        System.out.println(room.getRoom_name());
+
     }
 }
