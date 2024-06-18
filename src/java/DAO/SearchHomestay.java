@@ -16,6 +16,8 @@ import model.HomestayFacilities;
 import model.HomestayImg;
 import model.HomestayType;
 import model.Payment;
+import model.Room;
+import model.RoomPrice;
 
 public class SearchHomestay {
 
@@ -50,8 +52,8 @@ public class SearchHomestay {
                    "        SELECT bd.room_id " +
                    "        FROM dbo.tblBooking_detail bd " +
                    "        JOIN dbo.tblBooking bk ON bd.booking_id = bk.booking_id " +
-                   "        WHERE (? <= bk.date_checkout OR bk.date_checkout IS NULL) " +
-                   "        AND (? >= bk.date_checkin OR bk.date_checkin IS NULL) " +
+                   "        WHERE (? <= bk.date_checkout ) " +
+                   "        AND (? >= bk.date_checkin ) " +
                    "    ) " +
                    ")";
         }
@@ -86,17 +88,15 @@ public class SearchHomestay {
         int id = rs.getInt("ht_id");
         String name = rs.getString("ht_name");
         Account owner = AccountDAO.getAccountById(rs.getInt("owner_id"));
-        HomestayType type = HomestayTypeDAO.getHomestayTypeById(rs.getInt("ht_type_id"));
+        
         String description = rs.getString("describe");
         District district = DistrictDAO.getDistrictById(rs.getInt("district_id"));
         String addressDetail = rs.getString("address_detail");
-        Payment payment = PaymentDAO.getPaymentById(rs.getInt("payment_id"));
-        String rules = rs.getString("ht_rules");
+      
         ArrayList<HomestayImg> imgs = HomestayImgDAO.getHomestayImgs(id);
-        ArrayList<HomestayFacilities> facilities = HomestayFacilitiesDAO.getHomestayFacilities(id);
-        // Add other necessary fields as needed
+        ArrayList<Room> rooms = RoomDAO.getRoomsOfHomestay(id);
 
-        return new Homestay(name, owner, type, description, district, addressDetail, payment, imgs, facilities);
+        return new Homestay(id,name, owner, description, district, addressDetail, imgs, rooms);
     }
 
   public static List<Homestay> searchHomestay(String district, java.util.Date checkIn, java.util.Date checkOut, int numberOfPersons) {
@@ -132,8 +132,8 @@ public static int count(String district, Date checkIn, Date checkOut, int number
                    "        SELECT bd.room_id " +
                    "        FROM dbo.tblBooking_detail bd " +
                    "        JOIN dbo.tblBooking bk ON bd.booking_id = bk.booking_id " +
-                   "        WHERE (? <= bk.date_checkout OR bk.date_checkout IS NULL) " +
-                   "        AND (? >= bk.date_checkin OR bk.date_checkin IS NULL) " +
+                   "        WHERE (? <= bk.date_checkout ) " +
+                   "        AND (? >= bk.date_checkin ) " +
                    "    ) " +
                    ")";
         }

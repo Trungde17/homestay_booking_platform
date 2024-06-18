@@ -42,63 +42,62 @@ public class searchServlet extends HttpServlet {
         processRequest(request, response);
     }
 
-   @Override
-protected void doPost(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-    request.setCharacterEncoding("UTF-8");
-    String district = request.getParameter("district");
-    String checkInString = request.getParameter("checkIn");
-    String checkOutString = request.getParameter("checkOut");
-    int numberOfPersons = Integer.parseInt(request.getParameter("guests"));
-    
-    // Parse date strings into Date objects
-    Date checkIn = parseDateString(checkInString);
-    Date checkOut = parseDateString(checkOutString);
-     
-    if(district == null){
-         response.sendRedirect("index.jsp");
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        String district = request.getParameter("district");
+        String checkInString = request.getParameter("checkIn");
+        String checkOutString = request.getParameter("checkOut");
+        int numberOfPersons = Integer.parseInt(request.getParameter("guests"));
+
+        // Parse date strings into Date objects
+        Date checkIn = parseDateString(checkInString);
+        Date checkOut = parseDateString(checkOutString);
+
+        if (district == null) {
+            response.sendRedirect("index.jsp");
             return;
-        
-    }
-   
-    // If both check-in and check-out are null, proceed with searching by district and guests
-    if (checkIn == null && checkOut == null) {
-        List<Homestay> homestays = SearchHomestay.searchHomestay(district, null, null, numberOfPersons);
-         
-        // Forward the search results to the appropriate JSP page
+
+        }
+
+        // If both check-in and check-out are null, proceed with searching by district and guests
+        if (checkIn == null && checkOut == null) {
+            List<Homestay> homestays = SearchHomestay.searchHomestay(district, null, null, numberOfPersons);
+
+            // Forward the search results to the appropriate JSP page
+            forwardToSearchResults(request, response, homestays, district, checkInString, checkOutString, numberOfPersons);
+            return;
+        }
+
+        // If check-in is null, set it to the current date
+        if (checkIn == null) {
+            checkIn = new Date();
+        }
+
+        // If check-out is null, set it to a default value (e.g., one day after check-in)
+        if (checkOut == null) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(checkIn);
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
+            checkOut = calendar.getTime();
+        }
+
+        List<Homestay> homestays = SearchHomestay.searchHomestay(district, checkIn, checkOut, numberOfPersons);
+
         forwardToSearchResults(request, response, homestays, district, checkInString, checkOutString, numberOfPersons);
-        return;
     }
-    
-    // If check-in is null, set it to the current date
-    if (checkIn == null) {
-        checkIn = new Date();
-    }
-    
-    // If check-out is null, set it to a default value (e.g., one day after check-in)
-    if (checkOut == null) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(checkIn);
-        calendar.add(Calendar.DAY_OF_MONTH, 1); // Default: check-out is one day after check-in
-        checkOut = calendar.getTime();
-    }
-    
-    // Perform the homestay search based on district, check-in, check-out, and number of guests
-    List<Homestay> homestays = SearchHomestay.searchHomestay(district, checkIn, checkOut, numberOfPersons);
 
-    // Forward the search results to the appropriate JSP page
-    forwardToSearchResults(request, response, homestays, district, checkInString, checkOutString, numberOfPersons);
-}
+    private void forwardToSearchResults(HttpServletRequest request, HttpServletResponse response,
+            List<Homestay> homestays, String district, String checkIn, String checkOut,
+            int numberOfPersons) throws ServletException, IOException {
+        int count;
+        if (checkIn == null && checkOut == null) {
 
-// Method to forward the search results to the JSP page
-private void forwardToSearchResults(HttpServletRequest request, HttpServletResponse response,
-                                     List<Homestay> homestays, String district, String checkIn, String checkOut,
-                                     int numberOfPersons) throws ServletException, IOException {
-    int count;
-   if (checkIn == null && checkOut == null) {
-       
-         count = SearchHomestay.count(district, null, null, numberOfPersons);} else{
-   count = SearchHomestay.count(district, parseDateString(checkIn), parseDateString(checkOut), numberOfPersons);}
+            count = SearchHomestay.count(district, null, null, numberOfPersons);
+        } else {
+            count = SearchHomestay.count(district, parseDateString(checkIn), parseDateString(checkOut), numberOfPersons);
+        }
         int size = 6; // Number of items per page
         int endPage = count / size;
         if (count % size != 0) {
@@ -129,7 +128,7 @@ private void forwardToSearchResults(HttpServletRequest request, HttpServletRespo
         // Subset the homestays list for the current page
         List<Homestay> homestaysForPage = homestays.subList(startIndex, endIndex);
 
-        // Set attributes for forwarding to JSP
+        // 
         request.setAttribute("homestays", homestaysForPage);
         request.setAttribute("districtName", district);
         request.setAttribute("checkin", checkIn);
@@ -141,8 +140,6 @@ private void forwardToSearchResults(HttpServletRequest request, HttpServletRespo
         // Forward the request to the JSP
         request.getRequestDispatcher("/homestaySearch/homestaySearch.jsp").forward(request, response);
     }
-
-
 
     @Override
     public String getServletInfo() {

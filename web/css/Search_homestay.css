@@ -11,7 +11,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
+    color: #26B4FF;
     text-align: center;
 }
 
@@ -121,7 +121,8 @@ body {
 }
 
 .form-select, .form-control {
-    padding-left: 2.5rem; /* Tạo khoảng cách cho biểu tượng */
+    padding-left: 2.5rem;
+    color:black;/* Tạo khoảng cách cho biểu tượng */
 }
 
 .select-wrapper {

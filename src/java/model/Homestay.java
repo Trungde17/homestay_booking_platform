@@ -37,6 +37,16 @@ public class Homestay {
         this.img = img;
         this.facilities = facilities;
     }
+     public Homestay(int ht_id,String ht_name, Account owner, String describe, District district, String address_detail, ArrayList<HomestayImg> img, ArrayList<Room>rooms) {
+       this.ht_id = ht_id;
+         this.ht_name = ht_name;
+        this.owner = owner;
+        this.describe = describe;
+        this.district = district;
+        this.address_detail = address_detail;
+        this.img = img;
+        this.rooms = rooms;
+    }
     
 
     public Homestay(int ht_id, String ht_name, Account owner, HomestayType homestayType, String describe, 

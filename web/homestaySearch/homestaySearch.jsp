@@ -1,3 +1,4 @@
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@page import="DAO.HomestayDAO"%>
@@ -45,7 +46,7 @@
                             <a class="nav-link" href="#">Contact Host</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="helpDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+<a class="nav-link dropdown-toggle" href="#" id="helpDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Help
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="helpDropdown">
@@ -84,7 +85,7 @@
                                     <a class="dropdown-item" href="#">Invite Friends</a>
                                     <a class="dropdown-item" href="#">List a Room</a>
                                     <a class="dropdown-item" href="${pageContext.request.contextPath}/account/personal_profile.jsp">Account</a>
-                                    <div class="dropdown-divider"></div>
+<div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="${pageContext.request.contextPath}/access/logout.jsp">Logout</a>
                                 </div>
                             </li>      
@@ -97,7 +98,7 @@
         <!-- Hero Section -->
         <section class="hero-section d-flex align-items-center">
             <div class="container text-center">
-                <h1 class="welcome-text">Welcome To HealingLand</h1>
+                 <h1 class="welcome-text">Welcome To HealingLand</h1>
                 <h1 class="hero-content">Find Your Perfect Homestay</h1>
                 <form action="${pageContext.request.contextPath}/searchServlet" method="post" class="search-bar mt-4">
                     <div class="row g-2 align-items-center">
@@ -115,7 +116,7 @@
                         </div>
                         <div class="col-md-3">
                             <input type="date" id="checkIn" class="form-control" value="${checkin}" name="checkIn" placeholder="Check-in">
-
+                            
                         </div>
                         <div class="col-md-3">
                             <input type="date" id="checkOut" class="form-control" value="${checkout}" name="checkOut" placeholder="Check-out">
@@ -125,7 +126,7 @@
                             <select class="form-select" id="guest" name="guests">
                                 <option value="1" ${guests == 1 ? "selected" : ""}>1 Guest</option>
                                 <option value="2" ${guests == 2 ? "selected" : ""}>2 Guests</option>
-                                <option value="3" ${guests == 3 ? "selected" : ""}>3 Guests</option>
+<option value="3" ${guests == 3 ? "selected" : ""}>3 Guests</option>
                                 <option value="4" ${guests == 4 ? "selected" : ""}>4 Guests</option>
                                 <option value="5" ${guests == 5 ? "selected" : ""}>5 Guests</option>
                                 <option value="6" ${guests == 6 ? "selected" : ""}>6 Guests</option>
@@ -144,15 +145,16 @@
             <div class="row">
                 <c:forEach var="homestay" items="${homestays}">
                     <div class="col-md-4 mb-4">
-                        <div class="card hotel-card" data-id="${homestay.getHt_id()}" onclick="submitDetailForm(this)">
+                        <div class="card hotel-card">
                             <c:if test="${not empty homestay.getImg()}">
                                 <c:forEach var="image" items="${homestay.getImg()}">
                                     <img src="${image.getImg_url()}" class="card-img-top" alt="Homestay Image">
                                 </c:forEach>
                             </c:if>
                             <div class="card-body">
+                                <h5 class="card-title"><c:out value="${homestay.getHt_id()}" /></h5>
                                 <h5 class="card-title"><c:out value="${homestay.getHt_name()}" /></h5>
-                                <p class="card-text">Owner: <c:out value="${homestay.getOwner().getFullName()}" /></p>
+                                <p class="card-text">Owner: <c:out value="${homestay.getOwner().getLast_name()} ${homestay.getOwner().getFirst_name()}" /></p>
                                 <p class="card-text">Description: <c:out value="${homestay.getDescribe()}" /></p>
                                 <p class="card-text">Address: <c:out value="${homestay.getAddress_detail()} ${homestay.getDistrict().getDistrict_name()}" /></p>                        
                             </div>
@@ -161,10 +163,7 @@
                 </c:forEach>    
             </div>
         </div>
-        <!-- Hidden form for detail navigation -->
-        <form id="detailForm" action="${pageContext.request.contextPath}/gethomestayblog" method="post" style="display: none;">
-            <input type="hidden" name="homestay_id" id="hiddenHomestayId">
-        </form>
+
 
         <!-- Hidden form for pagination -->
         <form id="paginationForm" action="${pageContext.request.contextPath}/searchServlet" method="post">
@@ -180,7 +179,7 @@
             <ul class="pagination justify-content-center">
                 <li class="page-item ${currentPage == 1 ? 'disabled' : ''}">
                     <a class="page-link" href="javascript:submitPaginationForm(${currentPage - 1})" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
+<span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
                 <c:forEach var="i" begin="1" end="${endPage}">
@@ -198,44 +197,39 @@
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
         <script>
-                            document.addEventListener('DOMContentLoaded', function () {
-                                const today = new Date().toISOString().split('T')[0];
-                                document.getElementById('checkIn').setAttribute('min', today);
-                                document.getElementById('checkOut').setAttribute('min', today);
-                            });
+            document.addEventListener('DOMContentLoaded', function () {
+                const today = new Date().toISOString().split('T')[0];
+                document.getElementById('checkIn').setAttribute('min', today);
+                document.getElementById('checkOut').setAttribute('min', today);
+            });
 
-                            document.getElementById('checkIn').addEventListener('change', function () {
-                                const checkInDate = new Date(this.value);
-                                const checkOutInput = document.getElementById('checkOut');
-                                const checkOutDate = new Date(checkOutInput.value);
+            document.getElementById('checkIn').addEventListener('change', function () {
+                const checkInDate = new Date(this.value);
+                const checkOutInput = document.getElementById('checkOut');
+                const checkOutDate = new Date(checkOutInput.value);
 
-                                // Update min attribute of check-out date picker
-                                checkOutInput.setAttribute('min', this.value);
+                // Update min attribute of check-out date picker
+                checkOutInput.setAttribute('min', this.value);
 
-                                if (checkOutDate && checkInDate > checkOutDate) {
-                                    checkOutInput.value = '';
-                                    alert('Check-in date cannot be later than check-out date. Please reselect the dates.');
-                                }
-                            });
+                if (checkOutDate && checkInDate > checkOutDate) {
+                    checkOutInput.value = '';
+                    alert('Check-in date cannot be later than check-out date. Please reselect the dates.');
+                }
+            });
 
-                            document.getElementById('checkOut').addEventListener('change', function () {
-                                const checkInDate = new Date(document.getElementById('checkIn').value);
-                                const checkOutDate = new Date(this.value);
-                                if (checkInDate && checkOutDate < checkInDate) {
-                                    document.getElementById('checkIn').value = this.value;
-                                    alert('Check-out date cannot be earlier than check-in date. Please reselect the dates.');
-                                }
-                            });
+            document.getElementById('checkOut').addEventListener('change', function () {
+                const checkInDate = new Date(document.getElementById('checkIn').value);
+                const checkOutDate = new Date(this.value);
+                if (checkInDate && checkOutDate < checkInDate) {
+                    document.getElementById('checkIn').value = this.value;
+                    alert('Check-out date cannot be earlier than check-in date. Please reselect the dates.');
+                }
+            });
 
-                            function submitPaginationForm(page) {
-                                document.getElementById('pageInput').value = page;
-                                document.getElementById('paginationForm').submit();
-                            }
-                            function submitDetailForm(element) {
-                                const homestayId = element.getAttribute('data-id');
-                                document.getElementById('hiddenHomestayId').value = homestayId;
-                                document.getElementById('detailForm').submit();
-                            }
+            function submitPaginationForm(page) {
+                document.getElementById('pageInput').value = page;
+                document.getElementById('paginationForm').submit();
+            }
         </script>
     </body>
 </html>
