@@ -1,11 +1,13 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="DAO.HomestayDAO"%>
+<%@page import="utilities.CurrencyUtils"%>
 <!DOCTYPE html>
 <html lang="en">
-
+    <c:set var="ht_id" value="${param.ht_id}"/>
+    <c:set var="homestay" value="${HomestayDAO.getHomestayById(ht_id)}" />
     <head>
-        <title>Beautiful Homestay - Homestay Profile</title>
+        <title>${homestay.ht_name}</title>
         <!-- META TAGS -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -33,8 +35,7 @@
                 <a href="#rooms">Rooms</a>
                 <a href="#reviews">User Reviews</a>
             </div>
-        </div>
-        <c:set var="homestay" value="${HomestayDAO.getHomestayById(1)}" />
+        </div>       
         <!--HEADER SECTION-->      
         <section>
             <c:set var="owner" value="${homestay.owner}" />
@@ -176,10 +177,10 @@
                                                         <c:set var="prices" value="${room.prices}"/>
                                                         <c:forEach var="price" items="${prices}">
                                                             <c:if test="${price.price_id==1}">
-                                                                <c:set var="onePersonPrice" value="${price.getAmount()}" />
+                                                                <c:set var="onePersonPrice" value="${CurrencyUtils.formatCurrency(price.getAmount())}" />
                                                             </c:if>  
                                                             <c:if test="${price.price_id==2}">
-                                                                <c:set var="moreThanOnePersonPrice" value="${price.getAmount()}" />
+                                                                <c:set var="moreThanOnePersonPrice" value="${CurrencyUtils.formatCurrency(price.getAmount())}" />
                                                             </c:if>
 
                                                         </c:forEach>
@@ -203,6 +204,7 @@
 
                                 </div>
                             </div>
+                            <div style="height: 800px;"></div>
                             <!-- Pricing Summary Section -->
                             <c:set var="cart" value="${sessionScope.cart}"/>
                             <c:if test="${cart!=null}">
@@ -212,21 +214,33 @@
                                             <div class="card-body d-flex justify-content-between align-items-center booking-cart" style="color: #000;">
                                                 <div>
                                                     <h5 class="card-title">Pricing Summary</h5>
-                                                    <div class="pricing-summary-content">
-                                                        <c:forEach var="entry" items="${cart.rooms}">
-                                                            <p>Room Name: <span id="roomType">${entry.key.room_name}</span></p>
-                                                                <c:set var="number" value="${entry.value}"/>
-                                                            <p>Number of Guests: <span id="numGuests">${number}</span></p>
-                                                                <c:set var="price" value="${entry.key.prices.get(0)}"/>
-                                                                <c:if test="${number>1}"><c:set var="price" value="${entry.key.prices.get(1)}"/></c:if>
-                                                            <p>Price per night: <span id="pricePerNight">${price.getAmount()}vnd</span></p>
-                                                            </c:forEach>
-                                                        <p>Date Check In: <span id="totalNights">${cart.getFormattedCheckIn()}</span></p>
-                                                        <p>Date Check Out: <span id="totalNights">${cart.getFormattedCheckOut()}</span></p>
-                                                        <p>Total cost: $<span id="totalCost">${cart.getTotalAmount()}vnd</span></p>
+                                                    <div class="pricing-summary-content row">
+                                                        <div class="col-sm-12 row">
+                                                            <p class="col-sm-2">Room Name</p>
+                                                            <p class="col-sm-2">Number of Guests</p>
+                                                            <p class="col-sm-2">Price per night</p>
+                                                            <p class="col-sm-2">Date Check In</p>
+                                                            <p class="col-sm-2">Date Check Out</p>
+                                                            <p class="col-sm-2">Total cost</p>
+                                                        </div>
+                                                        <div class="col-sm-12 row">
+                                                            <div class="col-sm-6 row">
+                                                                <c:forEach var="entry" items="${cart.rooms}">
+                                                                    <p class="col-sm-4"><span id="roomType">${entry.key.room_name}</span></p>
+                                                                        <c:set var="number" value="${entry.value}"/>
+                                                                    <p class="col-sm-4"><span id="numGuests">${number}</span></p>
+                                                                        <c:set var="price" value="${entry.key.prices.get(0)}"/>
+                                                                        <c:if test="${number>1}"><c:set var="price" value="${entry.key.prices.get(1)}"/></c:if>
+                                                                    <p class="col-sm-4"><span id="pricePerNight">${CurrencyUtils.formatCurrency(price.getAmount())}</span></p>
+                                                                    </c:forEach>
+                                                            </div>                                                        
+                                                            <p class="col-sm-2"> <span id="totalNights">${cart.getFormattedCheckIn()}</span></p>
+                                                            <p class="col-sm-2"><span id="totalNights">${cart.getFormattedCheckOut()}</span></p>
+                                                            <p class="col-sm-2"><span>${CurrencyUtils.formatCurrency(cart.getTotalAmount())}</span></p>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <a href="booking.jsp" class="btn btn-primary">Book Now</a>
+                                                <a href="${pageContext.request.contextPath}/booking/confirmBooking.jsp" class="btn btn-primary">Book Now</a>
                                             </div>
                                         </div>
                                     </div>

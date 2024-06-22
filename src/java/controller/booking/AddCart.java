@@ -79,19 +79,21 @@ public class AddCart extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         Booking cart = (Booking) session.getAttribute("cart");
-        if (cart == null) {
-            cart = new Booking();
-        }
-        String room_id_str = request.getParameter("room_id");
-        String number_of_get_str = request.getParameter(room_id_str);
         try {
-            String checkinDate_str=(String)session.getAttribute("checkinDate_str");
-            String checkoutDate_str =(String)session.getAttribute("checkoutDate_str");
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            Date checkinDate = dateFormat.parse(checkinDate_str);
-            Date checkoutDate = dateFormat.parse(checkoutDate_str);
-            cart.setCheck_in(checkinDate);
-            cart.setCheck_out(checkoutDate);
+            if (cart == null) {
+                cart = new Booking();
+                String checkinDate_str = (String) session.getAttribute("checkinDate_str");
+                String checkoutDate_str = (String) session.getAttribute("checkoutDate_str");
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                Date checkinDate = dateFormat.parse(checkinDate_str);
+                Date checkoutDate = dateFormat.parse(checkoutDate_str);
+                cart.setDate_booked(new Date());
+                cart.setCheck_in(checkinDate);
+                cart.setCheck_out(checkoutDate);
+            }
+            String room_id_str = request.getParameter("room_id");
+            String number_of_get_str = request.getParameter(room_id_str);
+
             int number_of_get = Integer.parseInt(number_of_get_str);
             int room_id = Integer.parseInt(room_id_str);
             cart.getRooms().put(RoomDAO.getRoomById(room_id), number_of_get);

@@ -105,7 +105,7 @@ public class Admin implements Filter {
         HttpServletResponse rp = (HttpServletResponse)response;
         HttpSession session = rq.getSession();
         Account account=(Account)session.getAttribute("account");
-        if(account.getRole_account()!=1)rp.sendRedirect(rq.getContextPath() +"/index.jsp");
+        if(account.getRole_account()!=3)rp.sendRedirect(rq.getContextPath() +"/index.jsp");
         Throwable problem = null;
         try {
             chain.doFilter(request, response);

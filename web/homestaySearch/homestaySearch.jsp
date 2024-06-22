@@ -143,28 +143,27 @@
         <div class="container mt-5">
             <div class="row">
                 <c:forEach var="homestay" items="${homestays}">
-                    <div class="col-md-4 mb-4">
+                    <a href="${pageContext.request.contextPath}/homestay/view_homestay/homestay_block.jsp?ht_id=${homestay.ht_id}" class="col-md-4 mb-4">
                         <div class="card hotel-card" data-id="${homestay.getHt_id()}" onclick="submitDetailForm(this)">
                             <c:if test="${not empty homestay.getImg()}">
-                                <c:forEach var="image" items="${homestay.getImg()}">
-                                    <img src="${image.getImg_url()}" class="card-img-top" alt="Homestay Image">
-                                </c:forEach>
+                                
+                                    <img src="${homestay.img.get(0).getImg_url()}" class="card-img-top" alt="Homestay Image">
+                                
                             </c:if>
                             <div class="card-body">
+                                <h5 class="card-title"><c:out value="${homestay.getHt_id()}" /></h5>
                                 <h5 class="card-title"><c:out value="${homestay.getHt_name()}" /></h5>
                                 <p class="card-text">Owner: <c:out value="${homestay.getOwner().getFullName()}" /></p>
                                 <p class="card-text">Description: <c:out value="${homestay.getDescribe()}" /></p>
                                 <p class="card-text">Address: <c:out value="${homestay.getAddress_detail()} ${homestay.getDistrict().getDistrict_name()}" /></p>                        
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </c:forEach>    
             </div>
         </div>
         <!-- Hidden form for detail navigation -->
-        <form id="detailForm" action="${pageContext.request.contextPath}/gethomestayblog" method="post" style="display: none;">
-            <input type="hidden" name="homestay_id" id="hiddenHomestayId">
-        </form>
+        
 
         <!-- Hidden form for pagination -->
         <form id="paginationForm" action="${pageContext.request.contextPath}/searchServlet" method="post">
@@ -231,11 +230,7 @@
                                 document.getElementById('pageInput').value = page;
                                 document.getElementById('paginationForm').submit();
                             }
-                            function submitDetailForm(element) {
-                                const homestayId = element.getAttribute('data-id');
-                                document.getElementById('hiddenHomestayId').value = homestayId;
-                                document.getElementById('detailForm').submit();
-                            }
+                            
         </script>
     </body>
 </html>

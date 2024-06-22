@@ -96,7 +96,7 @@ public class SearchHomestay {
         ArrayList<HomestayFacilities> facilities = HomestayFacilitiesDAO.getHomestayFacilities(id);
         // Add other necessary fields as needed
 
-        return new Homestay(name, owner, type, description, district, addressDetail, payment, imgs, facilities);
+        return new Homestay(id, name, owner, description, district, addressDetail, imgs);
     }
 
   public static List<Homestay> searchHomestay(String district, java.util.Date checkIn, java.util.Date checkOut, int numberOfPersons) {

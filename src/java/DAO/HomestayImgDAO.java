@@ -13,7 +13,7 @@ public class HomestayImgDAO extends DAO {
             ResultSet rs = stmt.executeQuery();
             ArrayList<HomestayImg> imgs = new ArrayList<>();
             while (rs.next()) {
-                imgs.add(new HomestayImg(rs.getInt("img_id"), rs.getString("image_url"), rs.getInt("img_role")));
+                imgs.add(new HomestayImg(rs.getInt("img_id"), rs.getString("image_url")));
             }
             return imgs;
         } catch (Exception e) {

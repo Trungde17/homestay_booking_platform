@@ -93,8 +93,9 @@
                     date_booked: "${booking.date_booked}",
                     guest_number: "${booking.guest_number}",
                     rooms: [
-                <c:forEach var="room" items="${booking.rooms}" varStatus="roomStatus">
+                <c:forEach var="entry" items="${booking.rooms}" varStatus="roomStatus">
                     {
+                                                                        <c:set var="room" value="${entry.key}"/>
                     room_name: "${room.room_name}",
                             capacity: "${room.capacity}",
                             img: [

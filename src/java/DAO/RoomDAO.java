@@ -76,6 +76,25 @@ public class RoomDAO extends DAO{
         return 0;
     }
     
+    public static int insertIntoBookingDetail(int booking_id,Map<Room, Integer>rooms){
+        int number=0;
+        try (Connection con=getConnection()){            
+            PreparedStatement stmt=con.prepareStatement("insert into tblBooking_detail values(?, ?, ?)");
+            stmt.setInt(1, booking_id);
+            for (Map.Entry<Room, Integer> entry : rooms.entrySet()) {
+                try {
+                    stmt.setInt(2, entry.getKey().getRoom_id());
+                    stmt.setInt(3, entry.getValue());
+                    stmt.executeUpdate();
+                } catch (SQLException sQLException) {
+                    System.out.println(sQLException);
+                }
+                number++;
+            }
+        } catch (Exception e) {
+        }
+        return number;
+    }
     public static int count(){
         
         try (Connection con=getConnection()){

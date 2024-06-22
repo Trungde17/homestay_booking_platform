@@ -1,0 +1,70 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #001f3f;
+    color: #ffffff;
+    overflow-x: hidden;
+}
+
+.confirmation-section {
+    padding: 60px 0;
+    background: linear-gradient(135deg, #001f3f, #005f9e);
+    animation: backgroundAnimation 10s infinite alternate;
+}
+
+@keyframes backgroundAnimation {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 100% 50%;
+    }
+}
+
+.confirmation-form {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s, box-shadow 0.3s;
+    color: #001f3f;
+}
+
+.confirmation-form:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.3);
+}
+
+.confirmation-form h1 {
+    font-size: 30px;
+    color: #005f9e;
+    margin-bottom: 20px;
+    animation: slideInLeft 1s ease-in-out;
+    text-align: center;
+}
+
+@keyframes slideInLeft {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.btn-primary {
+    background-color: #005f9e;
+    border: none;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #003f6e;
+    transform: translateY(-2px);
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}

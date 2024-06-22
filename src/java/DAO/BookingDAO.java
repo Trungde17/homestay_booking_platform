@@ -4,18 +4,19 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import model.Booking;
+import java.util.Date;
 
 public class BookingDAO extends DAO {
 
     public static ArrayList<Booking>getAllUnapprovedBookingsOfHomestay(int homestay_id) {
         try (Connection con = getConnection()) {
-            PreparedStatement stmt=con.prepareStatement("select * from tblBooking where ht_id=? AND booking_status=0");
+            PreparedStatement stmt=con.prepareStatement("select * from tblBooking where ht_id=? AND booking_status=1");
             stmt.setInt(1, homestay_id);
             ResultSet rs=stmt.executeQuery();
             ArrayList<Booking>bookings=new ArrayList<>();
             while(rs.next()){
                 bookings.add(new Booking(rs.getInt("booking_id"), AccountDAO.getBasicInforOfAccount(rs.getInt("customer_id")), 
-                        rs.getInt("guest_count"), rs.getDate("date_booked"), rs.getDate("date_checkin"),
+                        rs.getDate("date_booked"), rs.getDate("date_checkin"),
                         rs.getDate("date_checkout"), RoomDAO.getRoomBookingBasicInfor(rs.getInt("booking_id")), 
                         rs.getInt("booking_status")));
             }
@@ -26,7 +27,38 @@ public class BookingDAO extends DAO {
         }
         return null;
     }
+    public static int insertIntoBooking(int booking_id, int customer_id, Date date_booked, Date date_checkin, Date date_checkout){
+        try (Connection con=getConnection()){
+            PreparedStatement stmt=con.prepareStatement("insert into tblBooking(booking_id, "
+                    + "customer_id, date_booked, date_checkin, date_checkout) values(?, ?, ?, ?, ?)");
+            
+            stmt.setInt(1, booking_id);
+            stmt.setInt(2, customer_id);
+            stmt.setDate(3, new java.sql.Date(date_booked.getTime()));
+            stmt.setDate(4, new java.sql.Date(date_checkin.getTime()));
+            stmt.setDate(5, new java.sql.Date(date_checkout.getTime()));
+            stmt.executeUpdate();
+            return 1;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return 0;
+    }
     
+    public static int count(){
+        try (Connection con=getConnection()){
+            int number=0;
+            PreparedStatement stmt=con.prepareStatement("select count(*) number from tblBooking");
+            ResultSet rs=stmt.executeQuery();
+            if(rs.next()){
+                number = rs.getInt("number");
+            }
+            return number;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return -1;
+    }
     public static boolean changeStatusBooking(int booking_id, int status){
         try (Connection con=getConnection()){
             PreparedStatement stmt=con.prepareStatement("update tblBooking set booking_status=? where booking_id=?");
@@ -40,6 +72,6 @@ public class BookingDAO extends DAO {
         return false;
     }
     public static void main(String[] args) {
-        
+        insertIntoBooking(4, 1, new Date(), new Date(), new Date());
     }
 }
