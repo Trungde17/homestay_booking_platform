@@ -1,17 +1,21 @@
 package DAO;
 
+import static DAO.DAO.getConnection;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import model.Booking;
 import java.util.Date;
+import java.util.Map;
+import model.Room;
 
 public class BookingDAO extends DAO {
 
     public static ArrayList<Booking>getAllUnapprovedBookingsOfHomestay(int homestay_id) {
         try (Connection con = getConnection()) {
-            PreparedStatement stmt=con.prepareStatement("select * from tblBooking where ht_id=? AND booking_status=1");
-            stmt.setInt(1, homestay_id);
+            PreparedStatement stmt=con.prepareStatement("EXEC GetDistinctBookings @BookingStatus=?, @HtId = ?");
+            stmt.setInt(1, 1);
+            stmt.setInt(2, homestay_id);
             ResultSet rs=stmt.executeQuery();
             ArrayList<Booking>bookings=new ArrayList<>();
             while(rs.next()){
@@ -72,6 +76,14 @@ public class BookingDAO extends DAO {
         return false;
     }
     public static void main(String[] args) {
-        insertIntoBooking(4, 1, new Date(), new Date(), new Date());
+        ArrayList<Booking>bookings=getAllUnapprovedBookingsOfHomestay(1);
+        for(Booking booking : bookings){
+            System.out.println(booking.getBooking_id() + ", "  + booking.getGuest().getFirst_name());
+            for (Map.Entry<Room, Integer> entry : booking.getRooms().entrySet()) {
+                Room key = entry.getKey();
+                Integer value = entry.getValue();
+                System.out.println(key.getRoom_name());
+            }
+        }
     }
 }

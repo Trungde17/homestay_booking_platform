@@ -8,6 +8,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -128,12 +129,12 @@ private void forwardToSearchResults(HttpServletRequest request, HttpServletRespo
 
         // Subset the homestays list for the current page
         List<Homestay> homestaysForPage = homestays.subList(startIndex, endIndex);
-
+        HttpSession session = request.getSession();
         // Set attributes for forwarding to JSP
         request.setAttribute("homestays", homestaysForPage);
         request.setAttribute("districtName", district);
-        request.setAttribute("checkin", checkIn);
-        request.setAttribute("checkout", checkOut);
+        session.setAttribute("checkin", checkIn);
+        session.setAttribute("checkout", checkOut);
         request.setAttribute("guests", numberOfPersons);
         request.setAttribute("currentPage", page);
         request.setAttribute("endPage", endPage);

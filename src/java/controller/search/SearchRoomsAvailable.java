@@ -73,8 +73,8 @@ public class SearchRoomsAvailable extends HttpServlet {
             e.printStackTrace();
         }
         session.setAttribute("cart", null);
-        session.setAttribute("checkinDate_str", checkin_str);
-        session.setAttribute("checkoutDate_str", checkout_str);
+        session.setAttribute("checkin", checkin_str);
+        session.setAttribute("checkout", checkout_str);
         request.setAttribute("scrollToRooms", true);
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/homestay/view_homestay/homestay_block.jsp");
         rd.forward(request, response);

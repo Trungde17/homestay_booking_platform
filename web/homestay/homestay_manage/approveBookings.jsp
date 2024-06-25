@@ -29,13 +29,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <c:forEach var="booking" items="${bookings}" varStatus="status">
+                    <c:forEach var="booking" items="${sessionScope.bookings}" varStatus="status">
                         <tr onclick="showBookingDetail(${status.index})">
                             <td>${status.index + 1}</td>
                             <td>${booking.guest.fullName}</td>
                             <td>${booking.check_in}</td>
                             <td>${booking.check_out}</td>
-                            <td>${booking.date_booked}</td>
+                            <td>${booking.date_booked}</td>                          
                         </tr>
                     </c:forEach>
                 </tbody>
@@ -68,7 +68,7 @@
 
             <form id="booking-action-form" method="post" action="${pageContext.request.contextPath}/approvebooking">
                 <input type="hidden" name="booking_id" id="booking-id">
-                <input type="hidden" name="homestay_id" value="${homestay_summary.getHomestay_id()}">
+                <input type="hidden" name="homestay_id" value="${sessionScope.homestay_summary.homestay_id}">
                 <div class="action-buttons">
                     <button type="submit" name="action" value="approve" class="btn btn-success">Approve</button>
                     <button type="submit" name="action" value="reject" class="btn btn-danger">Reject</button>
@@ -91,18 +91,15 @@
                     check_in: "${booking.check_in}",
                     check_out: "${booking.check_out}",
                     date_booked: "${booking.date_booked}",
-                    guest_number: "${booking.guest_number}",
+                    guest_number: "${booking.guestNumber}",
                     rooms: [
-                <c:forEach var="entry" items="${booking.rooms}" varStatus="roomStatus">
+                <c:forEach var="entry" items="${booking.rooms.entrySet()}" varStatus="roomStatus">
                     {
-                                                                        <c:set var="room" value="${entry.key}"/>
+                    <c:set var="room" value="${entry.key}"/>
                     room_name: "${room.room_name}",
                             capacity: "${room.capacity}",
-                            img: [
-                    <c:forEach var="img" items="${room.img}" varStatus="imgStatus">
-                            "${img.img_url}"<c:if test="${!imgStatus.last}">,</c:if>
-                    </c:forEach>
-                            ]
+                            img_js:"${room.img.get(0).img_url}",
+                            numberGuestOfRoom:"${entry.value}"
                     }<c:if test="${!roomStatus.last}">,</c:if>
                 </c:forEach>
                     ]
@@ -135,9 +132,10 @@
             rowDiv.classList.add('row', 'no-gutters');
             var colImgDiv = document.createElement('div');
             colImgDiv.classList.add('col-md-4');
+            
             var img = document.createElement('img');
             img.classList.add('card-img');
-            img.src = room.img.length > 0 ? room.img[0] : '';
+            img.src = room.img_js;
             img.alt = 'Room Image';
             colImgDiv.appendChild(img);
             var colContentDiv = document.createElement('div');
@@ -150,8 +148,13 @@
             var capacity = document.createElement('p');
             capacity.classList.add('card-text');
             capacity.innerHTML = '<strong>Capacity:</strong> ' + room.capacity + ' people';
+            var numberGuestOfRoom=document.createElement('p');
+            numberGuestOfRoom.classList.add('card-text');
+            numberGuestOfRoom.innerHTML = '<strong>Number of guest:</strong> ' + room.numberGuestOfRoom + ' people';
+            
             cardBodyDiv.appendChild(roomName);
             cardBodyDiv.appendChild(capacity);
+            cardBodyDiv.appendChild(numberGuestOfRoom);
             colContentDiv.appendChild(cardBodyDiv);
             rowDiv.appendChild(colImgDiv);
             rowDiv.appendChild(colContentDiv);

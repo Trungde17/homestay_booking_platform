@@ -165,13 +165,24 @@ public class Booking {
         }
         return amount;
     }
-
+    
     public String getFormattedBookingDated() {
         if (date_booked != null) {
             SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
             return formatter.format(date_booked);
         }
         return "";
+    }
+    
+    public int getGuestNumber(){
+        int number=0;
+        if(rooms!=null){
+            for (Map.Entry<Room, Integer> entry : rooms.entrySet()) {
+                Integer value = entry.getValue();
+                number+=entry.getValue();
+            }
+        }
+        return number;
     }
 
 @Override

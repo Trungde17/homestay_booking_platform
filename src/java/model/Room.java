@@ -31,7 +31,8 @@ public class Room {
 
     
     
-    public Room(String room_name, int capacity, String size, ArrayList<Img> img, ArrayList<RoomPrice> prices) {
+    public Room(int room_id,String room_name, int capacity, String size, ArrayList<Img> img, ArrayList<RoomPrice> prices) {
+        this.room_id=room_id;
         this.room_name = room_name;
         this.capacity = capacity;
         this.size = size;

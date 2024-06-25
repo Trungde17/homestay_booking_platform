@@ -4,8 +4,7 @@
 <%@page import="utilities.CurrencyUtils"%>
 <!DOCTYPE html>
 <html lang="en">
-    <c:set var="ht_id" value="${param.ht_id}"/>
-    <c:set var="homestay" value="${HomestayDAO.getHomestayById(ht_id)}" />
+    <c:set var="homestay" value="${sessionScope.homestay_view}" />
     <head>
         <title>${homestay.ht_name}</title>
         <!-- META TAGS -->
@@ -144,10 +143,10 @@
                                         <label for="checkoutDate">Check-out Date:</label>
                                     </div>
                                     <div class="col-sm-5">
-                                        <input name="checkin_date" value="${sessionScope.checkinDate_str}" type="date" class="form-control mb-3" id="checkinDate" required>
+                                        <input name="checkin_date" value="${sessionScope.checkin}" type="date" class="form-control mb-3" id="checkinDate" required>
                                     </div>
                                     <div class="col-sm-5">
-                                        <input name="checkout_date" value="${sessionScope.checkoutDate_str}" type="date" class="form-control mb-3" id="checkoutDate" required>
+                                        <input name="checkout_date" value="${sessionScope.checkout}" type="date" class="form-control mb-3" id="checkoutDate" required>
                                     </div>
                                     <div class="col-sm-2">
                                         <button name="homestay_id" class="btn btn-primary w-100" type="submit" value="${homestay.ht_id}">Find</button>

@@ -184,7 +184,7 @@ public class AccountDAO extends DAO {
         }
     }
     public static void main(String[] args) {
-        System.out.println(getBasicInforOfAccount(1).getFirst_name());
+        signupAccount("nguyenvietthanhtrunga3@gmail.com", "1", "trung", "nguyen", 3);
     }
 
 }

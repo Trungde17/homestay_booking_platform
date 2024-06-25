@@ -109,6 +109,7 @@
                                 <hr class="my-4">
                                 <form class="form" action="${pageContext.request.contextPath}/changeProfile" method="post" id="registrationForm">
                                     <input type="hidden" name="account_id" value="${sessionScope.account.account_id}">
+                                    <p>${param.message}</p>
                                     <div class="mb-3">
                                         <label for="first_name" class="form-label">First Name</label>
                                         <input type="text" class="form-control" name="first_name" id="first_name" value="${sessionScope.account.first_name}" required placeholder="First Name">

@@ -39,7 +39,7 @@ public class RoomDAO extends DAO{
             ResultSet rs=stmt.executeQuery();
             Map<Room, Integer>rooms=new LinkedHashMap<>();
             while(rs.next()){
-                rooms.put(new Room(rs.getString("room_name"), rs.getInt("capacity"), rs.getString("size"), 
+                rooms.put(new Room(rs.getInt("room_id"),rs.getString("room_name"), rs.getInt("capacity"), rs.getString("size"), 
                         RoomImgDAO.getRoomImgs(rs.getInt("room_id")), RoomPriceDAO.getRoomPrices(rs.getInt("room_id"))), rs.getInt("number_of_guest"));
             }
             return rooms;
@@ -163,6 +163,11 @@ public class RoomDAO extends DAO{
         return null;
     }
     public static void main(String[] args) {
-
+         Map<Room, Integer>rooms=getRoomBookingBasicInfor(5);
+         for (Map.Entry<Room, Integer> entry : rooms.entrySet()) {
+            Room key = entry.getKey();
+             System.out.println(key.getRoom_name());            
+        }
+         
     }
 }

@@ -1,18 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Filter.java to edit this template
- */
+
 package filter;
 
-import DAO.BookingDAO;
-import DTO.homestay.HomestaySummaryDTO;
-import java.io.IOException;
-import java.io.PrintStream;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.FilterConfig;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
@@ -20,73 +12,40 @@ import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.ArrayList;
-import model.Booking;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import model.Account;
 
 
-public class Homestay_manage_filter implements Filter {
-
+@WebFilter(filterName = "CheckInforAccountForBooking", urlPatterns = {"/booking/confirmBooking.jsp"})
+public class CheckInforAccountForBooking implements Filter {
+    
     private static final boolean debug = true;
 
-    // The filter configuration object we are associated with.  If
-    // this value is null, this filter instance is not currently
-    // configured. 
+
     private FilterConfig filterConfig = null;
-
-    public Homestay_manage_filter() {
-    }
-
+    
+    public CheckInforAccountForBooking() {
+    }    
+    
     private void doBeforeProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
-            log("Homestay_manage_filter:DoBeforeProcessing");
+            log("CheckInforAccountForBooking:DoBeforeProcessing");
         }
 
-        // Write code here to process the request and/or response before
-        // the rest of the filter chain is invoked.
-        // For example, a logging filter might log items on the request object,
-        // such as the parameters.
-        /*
-	for (Enumeration en = request.getParameterNames(); en.hasMoreElements(); ) {
-	    String name = (String)en.nextElement();
-	    String values[] = request.getParameterValues(name);
-	    int n = values.length;
-	    StringBuffer buf = new StringBuffer();
-	    buf.append(name);
-	    buf.append("=");
-	    for(int i=0; i < n; i++) {
-	        buf.append(values[i]);
-	        if (i < n-1)
-	            buf.append(",");
-	    }
-	    log(buf.toString());
-	}
-         */
-    }
-
+      
+    }    
+    
     private void doAfterProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
-            log("Homestay_manage_filter:DoAfterProcessing");
+            log("CheckInforAccountForBooking:DoAfterProcessing");
         }
 
-        // Write code here to process the request and/or response after
-        // the rest of the filter chain is invoked.
-        // For example, a logging filter might log the attributes on the
-        // request object after the request has been processed. 
-        /*
-	for (Enumeration en = request.getAttributeNames(); en.hasMoreElements(); ) {
-	    String name = (String)en.nextElement();
-	    Object value = request.getAttribute(name);
-	    log("attribute: " + name + "=" + value.toString());
 
-	}
-         */
-        // For example, a filter might append something to the response.
-        /*
-	PrintWriter respOut = new PrintWriter(response.getWriter());
-	respOut.println("<P><B>This has been appended by an intrusive filter.</B>");
-         */
     }
 
     /**
@@ -101,32 +60,19 @@ public class Homestay_manage_filter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain)
             throws IOException, ServletException {
-
-        if (debug) {
-            log("Homestay_manage_filter:doFilter()");
-        }
-
-        doBeforeProcessing(request, response);
         
-        HttpServletRequest rq = (HttpServletRequest) request;
-        HttpServletResponse rp = (HttpServletResponse)response;
-        HttpSession session = rq.getSession();
-        boolean isError=false;
-        try {
-            int ht_id=Integer.parseInt(rq.getParameter("ht_id"));
-            HomestaySummaryDTO htsDTO = HomestaySummaryDTO.getHomestaySummaryDTOById(ht_id);
-            if(htsDTO.getStatus()==0)rp.sendRedirect(rq.getContextPath() +"/S");
-            else if(htsDTO.getStatus()==1)rp.sendRedirect(rq.getContextPath() +"/homestay/homestay_register/step1.jsp");
-            else if(htsDTO.getStatus()==2)rp.sendRedirect(rq.getContextPath() +"/homestay/homestay_register/wait.jsp");
-            else if(htsDTO.getStatus()==3){
-                session.setAttribute("homestay_summary", htsDTO);
-                ArrayList<Booking> bookings = BookingDAO.getAllUnapprovedBookingsOfHomestay(htsDTO.getHomestay_id());
-                session.setAttribute("bookings", bookings); 
-            }
-        } catch (Exception e) {
-            System.out.println(e);
+        if (debug) {
+            log("CheckInforAccountForBooking:doFilter()");
         }
-            
+        
+        doBeforeProcessing(request, response);
+        HttpServletRequest rq = (HttpServletRequest) request;
+        HttpServletResponse rp = (HttpServletResponse) response;
+        HttpSession session=rq.getSession();
+        Account account=(Account)session.getAttribute("account");
+        if(account.getEmail()==null || account.getPhone()==null||account.getAddress()==null){
+            rp.sendRedirect(rq.getContextPath() +"/account/personal_profile.jsp?message=Please complete information!");
+        }
         Throwable problem = null;
         try {
             chain.doFilter(request, response);
@@ -137,7 +83,7 @@ public class Homestay_manage_filter implements Filter {
             problem = t;
             t.printStackTrace();
         }
-
+        
         doAfterProcessing(request, response);
 
         // If there was a problem, we want to rethrow it if it is
@@ -172,17 +118,17 @@ public class Homestay_manage_filter implements Filter {
     /**
      * Destroy method for this filter
      */
-    public void destroy() {
+    public void destroy() {        
     }
 
     /**
      * Init method for this filter
      */
-    public void init(FilterConfig filterConfig) {
+    public void init(FilterConfig filterConfig) {        
         this.filterConfig = filterConfig;
         if (filterConfig != null) {
-            if (debug) {
-                log("Homestay_manage_filter:Initializing filter");
+            if (debug) {                
+                log("CheckInforAccountForBooking:Initializing filter");
             }
         }
     }
@@ -193,27 +139,27 @@ public class Homestay_manage_filter implements Filter {
     @Override
     public String toString() {
         if (filterConfig == null) {
-            return ("Homestay_manage_filter()");
+            return ("CheckInforAccountForBooking()");
         }
-        StringBuffer sb = new StringBuffer("Homestay_manage_filter(");
+        StringBuffer sb = new StringBuffer("CheckInforAccountForBooking(");
         sb.append(filterConfig);
         sb.append(")");
         return (sb.toString());
     }
-
+    
     private void sendProcessingError(Throwable t, ServletResponse response) {
-        String stackTrace = getStackTrace(t);
-
+        String stackTrace = getStackTrace(t);        
+        
         if (stackTrace != null && !stackTrace.equals("")) {
             try {
                 response.setContentType("text/html");
                 PrintStream ps = new PrintStream(response.getOutputStream());
-                PrintWriter pw = new PrintWriter(ps);
+                PrintWriter pw = new PrintWriter(ps);                
                 pw.print("<html>\n<head>\n<title>Error</title>\n</head>\n<body>\n"); //NOI18N
 
                 // PENDING! Localize this for next official release
-                pw.print("<h1>The resource did not process correctly</h1>\n<pre>\n");
-                pw.print(stackTrace);
+                pw.print("<h1>The resource did not process correctly</h1>\n<pre>\n");                
+                pw.print(stackTrace);                
                 pw.print("</pre></body>\n</html>"); //NOI18N
                 pw.close();
                 ps.close();
@@ -230,7 +176,7 @@ public class Homestay_manage_filter implements Filter {
             }
         }
     }
-
+    
     public static String getStackTrace(Throwable t) {
         String stackTrace = null;
         try {
@@ -244,9 +190,9 @@ public class Homestay_manage_filter implements Filter {
         }
         return stackTrace;
     }
-
+    
     public void log(String msg) {
-        filterConfig.getServletContext().log(msg);
+        filterConfig.getServletContext().log(msg);        
     }
-
+    
 }

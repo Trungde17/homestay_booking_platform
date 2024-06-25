@@ -158,6 +158,6 @@ public class HomestayDAO extends DAO {
     }
         
     public static void main(String[] args) {
-       Homestay homestay=getHomestayById(1);
+        insert(22, "homestay", 1, "dhdjsj", 1, 1);
     }
 }

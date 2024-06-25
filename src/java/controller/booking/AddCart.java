@@ -82,8 +82,8 @@ public class AddCart extends HttpServlet {
         try {
             if (cart == null) {
                 cart = new Booking();
-                String checkinDate_str = (String) session.getAttribute("checkinDate_str");
-                String checkoutDate_str = (String) session.getAttribute("checkoutDate_str");
+                String checkinDate_str = (String) session.getAttribute("checkin");
+                String checkoutDate_str = (String) session.getAttribute("checkout");
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 Date checkinDate = dateFormat.parse(checkinDate_str);
                 Date checkoutDate = dateFormat.parse(checkoutDate_str);
