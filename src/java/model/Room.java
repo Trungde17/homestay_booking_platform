@@ -8,6 +8,7 @@ public class Room {
     private int room_id;
     private String room_name;
     private String room_description;
+    private int ht_id;
     private int capacity;
     private String size;
     private Map<Bed, Integer> beds;
@@ -53,6 +54,14 @@ public class Room {
         this.facilities = facilities;
         this.prices = prices;
         this.status = status;
+    }
+
+    public int getHt_id() {
+        return ht_id;
+    }
+
+    public void setHt_id(int ht_id) {
+        this.ht_id = ht_id;
     }
 
     public int getRoom_id() {

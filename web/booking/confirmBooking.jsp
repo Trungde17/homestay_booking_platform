@@ -36,7 +36,7 @@
                     <div class="col-md-10">
                         <!-- Confirmation Message -->
                         <div class="confirmation-form">
-                            <form action="${pageContext.request.contextPath}/confirmbooking" method="POST" class="container mt-4">
+                            <form action="${pageContext.request.contextPath}/payment/authorize" method="POST" class="container mt-4">
                                 <c:set var="acc" value="${sessionScope.account}" />
                                 <h1 class="text-center mb-4">Booking Confirmation</h1>
                                 <p>Thank you for booking your stay with Beautiful Homestay! Here are your booking details:</p>
@@ -108,7 +108,7 @@
                                 <p><strong>Total Amount:</strong> <span>${CurrencyUtils.formatCurrency(cart.getTotalAmount())}</span></p>
                                 <div class="d-flex justify-content-center mt-4">
                                     <button type="submit" name="action" value="confirm" class="btn btn-success mr-2">Confirm</button>
-                                    <button type="submit" name="action" value="cancel" class="btn btn-danger">Cancel</button>
+                                    <a href="${pageContext.request.contextPath}/booking/booking_result.jsp?error=Booking Cancelled." class="btn btn-danger">Cancel</a>
                                 </div>
                             </form>
                         </div>

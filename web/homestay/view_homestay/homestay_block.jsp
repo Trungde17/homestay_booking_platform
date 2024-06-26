@@ -32,7 +32,7 @@
                 <a href="#locations">Nearby</a>
                 <a href="#rules">Rules</a>
                 <a href="#rooms">Rooms</a>
-                <a href="#reviews">User Reviews</a>
+                <a href="${pageContext.request.contextPath}/homestay/view_homestay/feedback.jsp?ht_id=${homestay.ht_id}#reviews">User Reviews</a>
             </div>
         </div>       
         <!--HEADER SECTION-->      

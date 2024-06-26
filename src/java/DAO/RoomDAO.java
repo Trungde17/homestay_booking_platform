@@ -154,7 +154,9 @@ public class RoomDAO extends DAO{
                 ArrayList<RoomFacilities>facilities=RoomFacilitiesDAO.getRoomFacilities(id);
                 ArrayList<RoomPrice>prices=RoomPriceDAO.getRoomPrices(id);
                 boolean status=rs.getBoolean("room_status");
-                rooms.add(new Room(id, room_name, room_name, capacity, size, beds, imgs, facilities, prices, status));
+                Room room = new Room(id, room_name, room_name, capacity, size, beds, imgs, facilities, prices, status);
+                room.setHt_id(rs.getInt("ht_id"));
+                rooms.add(room);
             }
             return rooms;
         } catch (Exception e) {
