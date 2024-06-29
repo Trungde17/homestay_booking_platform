@@ -119,7 +119,66 @@ public class BookingDAO extends DAO {
         return false;
 
     }
-    
+    // New methods for revenue calculations
+    // Method to get bookings by date range
+    public static List<Booking> getBookingsByDateRange(Date startDate, Date endDate) {
+        List<Booking> bookings = new ArrayList<>();
+        String sql = "SELECT * FROM tblBooking WHERE date_booked BETWEEN ? AND ?";
+
+        try (Connection con = getConnection(); PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setDate(1, new java.sql.Date(startDate.getTime()));
+            stmt.setDate(2, new java.sql.Date(endDate.getTime()));
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Booking booking = new Booking();
+                booking.setBooking_id(rs.getInt("booking_id"));
+                // Assuming Account class has appropriate constructor or setters
+                booking.setGuest(AccountDAO.getBasicInforOfAccount(rs.getInt("customer_id")));
+                booking.setDate_booked(rs.getDate("date_booked"));
+                booking.setCheck_in(rs.getDate("date_checkin"));
+                booking.setCheck_out(rs.getDate("date_checkout"));
+                booking.setPaid_amount(rs.getDouble("paid_amount"));
+                booking.setOutstanding_amount(rs.getDouble("outstanding_amount"));
+                booking.setBooking_status(rs.getInt("booking_status"));
+                // Add other fields as necessary
+                bookings.add(booking);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return bookings;
+    }
+
+    // Method to get all bookings
+    public static List<Booking> getAllBookings() {
+        List<Booking> bookings = new ArrayList<>();
+        String sql = "SELECT * FROM tblBooking";
+
+        try (Connection con = getConnection(); PreparedStatement stmt = con.prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Booking booking = new Booking();
+                booking.setBooking_id(rs.getInt("booking_id"));
+                // Assuming Account class has appropriate constructor or setters
+                booking.setGuest(AccountDAO.getBasicInforOfAccount(rs.getInt("customer_id")));
+                booking.setDate_booked(rs.getDate("date_booked"));
+                booking.setCheck_in(rs.getDate("date_checkin"));
+                booking.setCheck_out(rs.getDate("date_checkout"));
+                booking.setPaid_amount(rs.getDouble("paid_amount"));
+                booking.setOutstanding_amount(rs.getDouble("outstanding_amount"));
+                booking.setBooking_status(rs.getInt("booking_status"));
+                // Add other fields as necessary
+                bookings.add(booking);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return bookings;
+    }
     public static void main(String[] args) {
         ArrayList<Booking>bookings=getAllUnapprovedBookingsOfHomestay(1);
         for(Booking booking : bookings){

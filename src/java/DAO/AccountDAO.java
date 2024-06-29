@@ -4,6 +4,7 @@ import static DAO.DAO.getConnection;
 import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 import model.Account;
 import model.Payment;
 
@@ -36,6 +37,54 @@ public class AccountDAO extends DAO {
         }
         return null;
     }
+    public static List<Account> getAccountsByRole(int role) {
+        List<Account> accounts = new ArrayList<>();
+        String query = "SELECT * FROM tblAccount WHERE roles_account = ?";
+
+        try ( Connection con = getConnection();  PreparedStatement stmt = con.prepareStatement(query)) {
+
+            stmt.setInt(1, role);
+            ResultSet rs = stmt.executeQuery();
+
+            accounts = createAccountFromResultSet(rs);
+
+        } catch (Exception e) {
+            System.out.println("Error fetching accounts by role: " + e.getMessage());
+        }
+
+        return accounts;
+    }
+
+    public static void updateAccountStatus(int accountId, String newStatus) {
+        try ( Connection con = getConnection()) {
+            PreparedStatement stmt = con.prepareStatement("UPDATE tblAccount SET status = ? WHERE account_id = ?");
+            stmt.setString(1, newStatus);
+            stmt.setInt(2, accountId);
+            stmt.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public static String getAccountStatusById(int accountId) {
+        String status = null;
+        String query = "SELECT status FROM tblAccount WHERE account_id = ?";
+
+        try ( Connection con = getConnection();  PreparedStatement stmt = con.prepareStatement(query)) {
+
+            stmt.setInt(1, accountId);
+            try ( ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    status = rs.getString("status");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return status;
+    }
+
+
     private static ArrayList<Account> createAccountFromResultSet(ResultSet rs) {
         if (rs != null) {
             ArrayList<Account> result = new ArrayList();
