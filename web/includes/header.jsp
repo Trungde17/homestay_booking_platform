@@ -20,7 +20,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">Help</a>
                 </li>
-                <c:if test="${account.getRole_account() == 3}">
+                <c:if test="${account.getRole_account() == 1}">
                     <a class="nav-link" href="${pageContext.request.contextPath}/admin/index.jsp" aria-expanded="false">
                         Dashboard
                     </a>

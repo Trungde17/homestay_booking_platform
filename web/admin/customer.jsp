@@ -10,7 +10,7 @@
         Account account = (Account) session.getAttribute("account");
         int role = account.getRole_account(); // Adjust to your actual getter method for role
         
-        if (role != 3) { // Assuming role 3 is Admin, redirect if not Admin
+        if (role != 1) { // Assuming role 1 is Admin, redirect if not Admin
             response.sendRedirect(request.getContextPath());
         }
     }
@@ -143,7 +143,7 @@
                                 </thead>
                                 <tbody>
                                     <%
-                                        List<Account> customers = AccountDAO.getAccountsByRole(1); // Fetch normal customers
+                                        List<Account> customers = AccountDAO.getAccountsByRole(3); // Fetch normal customers
 
                                         if (customers != null) {
                                             for (Account customer : customers) {
