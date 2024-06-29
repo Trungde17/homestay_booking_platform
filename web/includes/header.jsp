@@ -20,6 +20,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">Help</a>
                 </li>
+                <c:if test="${account.getRole_account() == 1}">
+                    <a class="nav-link" href="${pageContext.request.contextPath}/admin/index.jsp" aria-expanded="false">
+                        Dashboard
+                    </a>
+                </c:if>
                 <c:if test="${account != null}">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="homestayDropdown" role="button" onclick="toggleDropdown()" aria-expanded="false">
@@ -29,11 +34,11 @@
                             <c:set var="homestaySummarys" value="${HomestaySummaryDTO.getAllHomestaySummaryDTO(account.getAccount_id())}"/>
                             <c:forEach var="ht_summary" items="${homestaySummarys}">
                                 <li><a class="dropdown-item homestay-item" href="#" onclick="postToManageHomestay('${ht_summary.getHomestay_id()}')">
-                                    <i class='homestay-icon bx bx-home-smile'></i>${ht_summary.getHomestay_name()}</a></li>
-                            </c:forEach>
+                                        <i class='homestay-icon bx bx-home-smile'></i>${ht_summary.getHomestay_name()}</a></li>
+                                    </c:forEach>
                             <li><a class="dropdown-item create-homestay" href="${pageContext.request.contextPath}/homestay/homestay_register/step1.jsp">
-                                <i class='homestay-icon bx bx-plus-circle'></i> New
-                            </a></li>
+                                    <i class='homestay-icon bx bx-plus-circle'></i> New
+                                </a></li>
                         </ul>
                     </li>
                 </c:if>
@@ -49,6 +54,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="${pageContext.request.contextPath}/account/personal_profile.jsp">${account.getFirst_name()}</a>
                     </li>
+                    <form action="${pageContext.request.contextPath}/LogoutSeverlet" method="post">
+                        <button type="submit" class="nav-link">Log Out</button>
+                    </form>
                 </c:if>
             </ul>
         </div>

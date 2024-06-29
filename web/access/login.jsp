@@ -72,6 +72,8 @@
                             <!-- incorrect account -->
                             <c:set var="incorrect_account" value="${requestScope.incorrect_account}"/>
                             <p class="error">${incorrect_account}</p>
+                            <c:set var="not_allow" value="${requestScope.not_allow}"/>
+                            <p class="error">${not_allow}</p>
                             <div class="input-group mb-3 d-flex- justify-content-between">
                                 <div class="form-check">
                                     <input type="checkbox" id="form-check" class="form-check-input"> <label

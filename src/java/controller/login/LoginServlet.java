@@ -61,9 +61,14 @@ public class LoginServlet extends HttpServlet {
         if (Valid.isValidEmailAddress(email)) {
             Account account = AccountDAO.verifyTheAccount(email, password);
             if (account != null) {
-                HttpSession session = request.getSession();
-                session.setAttribute("account", account);
-                url = "/index.jsp";
+                if (AccountDAO.getAccountStatusById(account.getAccount_id()).equals("active")) {
+                    HttpSession session = request.getSession();
+                    session.setAttribute("account", account);
+                    url = "/index.jsp";
+                } else {
+                    request.setAttribute("not_allow", "You are not allowed to login to HealingLand.");
+                    error = true;
+                }
             } else {
                 request.setAttribute("incorrect_account", "Incorrect account or password!");
                 error=true;
