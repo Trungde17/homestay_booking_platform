@@ -59,8 +59,10 @@ public class HomestayFacilitiesDAO extends DAO {
     }
 
     public static void main(String[] args) {
-        int[]list=new int[]{1, 2, 3, 4, 5};
-        System.out.println(insertIntoHomestayFacilities(1, list));
+        ArrayList<HomestayFacilities>f=getHomestayFacilities(1);
+        for(HomestayFacilities hf:f){
+            System.out.println(hf.getFacilities_name());
+        }
     }
     
 }

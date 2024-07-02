@@ -37,10 +37,6 @@
         <filter-name>AuthCheck</filter-name>
         <url-pattern>/admin/ht_register_approve/list_request.jsp</url-pattern>
     </filter-mapping> 
-    <filter-mapping>
-        <filter-name>AuthCheck</filter-name>
-        <url-pattern>/booking/confirmBooking.jsp</url-pattern>
-    </filter-mapping> 
     
     <filter>
         <filter-name>Admin</filter-name>
