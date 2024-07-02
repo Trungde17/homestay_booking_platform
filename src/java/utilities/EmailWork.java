@@ -51,7 +51,7 @@ public class EmailWork {
         }
         return false;
     }
-    
+   
     public String sendOtpToEmail(String to){ 
         String otp_code=random.createOtpCode();
         if(sendEmail(to, "Sao quên hoài vậy!!!", "OTP đây: " + otp_code))return otp_code;
