@@ -39,6 +39,16 @@ public class NeighbourhoodDAO extends DAO{
         }
         return null;
     }
+    public static boolean delete(int homestay_id){
+        try(Connection con=getConnection()) {
+            PreparedStatement stmt=con.prepareStatement("delete tblNeighbourhoodOfHomestay where ht_id=?");
+            stmt.setInt(1, homestay_id);
+            stmt.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
     private static ArrayList<Neighbourhood>createNeighbourhoodsBaseResultSet(ResultSet rs){
         try {
             ArrayList<Neighbourhood>result=new ArrayList<>();

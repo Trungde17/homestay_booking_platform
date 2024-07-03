@@ -27,7 +27,17 @@ public class RuleDAO extends DAO {
         }
         return null;
     }
-    
+    public static boolean delete(int homestay_id){
+        try (Connection con=getConnection()){
+            PreparedStatement stmt = con.prepareStatement("delete tblHomestayRules where ht_id=?");
+            stmt.setInt(1, homestay_id);
+            stmt.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
     public static int insertHomestayRules(int homestay_id, int[]rules){
         int number=0;
         try (Connection con=getConnection()){

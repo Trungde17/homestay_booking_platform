@@ -32,6 +32,26 @@ public class BookingDAO extends DAO {
         }
         return null;
     }
+    
+    public static ArrayList<Booking>getPaidBookingsOfHomestay(int homestay_id) {
+        try (Connection con = getConnection()) {
+            PreparedStatement stmt=con.prepareStatement("EXEC GetDistinctBookings @BookingStatus=1, @HtId = ?");
+            stmt.setInt(1, homestay_id);
+            ResultSet rs=stmt.executeQuery();
+            ArrayList<Booking>bookings=new ArrayList<>();
+            while(rs.next()){
+                bookings.add(new Booking(rs.getInt("booking_id"), AccountDAO.getBasicInforOfAccount(rs.getInt("customer_id")), 
+                        rs.getDate("date_booked"), rs.getDate("date_checkin"),
+                        rs.getDate("date_checkout"), RoomDAO.getRoomBookingBasicInfor(rs.getInt("booking_id")), 
+                        rs.getInt("booking_status")));
+            }
+            Collections.sort(bookings, (i, j)->i.getDate_booked().compareTo(j.getDate_booked()));
+            return bookings;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
     public static int insertIntoBooking(int booking_id, int customer_id, Date date_booked, Date date_checkin, Date date_checkout, double paid_amount, int booking_status){
         try (Connection con=getConnection()){
             PreparedStatement stmt=con.prepareStatement("insert into tblBooking(booking_id, "
@@ -120,8 +140,150 @@ public class BookingDAO extends DAO {
 
     }
     
+    public static double calculateMonthlyRevenue(int year, int month, int homestayId) {
+        double monthlyRevenue = 0.0;
+        String sql = "SELECT SUM(rp.amount_per_night * DATEDIFF(day, b.date_checkin, b.date_checkout)) AS MonthlyRevenue " +
+                     "FROM tblBooking b " +
+                     "JOIN tblBooking_detail bd ON b.booking_id = bd.booking_id " +
+                     "JOIN tblRoom r ON bd.room_id = r.room_id " +
+                     "JOIN tblHomestay h ON r.ht_id = h.ht_id " +
+                     "JOIN tblRoomPrice rp ON r.room_id = rp.room_id " +
+                     "WHERE YEAR(b.date_booked) = ? " +
+                     "AND MONTH(b.date_booked) = ? " +
+                     "AND h.ht_id = ? " +
+                     "AND ((bd.number_of_guest = 1 AND rp.price_id = 1) " +
+                     "OR (bd.number_of_guest > 1 AND rp.price_id = 2))";
+
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, year);
+            ps.setInt(2, month);
+            ps.setInt(3, homestayId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    monthlyRevenue = rs.getDouble("MonthlyRevenue");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return monthlyRevenue;
+    }
+    public static int count(int year, int month, int homestayId) {
+        int bookingCount = 0;
+        String sql = "SELECT COUNT(*) AS BookingCount " +
+                     "FROM tblBooking b " +
+                     "JOIN tblBooking_detail bd ON b.booking_id = bd.booking_id " +
+                     "JOIN tblRoom r ON bd.room_id = r.room_id " +
+                     "JOIN tblHomestay h ON r.ht_id = h.ht_id " +
+                     "WHERE YEAR(b.date_booked) = ? " +
+                     "AND MONTH(b.date_booked) = ? " +
+                     "AND h.ht_id = ?";
+
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, year);
+            ps.setInt(2, month);
+            ps.setInt(3, homestayId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    bookingCount = rs.getInt("BookingCount");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return bookingCount;
+    }
+    public static ArrayList<Booking>getCurrentStayBookings(int homestay_id){
+        String sql = "SELECT b.booking_id, b.customer_id, b.date_booked, b.date_checkin, b.date_checkout, b.paid_amount, b.outstanding_amount, b.booking_status " +
+                     "FROM tblBooking b " +
+                     "JOIN tblBooking_detail bd ON b.booking_id = bd.booking_id " +
+                     "JOIN tblRoom r ON bd.room_id = r.room_id " +
+                     "JOIN tblHomestay h ON r.ht_id = h.ht_id " +
+                     "WHERE h.ht_id = ? " +
+                     "AND GETDATE() BETWEEN b.date_checkin AND b.date_checkout " +
+                     "AND b.booking_status = 1";
+        try (Connection con=getConnection()){         
+            PreparedStatement stmt=con.prepareStatement(sql);
+            stmt.setInt(1, homestay_id);
+            ResultSet rs=stmt.executeQuery();
+            ArrayList<Booking>bookings=new ArrayList<>();
+            while(rs.next()){
+                bookings.add(new Booking(rs.getInt("booking_id"), AccountDAO.getBasicInforOfAccount(rs.getInt("customer_id")), 
+                        rs.getDate("date_booked"), rs.getDate("date_checkin"),
+                        rs.getDate("date_checkout"), RoomDAO.getRoomBookingBasicInfor(rs.getInt("booking_id")), 
+                        rs.getInt("booking_status")));
+            }
+            Collections.sort(bookings, (i, j)->i.getDate_booked().compareTo(j.getDate_booked()));
+            return bookings;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+    
+    public static ArrayList<Booking>getCheckedOutBookings(int homestay_id){
+        String sql = "SELECT b.booking_id, b.customer_id, b.date_booked, b.date_checkin, b.date_checkout, b.paid_amount, b.outstanding_amount, b.booking_status " +
+                     "FROM tblBooking b " +
+                     "JOIN tblBooking_detail bd ON b.booking_id = bd.booking_id " +
+                     "JOIN tblRoom r ON bd.room_id = r.room_id " +
+                     "JOIN tblHomestay h ON r.ht_id = h.ht_id " +
+                     "WHERE h.ht_id = ? " +
+                     "AND GETDATE() > b.date_checkout " +
+                     "AND b.booking_status = 1";
+        try (Connection con=getConnection()){
+            PreparedStatement stmt=con.prepareStatement(sql);
+            stmt.setInt(1, homestay_id);
+            ResultSet rs=stmt.executeQuery();
+            ArrayList<Booking>bookings=new ArrayList<>();
+            while(rs.next()){
+                bookings.add(new Booking(rs.getInt("booking_id"), AccountDAO.getBasicInforOfAccount(rs.getInt("customer_id")), 
+                        rs.getDate("date_booked"), rs.getDate("date_checkin"),
+                        rs.getDate("date_checkout"), RoomDAO.getRoomBookingBasicInfor(rs.getInt("booking_id")), 
+                        rs.getInt("booking_status")));
+            }
+            Collections.sort(bookings, (i, j)->i.getDate_booked().compareTo(j.getDate_booked()));
+            return bookings;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+    
+    public static ArrayList<Booking>getCancelledBookings(int homestay_id){
+        String sql = "SELECT b.booking_id, b.customer_id, b.date_booked, b.date_checkin, b.date_checkout, b.paid_amount, b.outstanding_amount, b.booking_status " +
+                     "FROM tblBooking b " +
+                     "JOIN tblBooking_detail bd ON b.booking_id = bd.booking_id " +
+                     "JOIN tblRoom r ON bd.room_id = r.room_id " +
+                     "JOIN tblHomestay h ON r.ht_id = h.ht_id " +
+                     "WHERE h.ht_id = ? " +
+                     "AND b.booking_status = 0";
+        
+        try (Connection con=getConnection()){
+            PreparedStatement stmt=con.prepareStatement(sql);
+            stmt.setInt(1, homestay_id);
+            ResultSet rs=stmt.executeQuery();
+            ArrayList<Booking>bookings=new ArrayList<>();
+            while(rs.next()){
+                bookings.add(new Booking(rs.getInt("booking_id"), AccountDAO.getBasicInforOfAccount(rs.getInt("customer_id")), 
+                        rs.getDate("date_booked"), rs.getDate("date_checkin"),
+                        rs.getDate("date_checkout"), RoomDAO.getRoomBookingBasicInfor(rs.getInt("booking_id")), 
+                        rs.getInt("booking_status")));
+            }
+            Collections.sort(bookings, (i, j)->i.getDate_booked().compareTo(j.getDate_booked()));
+            return bookings;
+        } catch (Exception e) {
+            System.out.println(e);
+        }     
+        return null;
+    }
     public static void main(String[] args) {
-        ArrayList<Booking>bookings=getAllUnapprovedBookingsOfHomestay(1);
+        System.out.println(calculateMonthlyRevenue(2024, 6, 1));
+        System.out.println(count(2024, 7, 1));
+        ArrayList<Booking>bookings=getCurrentStayBookings(1);
         for(Booking booking : bookings){
             System.out.println(booking.getBooking_id() + ", "  + booking.getGuest().getFirst_name());
             for (Map.Entry<Room, Integer> entry : booking.getRooms().entrySet()) {

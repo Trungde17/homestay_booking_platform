@@ -57,7 +57,17 @@ public class HomestayFacilitiesDAO extends DAO {
         }
         return null;
     }
-
+    
+    public static boolean delete(int homestay_id){
+        try(Connection con=getConnection()) {
+            PreparedStatement stmt=con.prepareStatement("delete tblFacilitiesOfHomestay where ht_id=?");
+            stmt.setInt(1, homestay_id);
+            stmt.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
     public static void main(String[] args) {
         int[]list=new int[]{1, 2, 3, 4, 5};
         System.out.println(insertIntoHomestayFacilities(1, list));

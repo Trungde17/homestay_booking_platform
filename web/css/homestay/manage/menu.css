@@ -1,22 +1,40 @@
+body {
+    background-color: #f8f9fa;
+}
 .ht-name{
-    color: #fff;
+    padding: 20px 0px;
 }
+
 .sidebar {
-    height: 100%;
-    width: 200px;
     position: fixed;
-    top: 0;
-    left: 0;
     background-color: #343a40;
-    padding-top: 20px;
+    color: #ffffff;
+    min-height: 100vh;
+    width: auto;
+    padding-right: 10px; /* Để có đủ không gian cho tên homestay dài */
 }
+
 .sidebar a {
-    padding: 10px 15px;
-    text-decoration: none;
-    font-size: 18px;
-    color: #fff;
-    display: block;
+    color: #ffffff;
+    font-size: 1.2rem; /* Tăng kích thước chữ */
 }
-.sidebar a:hover {
-    background-color: #575d63;
+
+.sidebar a.active {
+    background-color: #495057;
+}
+
+.sidebar .nav-item .nav-link {
+    font-size: 1.2rem; /* Tăng kích thước chữ của các mục chính */
+}
+
+.sidebar .nav-item .nav-link.submenu {
+    font-size: 1rem; /* Kích thước chữ của các mục con */
+}
+
+.content {
+    padding: 20px;
+}
+
+.table th, .table td {
+    vertical-align: middle;
 }

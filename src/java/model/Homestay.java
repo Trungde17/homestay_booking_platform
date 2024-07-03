@@ -212,7 +212,25 @@ public class Homestay {
         }
         return result;
     }
-
+    
+    public boolean checkFacilities(int id){
+        for(HomestayFacilities hf : facilities){
+            if(hf.getFacilities_id()==id)return true;
+        }
+        return false;
+    }
+    public boolean checkRule(int id){
+        for(Rule r : commonRules){
+            if(r.getRule_id()==id)return true;
+        }
+        return false;
+    }
+    public boolean checkNeighbourhood(int id){
+        for(Neighbourhood nb : neighbourhoods){
+            if(nb.getNeighbourhood_id()==id)return true;
+        }
+        return false;
+    }
     public String getNeighbourhoodsString() {
         String result = "";
         if (neighbourhoods != null && neighbourhoods.size() > 0) {

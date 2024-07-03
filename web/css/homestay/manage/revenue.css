@@ -1,0 +1,21 @@
+.container {
+    margin-top: 50px;
+}
+.revenue-card {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: #f9f9f9;
+}
+.revenue-card h4 {
+    margin-bottom: 20px;
+}
+.revenue-summary {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-top: 20px;
+}
+.form-inline .form-group {
+    margin-right: 15px;
+}

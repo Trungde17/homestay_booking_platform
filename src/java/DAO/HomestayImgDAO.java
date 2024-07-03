@@ -22,6 +22,19 @@ public class HomestayImgDAO extends DAO {
         return null;
     }
 
+    
+    public static boolean changeImg(int img_id, String url){
+        try (Connection con=getConnection()){
+            PreparedStatement stmt=con.prepareStatement("update tblHomestayImg set image_url=? where img_id=?");
+            stmt.setString(1, url);
+            stmt.setInt(2, img_id);
+            stmt.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
     public static int InsertHomestayImg(int homestay_id, String url) {
         try (Connection con = getConnection()) {
             PreparedStatement stmt = con.prepareStatement("insert into tblHomestayImg(ht_id, img_id, image_url) values(?, ?, ?)");

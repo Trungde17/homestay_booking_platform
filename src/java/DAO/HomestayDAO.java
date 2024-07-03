@@ -73,7 +73,7 @@ public class HomestayDAO extends DAO {
         }
         return false;
     }
-
+    
     public static boolean update(int homestay_id, String homestay_rules) {
         try (Connection con = getConnection()) {
             PreparedStatement stmt = con.prepareStatement("UPDATE tblHomestay set ht_rules=? where ht_id=?");
@@ -156,7 +156,84 @@ public class HomestayDAO extends DAO {
         }
         return null;
     }
+    
+    public static boolean changeName(int ht_id, String name){
+        try(Connection con=getConnection()) {
+            PreparedStatement stmt=con.prepareStatement("Update tblHomestay set ht_name=? where ht_id=?");
+            stmt.setString(1, name);
+            stmt.setInt(2, ht_id);
+            stmt.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
         
+    public static boolean changeType(int ht_id, int ht_type_id){
+        try(Connection con=getConnection()) {
+            PreparedStatement stmt=con.prepareStatement("Update tblHomestay set ht_type_id=? where ht_id=?");
+            stmt.setInt(1, ht_type_id);
+            stmt.setInt(2, ht_id);
+            stmt.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
+    
+    public static boolean changeDescription(int ht_id, String description){
+        try(Connection con=getConnection()) {
+            PreparedStatement stmt=con.prepareStatement("Update tblHomestay set describe=? where ht_id=?");
+            stmt.setString(1, description);
+            stmt.setInt(2, ht_id);
+            stmt.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
+    
+    
+    public static boolean changeAddressDetail(int ht_id, String address_detail){
+        try (Connection con=getConnection()){
+            PreparedStatement stmt=con.prepareStatement("Update tblHomestay set address_detail=? where ht_id=?");
+            stmt.setString(1, address_detail);
+            stmt.setInt(2, ht_id);
+            stmt.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
+    
+    public static boolean changeDistrict(int ht_id, int district_id){
+        try (Connection con=getConnection()){
+            PreparedStatement stmt=con.prepareStatement("Update tblHomestay set district_id=? where ht_id=?");
+            stmt.setInt(1, district_id);
+            stmt.setInt(2, ht_id);
+            stmt.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
+    
+    public static boolean changeRule(String rule_text){
+        try (Connection con=getConnection()){
+            PreparedStatement stmt=con.prepareStatement("Update tblHomestay set ht_rules=?");
+            stmt.setString(1, rule_text);
+            stmt.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
     public static void main(String[] args) {
         insert(22, "homestay", 1, "dhdjsj", 1, 1);
     }
