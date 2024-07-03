@@ -65,6 +65,12 @@ public class LoginServlet extends HttpServlet {
                     HttpSession session = request.getSession();
                     session.setAttribute("account", account);
                     url = "/index.jsp";
+                    
+                    if (account.getRole_account() == 1) {
+                        response.sendRedirect("./admin/index.jsp");
+                        return;
+                    }
+                    
                 } else {
                     request.setAttribute("not_allow", "You are not allowed to login to HealingLand.");
                     error = true;
@@ -79,7 +85,7 @@ public class LoginServlet extends HttpServlet {
         }
         if(error){
             request.setAttribute("email", email);
-        }
+        } 
         RequestDispatcher rd = getServletContext().getRequestDispatcher(url);
         rd.forward(request, response);
     }
