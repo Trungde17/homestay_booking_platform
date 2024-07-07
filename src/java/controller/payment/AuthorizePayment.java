@@ -37,7 +37,7 @@ public class AuthorizePayment extends HttpServlet {
             Account account=(Account)session.getAttribute("account");
             
             VnPaymentRequestModel requestModel = new VnPaymentRequestModel();
-            requestModel.setAmount((int)booking.getTotalAmount());
+            requestModel.setAmount((int)booking.getTotalAmount() * 1000);
             requestModel.setCreatedDate(LocalDateTime.now());
             requestModel.setDescription("Booking Payment");
             requestModel.setFullName(account.getFullName());

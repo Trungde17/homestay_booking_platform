@@ -101,7 +101,7 @@
                                     <form action="${pageContext.request.contextPath}/uploadimg" method="post" enctype="multipart/form-data" class="ms-4">
                                         <label class="btn btn-outline-primary">
                                             Upload New Photo
-                                            <input type="file" name="img_file" id="input_file" class="d-none">
+                                            <input type="file" name="img_file" id="input_file" class="d-none" required>
                                         </label>
                                         <button type="submit" class="btn btn-default ms-2">Change</button>
                                     </form>

@@ -230,12 +230,12 @@
                                                                     <p class="col-sm-4"><span id="numGuests">${number}</span></p>
                                                                         <c:set var="price" value="${entry.key.prices.get(0)}"/>
                                                                         <c:if test="${number>1}"><c:set var="price" value="${entry.key.prices.get(1)}"/></c:if>
-                                                                    <p class="col-sm-4"><span id="pricePerNight">${CurrencyUtils.formatCurrency(price.getAmount())}</span></p>
+                                                                    <p class="col-sm-4"><span id="pricePerNight">${CurrencyUtils.formatCurrency(price.getAmount()*1000)}</span></p>
                                                                     </c:forEach>
                                                             </div>                                                        
                                                             <p class="col-sm-2"> <span id="totalNights">${cart.getFormattedCheckIn()}</span></p>
                                                             <p class="col-sm-2"><span id="totalNights">${cart.getFormattedCheckOut()}</span></p>
-                                                            <p class="col-sm-2"><span>${CurrencyUtils.formatCurrency(cart.getTotalAmount())}</span></p>
+                                                            <p class="col-sm-2"><span>${CurrencyUtils.formatCurrency(cart.getTotalAmount() * 1000)}</span></p>
                                                         </div>
                                                     </div>
                                                 </div>

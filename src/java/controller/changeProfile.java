@@ -91,18 +91,14 @@ public class changeProfile extends HttpServlet {
         Account updateUser = new Account(id, email, first_name, last_name, gender, phone, address);
         AccountDAO.updateProfile(updateUser);
         HttpSession session = request.getSession();
-        session.removeAttribute("account");
-        session.setAttribute("account", updateUser);
+        Account account = AccountDAO.getAccountById(id);
+        session.setAttribute("account", account);
         String ms = "Successful change!";
         request.setAttribute("ms", ms);
         doGet(request, response);
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
+
     @Override
     public String getServletInfo() {
         return "Short description";

@@ -41,11 +41,10 @@
                             <p class="text-secondary">Get access to your account</p>
                         </div>
                         <!-- social login -->
-                        <button class="btn btn-outline-secondary w-100">
+                        <a href="https://accounts.google.com/o/oauth2/auth?scope=email profile openid&redirect_uri=http://localhost:8081/healingland/login_servlet&response_type=code&client_id=922603002284-n5btgmn4lpnl1e3kim0ffe4q6ki3c863.apps.googleusercontent.com&approval_prompt=force" class="btn btn-outline-secondary w-100">
                             <i class='bx bxl-google text-danger me-1 fs-6'></i>Login with
                             Google
-                        </button>
-                        <!-- /social login -->
+                        </a>
                         <!-- divider -->
                         <div class="position-relative">
                             <hr class="text-secondary divider">
@@ -72,6 +71,8 @@
                             <!-- incorrect account -->
                             <c:set var="incorrect_account" value="${requestScope.incorrect_account}"/>
                             <p class="error">${incorrect_account}</p>
+                            <c:set var="not_allow" value="${requestScope.not_allow}"/>
+                            <p class="error">${not_allow}</p>
                             <div class="input-group mb-3 d-flex- justify-content-between">
                                 <div class="form-check">
                                     <input type="checkbox" id="form-check" class="form-check-input"> <label
@@ -82,7 +83,7 @@
                             </div>
                             <button type="submit" class="btn btn-primary btn-lg w-100 mb-3">LOGIN</button>
                             <div class="text-center"><small>Don't have account? <a href="${pageContext.request.contextPath}/access/signup.jsp" class="fw-both" >Sign up</a></small> </div>
-                            
+
                         </form>
                         <!-- /FORM -->
                     </div>

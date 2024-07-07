@@ -235,6 +235,7 @@ public class HomestayDAO extends DAO {
         return false;
     }
     public static void main(String[] args) {
-        insert(22, "homestay", 1, "dhdjsj", 1, 1);
+        Homestay homestay = getHomestayById(1);
+        System.out.println(homestay.getHt_name());
     }
 }
