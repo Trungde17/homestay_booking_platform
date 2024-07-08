@@ -12,8 +12,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>HealingLand</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-        <link rel="stylesheet"
-              href="${pageContext.request.contextPath}/css/Search_homestay.css" />
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/Search_homestay.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     </head>
@@ -23,14 +22,11 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
             <div class="container">
                 <a class="navbar-brand" href="index.jsp"><img src="${pageContext.request.contextPath}/img/project_logo.jpg" alt="logo"/></a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span>
-                </button>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Destinations
-                            </a>
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Destinations</a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" href="#">Hải Châu</a></li>
                                 <li><a class="dropdown-item" href="#">Sơn Trà</a></li>
@@ -42,12 +38,10 @@
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Contact Host</a>
+                            <a class="nav-link" href="${pageContext.request.contextPath}/viewMessages.jsp">Messenger</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="helpDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Help
-                            </a>
+                            <a class="nav-link dropdown-toggle" href="#" id="helpDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Help</a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="helpDropdown">
                                 <a class="dropdown-item" href="#">General</a>
                                 <a class="dropdown-item" href="#">Hosts</a>
@@ -59,7 +53,7 @@
                                 <a class="dropdown-item" href="#">Regulatory Compliance</a>
                             </div>
                         </li>
-                        <c:if test="${account==null}">
+                        <c:if test="${account == null}">
                             <li class="nav-item">
                                 <a class="nav-link" href="${pageContext.request.contextPath}/access/signup.jsp">Sign Up</a>
                             </li>
@@ -67,17 +61,15 @@
                                 <a class="nav-link" href="${pageContext.request.contextPath}/access/login.jsp">Log In</a>
                             </li>
                         </c:if>
-                        <c:if test="${account!=null}">
+                        <c:if test="${account != null}">
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Your Homestay</a>
                             </li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="accountDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    ${account.getFirst_name()}
-                                </a>
+                                <a class="nav-link dropdown-toggle" href="#" id="accountDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">${account.getFirst_name()}</a>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="accountDropdown">
                                     <a class="dropdown-item" href="#">Dashboard</a>
-                                    <a class="dropdown-item" href="#">Inbox</a>
+                                    <a class="dropdown-item" href="${pageContext.request.contextPath}/favourite/add_favourite">Favorite Homestays</a>
                                     <a class="dropdown-item" href="#">Trips</a>
                                     <a class="dropdown-item" href="#">Bookings</a>
                                     <a class="dropdown-item" href="#">Verify Me</a>
@@ -87,7 +79,7 @@
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="${pageContext.request.contextPath}/access/logout.jsp">Logout</a>
                                 </div>
-                            </li>      
+                            </li>
                         </c:if>
                     </ul>
                 </div>
@@ -115,7 +107,6 @@
                         </div>
                         <div class="col-md-3">
                             <input type="date" id="checkIn" class="form-control" value="${sessionScope.checkin}" name="checkIn" placeholder="Check-in">
-
                         </div>
                         <div class="col-md-3">
                             <input type="date" id="checkOut" class="form-control" value="${sessionScope.checkout}" name="checkOut" placeholder="Check-out">
@@ -149,10 +140,16 @@
                                 <img src="${homestay.img.get(0).getImg_url()}" class="card-img-top" alt="Homestay Image">
                             </c:if>
                             <div class="card-body">
-                                <h5 class="card-title"><c:out value="${homestay.getHt_name()}" /></h5>
-                                <p class="card-text">Owner: <c:out value="${homestay.getOwner().getFullName()}" /></p>
-                                <p class="card-text">Description: <c:out value="${homestay.getDescribe()}" /></p>
-                                <p class="card-text">Address: <c:out value="${homestay.getAddress_detail()} ${homestay.getDistrict().getDistrict_name()}" /></p>
+                                <h5 class="card-title"><c:out value="${homestay.getHt_name()}"/></h5>
+                                <p class="card-text">Owner: <c:out value="${homestay.getOwner().getFullName()}"/></p>
+                                <p class="card-text">Description: <c:out value="${homestay.getDescribe()}"/></p>
+                                <p class="card-text">Address: <c:out value="${homestay.getFullAddress()}"/></p>
+                                <form action="${pageContext.request.contextPath}/AddFavouriteServlet" method="post">
+                                    <input type="hidden" name="homestayId" value="${homestay.getHt_id()}"/>
+                                    <button type="submit" class="btn btn-primary">Add favourite</button>
+                                </form>
+
+
                             </div>
                         </div>
                     </div>
@@ -160,7 +157,8 @@
             </div>
         </div>
 
-        <!-- Hidden form for detail navigation -->
+       
+
         <form id="detailForm" action="${pageContext.request.contextPath}/viewhomestay" method="post" style="display:none;">
             <input type="hidden" name="homestayId" id="hiddenHomestayId">
         </form>

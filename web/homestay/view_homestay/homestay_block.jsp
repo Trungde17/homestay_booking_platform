@@ -32,9 +32,10 @@
                 <a href="#locations">Nearby</a>
                 <a href="#rules">Rules</a>
                 <a href="#rooms">Rooms</a>
-                <a href="${pageContext.request.contextPath}/homestay/view_homestay/feedback.jsp?ht_id=${homestay.ht_id}#reviews">User Reviews</a>
+                <a href="#" data-toggle="modal" data-target="#contactHostModal">Contact Host</a>
             </div>
-        </div>       
+        </div>
+       
         <!--HEADER SECTION-->      
         <section>
             <c:set var="owner" value="${homestay.owner}" />
@@ -46,7 +47,7 @@
                             <div class="owner-profile fixed-profile">
                                 <img src="${owner.avatar_img}" alt="Owner Avatar" class="owner-avatar">
                                 <div class="owner-info">
-                                    <h2>${owner.fullName}</h2>
+                                    <h2>${owner.fullName}</h2>                                  
                                     <p>Owner of ${homestay.ht_name}</p>
                                     <p>Contact: ${owner.email}</p>
                                     <p>Phone: ${owner.phone}</p>
@@ -230,12 +231,12 @@
                                                                     <p class="col-sm-4"><span id="numGuests">${number}</span></p>
                                                                         <c:set var="price" value="${entry.key.prices.get(0)}"/>
                                                                         <c:if test="${number>1}"><c:set var="price" value="${entry.key.prices.get(1)}"/></c:if>
-                                                                    <p class="col-sm-4"><span id="pricePerNight">${CurrencyUtils.formatCurrency(price.getAmount()*1000)}</span></p>
+                                                                    <p class="col-sm-4"><span id="pricePerNight">${CurrencyUtils.formatCurrency(price.getAmount())}</span></p>
                                                                     </c:forEach>
                                                             </div>                                                        
                                                             <p class="col-sm-2"> <span id="totalNights">${cart.getFormattedCheckIn()}</span></p>
                                                             <p class="col-sm-2"><span id="totalNights">${cart.getFormattedCheckOut()}</span></p>
-                                                            <p class="col-sm-2"><span>${CurrencyUtils.formatCurrency(cart.getTotalAmount() * 1000)}</span></p>
+                                                            <p class="col-sm-2"><span>${CurrencyUtils.formatCurrency(cart.getTotalAmount())}</span></p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -252,7 +253,30 @@
             </div>
         </section>
 
-
+ <!-- Contact Host Modal -->
+        <div class="modal fade" id="contactHostModal" tabindex="-1" aria-labelledby="contactHostModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="contactHostModalLabel">Contact Host</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="sendMessageForm" action="${pageContext.request.contextPath}/sendMessage" method="POST">
+                            <input type="hidden" name="owner_id" value="${owner.account_id}">
+                            <input type="hidden" name="customer_id" value="${sessionScope.account.account_id}">
+                            <div class="form-group">
+                                <label for="messageText">Message</label>
+                                <textarea class="form-control" id="messageText" name="message" rows="3" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- BOOTSTRAP JS -->
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
