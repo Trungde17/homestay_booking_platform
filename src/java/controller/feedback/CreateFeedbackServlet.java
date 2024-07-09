@@ -59,7 +59,7 @@ public class CreateFeedbackServlet extends HttpServlet {
                         response.sendRedirect("../homestay/view_homestay/feedback.jsp?ht_id=" + ht_id + "&msg=Feedback added successfully.");
                     } else {
                         //response.getWriter().write("Error processing feedback.");
-                        response.sendRedirect("../homestay/view_homestay/view.jsp?ht_id=" + ht_id + "&error=Fail to add the feedback, please try again.");
+                        response.sendRedirect("../homestay/view_homestay/feedback.jsp?ht_id=" + ht_id + "&error=Fail to add the feedback, please try again.");
                     }
                 } else {
                     response.sendRedirect("../homestay/view_homestay/feedback.jsp?ht_id=" + ht_id + "&error=You must book the homestay in order to send feedback.");

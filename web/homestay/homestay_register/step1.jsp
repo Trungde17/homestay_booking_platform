@@ -100,19 +100,7 @@
                                 <textarea name="homestay_about" class="form-control" id="aboutHomestay" rows="4" placeholder="Tell us about your homestay" minlength="100" required></textarea>
                                 <small class="form-text text-muted">Minimum 100 characters (100 remaining)</small>
                             </div>
-                            <div class="row">
-                                <c:set var="account" value="${sessionScope.account}"/>
-                                <div class="col-md-8">
-                                    <label for="payment-number" class="font-weight-bold">Payment number *</label>
-
-                                    <select name="payment" class="form-control" id="payment-number"> 
-                                        <c:forEach var="payment_number" items="${account.getPayments()}">
-                                            <option value="${payment_number.getPayment_id()}">${payment_number.getPayment_number()}</option>  
-                                        </c:forEach>
-                                    </select>
-
-                                </div>
-                            </div>
+                            
                                 <c:set var="error" value="${requestScope.fail_request}"/>
                                 <p class="error"> ${error}</p>
                             <button type="submit" class="btn btn-primary btn-block mt-5">Continue</button>
@@ -124,7 +112,7 @@
                     <div class="sidebar">
                         <div class="info-box">
                             <h6>HOSTED HOMESTAY EXPERIENCE</h6>
-                            <p>A host lives in every homestay listed on Homestay.com ? none of our homestays are vacant properties. We understand that you can't be there all the time, but just to welcome and orientate your guests.</p>
+                            <p>A host lives in every homestay listed on HealingLand.com ? none of our homestays are vacant properties. We understand that you can't be there all the time, but just to welcome and orientate your guests.</p>
                         </div>
                         <div class="info-box">
                             <h6>TIPS FOR A GREAT DESCRIPTION</h6>
@@ -137,10 +125,7 @@
                                 <li>Are any other languages spoken at home?</li>
                             </ul>
                         </div>
-                        <div class="mt-3">
-                            <p>QUESTION? GET IN TOUCH:</p>
-                            <p>Email us at <a href="mailto:hostsupport@homestay.com">hostsupport@homestay.com</a></p>
-                        </div>
+                        
                     </div>
                 </div>
             </div>

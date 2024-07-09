@@ -54,18 +54,17 @@ public class HomestayDAO extends DAO {
         return number;
     }
 
-    public static boolean insert(int homestay_id, String homestay_name, int homestay_type_id, String homestay_about, int owner_id, int payment_id) {
+    public static boolean insert(int homestay_id, String homestay_name, int homestay_type_id, String homestay_about, int owner_id) {
         try (Connection con = getConnection()) {
             PreparedStatement stmt = con.prepareStatement("insert into tblHomestay(ht_id, ht_name, ht_type_id, describe, owner_id,"
-                    + "payment_id, registration_date) "
+                    + "registration_date) "
                     + "values(?, ?, ?, ?, ?, ?, ?)");
             stmt.setInt(1, homestay_id);
             stmt.setString(2, homestay_name);
             stmt.setInt(3, homestay_type_id);
             stmt.setString(4, homestay_about);
             stmt.setInt(5, owner_id);
-            stmt.setInt(6, payment_id);
-            stmt.setDate(7, new java.sql.Date(new Date().getTime()));
+            stmt.setDate(6, new java.sql.Date(new Date().getTime()));
             stmt.executeUpdate();
             return true;
         } catch (SQLException e) {

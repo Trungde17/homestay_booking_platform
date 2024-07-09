@@ -56,9 +56,8 @@ public class register_step1_controll extends HttpServlet {
                 Account account = (Account) session.getAttribute("account");
                 if (account != null) {
                     String homestay_about = request.getParameter("homestay_about");
-                    int payment_id = Integer.parseInt(request.getParameter("payment"));
                     int ht_id = HomestayDAO.countHomesaty() + 1;
-                    if (HomestayDAO.insert(ht_id, homestay_name, ht_type_id, homestay_about,account.getAccount_id(), payment_id)) {
+                    if (HomestayDAO.insert(ht_id, homestay_name, ht_type_id, homestay_about,account.getAccount_id())) {
                         HomestayFacilitiesDAO.insertIntoHomestayFacilities(ht_id, facilities_list); 
                         Homestay homestay_register=HomestayDAO.getHomestayById(ht_id);
                         session.setAttribute("homestay_register", homestay_register);
