@@ -21,19 +21,18 @@ public class Room {
     }
     
     public Room(int room_id, String room_name){
-        this.room_id=room_id;
-        this.room_name=room_name;
+        this.room_id = room_id;
+        this.room_name = room_name;
     }
+    
     public Room(int room_id, String room_name, boolean status) {
         this.room_id = room_id;
         this.room_name = room_name;
         this.status = status;
     }
-
     
-    
-    public Room(int room_id,String room_name, int capacity, String size, ArrayList<Img> img, ArrayList<RoomPrice> prices) {
-        this.room_id=room_id;
+    public Room(int room_id, String room_name, int capacity, String size, ArrayList<Img> img, ArrayList<RoomPrice> prices) {
+        this.room_id = room_id;
         this.room_name = room_name;
         this.capacity = capacity;
         this.size = size;
@@ -41,7 +40,6 @@ public class Room {
         this.prices = prices;
         this.status = status;
     }
-    
     
     public Room(int room_id, String room_name, String room_description, int capacity, String size, Map<Bed, Integer> beds, ArrayList<Img> img, ArrayList<RoomFacilities> facilities, ArrayList<RoomPrice> prices, boolean status) {
         this.room_id = room_id;
@@ -54,6 +52,14 @@ public class Room {
         this.facilities = facilities;
         this.prices = prices;
         this.status = status;
+    }
+
+    // Add the new constructor
+    public Room(int room_id, String room_name, String room_description, String size) {
+        this.room_id = room_id;
+        this.room_name = room_name;
+        this.room_description = room_description;
+        this.size = size;
     }
 
     public int getHt_id() {
@@ -143,17 +149,19 @@ public class Room {
     public void setStatus(boolean status) {
         this.status = status;
     }
-    public String getPricesString(){
-        String prices_str="";
-        if(prices!=null && prices.size()>0){
-            int i=0;
-            for(; i < prices.size()-1; i++){
-                prices_str+= prices.get(i).getPrice_name()+": "+prices.get(i).getAmount()+"vnd, ";
+
+    public String getPricesString() {
+        String prices_str = "";
+        if (prices != null && prices.size() > 0) {
+            int i = 0;
+            for (; i < prices.size() - 1; i++) {
+                prices_str += prices.get(i).getPrice_name() + ": " + prices.get(i).getAmount() + "vnd, ";
             }
-            prices_str+=prices.get(i).getPrice_name()+": "+prices.get(i).getAmount()+"vnd.";
+            prices_str += prices.get(i).getPrice_name() + ": " + prices.get(i).getAmount() + "vnd.";
         }
         return prices_str;
     }
+
     public String getBedNameString() {
         String result = "";
         if (beds != null && beds.size() > 0) {
@@ -171,20 +179,19 @@ public class Room {
         }
         return result;
     }
-    
-    public String getRoomFacilitiesString(){
-        String result="";
-        if (facilities != null && facilities.size()>0) {
-            int i =0;
-            while(i < facilities.size()-1){
-                result+=facilities.get(i).getFacilities_name()+", ";
+
+    public String getRoomFacilitiesString() {
+        String result = "";
+        if (facilities != null && facilities.size() > 0) {
+            int i = 0;
+            while (i < facilities.size() - 1) {
+                result += facilities.get(i).getFacilities_name() + ", ";
                 i++;
             }
-            result += facilities.get(i).getFacilities_name()+".";
+            result += facilities.get(i).getFacilities_name() + ".";
         }
         return result;
     }
-    
 
     @Override
     public int hashCode() {
@@ -206,5 +213,4 @@ public class Room {
         final Room other = (Room) obj;
         return this.room_id == other.room_id;
     }
-
 }

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import model.Booking;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import model.Room;
@@ -337,6 +338,79 @@ public class BookingDAO extends DAO {
         }
 
         return bookings;
+    }
+        public static List<Booking> getBookingsByAccountId(int accountId) {
+    List<Booking> bookings = new ArrayList<>();
+    String sql = "SELECT b.booking_id, b.date_booked, b.date_checkin, b.date_checkout, b.paid_amount, b.outstanding_amount, b.booking_status, "
+               + "r.room_id, r.room_name, r.room_description, r.size "
+               + "FROM tblBooking b "
+               + "JOIN tblBooking_detail bd ON b.booking_id = bd.booking_id "
+               + "JOIN tblRoom r ON bd.room_id = r.room_id "
+               + "WHERE b.customer_id = ?";
+
+    try (Connection con = getConnection(); PreparedStatement stmt = con.prepareStatement(sql)) {
+        stmt.setInt(1, accountId);
+        ResultSet rs = stmt.executeQuery();
+
+        while (rs.next()) {
+            int bookingId = rs.getInt("booking_id");
+            Date dateBooked = rs.getDate("date_booked");
+            Date checkIn = rs.getDate("date_checkin");
+            Date checkOut = rs.getDate("date_checkout");
+            double paidAmount = rs.getDouble("paid_amount");
+            double outstandingAmount = rs.getDouble("outstanding_amount");
+            int bookingStatus = rs.getInt("booking_status");
+
+            Room room = new Room(rs.getInt("room_id"), rs.getString("room_name"), rs.getString("room_description"), rs.getString("size"));
+
+            Booking booking = new Booking();
+            booking.setBooking_id(bookingId);
+            booking.setDate_booked(dateBooked);
+            booking.setCheck_in(checkIn);
+            booking.setCheck_out(checkOut);
+            booking.setPaid_amount(paidAmount);
+            booking.setOutstanding_amount(outstandingAmount*1000);
+            booking.setBooking_status(bookingStatus);
+
+            if (bookings.contains(booking)) {
+                int index = bookings.indexOf(booking);
+                bookings.get(index).getRooms().put(room, 1);
+            } else {
+                Map<Room, Integer> rooms = new LinkedHashMap<>();
+                rooms.put(room, 1);
+                booking.setRooms(rooms);
+                bookings.add(booking);
+            }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    return bookings;
+}
+
+    
+    public static String getHomestayNameByBookingId(int bookingId) {
+        String homestayName = null;
+        String sql = "SELECT h.ht_name " +
+                     "FROM tblBooking b " +
+                     "JOIN tblBooking_detail bd ON b.booking_id = bd.booking_id " +
+                     "JOIN tblRoom r ON bd.room_id = r.room_id " +
+                     "JOIN tblHomestay h ON r.ht_id = h.ht_id " +
+                     "WHERE b.booking_id = ?";
+
+        try (Connection con = getConnection(); PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setInt(1, bookingId);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                homestayName = rs.getString("ht_name");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return homestayName;
     }
     public static void main(String[] args) {
         System.out.println(calculateMonthlyRevenue(2024, 6, 1));
