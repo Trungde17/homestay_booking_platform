@@ -63,7 +63,7 @@
                                                 <a href="form.html" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Forms</a>-->
                         <a href="customer.jsp" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Customers</a>
                         <a href="owner.jsp" class="nav-item nav-link active"><i class="fa fa-table me-2"></i>Owners</a>
-                        <!--<a href="chart.html" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Charts</a>-->
+                        <a href="pendingRequests.jsp" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Register</a>
 
                     </div>
                 </nav>

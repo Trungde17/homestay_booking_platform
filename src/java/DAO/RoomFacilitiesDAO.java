@@ -55,8 +55,22 @@ public class RoomFacilitiesDAO extends DAO{
         }
         return null;
     }
+    public static boolean delete(int room_id){
+        try(Connection con=getConnection()) {
+            PreparedStatement stmt=con.prepareStatement("delete tblFacilitiesOfRoom where room_id=?");
+            stmt.setInt(1, room_id);
+            stmt.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
     public static void main(String[] args) {
-        ArrayList<RoomFacilities>list=getAll();
+//        ArrayList<RoomFacilities>list=getAll();
+//        for(RoomFacilities r:list){
+//            System.out.println(r.getFacilities_name());
+//        }
+        ArrayList<RoomFacilities>list=getRoomFacilities(1);
         for(RoomFacilities r:list){
             System.out.println(r.getFacilities_name());
         }

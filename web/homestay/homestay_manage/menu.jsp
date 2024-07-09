@@ -1,4 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <link rel="stylesheet" href="sidebar.css">
 <div class="sidebar-sticky">
     <h5 class="sidebar-heading ht-name">Homestay Beach View</h5>
@@ -25,6 +27,13 @@
         </li>
         <li class="nav-item">
             <a class="nav-link" href="${pageContext.request.contextPath}/homestay/homestay_manage/revenue.jsp">Homestay revenue</a>
+        </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="${pageContext.request.contextPath}/owner/Room_Information.jsp"> Rooms</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="${pageContext.request.contextPath}/index.jsp">Back to home</a>
         </li>
     </ul>
 </div>

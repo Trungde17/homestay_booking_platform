@@ -44,7 +44,18 @@ public class RoomImgDAO extends DAO{
         }
         return number;
     }
-    
+      public static boolean changeImg(int img_id, String url){
+        try (Connection con=getConnection()){
+            PreparedStatement stmt=con.prepareStatement("update tblRoomImg set image_url=? where img_id=?");
+            stmt.setString(1, url);
+            stmt.setInt(2, img_id);
+            stmt.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
     public static void main(String[] args) {
         ArrayList<Img>imgs=getRoomImgs(4);
         for(Img img:imgs){

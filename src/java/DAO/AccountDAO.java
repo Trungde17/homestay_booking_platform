@@ -153,6 +153,19 @@ public class AccountDAO extends DAO {
         }
         return null;
     }
+     public static boolean updateUserRole(int account_id, String newRole) {
+        String query = "UPDATE tblAccount SET  roles_account = ? WHERE account_id = ?";
+        try (Connection con = getConnection();
+             PreparedStatement stmt = con.prepareStatement(query)) {
+            stmt.setString(1, newRole);
+            stmt.setInt(2, account_id);
+             stmt.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());           
+        }
+        return false;
+    }
 
     public static Account getAccountByEmail(String email) {
         try (Connection con = getConnection()) {

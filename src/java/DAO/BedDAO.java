@@ -39,6 +39,16 @@ public class BedDAO extends DAO{
         }
         return number;
     }
+      public static boolean delete(int room_id){
+        try(Connection con=getConnection()) {
+            PreparedStatement stmt=con.prepareStatement("delete tblRoomBed  where room_id=?");
+            stmt.setInt(1, room_id);
+            stmt.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
     
     public static Map<Bed, Integer> getBedsOfRoom(int room_id){
         try (Connection con=getConnection()){
@@ -57,9 +67,9 @@ public class BedDAO extends DAO{
         return null;
     }
     public static void main(String[] args) {
-        ArrayList<Bed>beds=getAllBedType();
-        for(Bed bed:beds){
-            System.out.println(bed.getBed_type());
-        }
+//       Map<Bed>beds=getBedsOfRoom(1);
+//        for(Bed bed:beds){
+//            System.out.println(bed.getBed_type());
+//        }
     }
 }

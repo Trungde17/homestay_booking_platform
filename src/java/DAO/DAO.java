@@ -1,3 +1,4 @@
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
@@ -9,12 +10,14 @@ import java.sql.DriverManager;
 
 import java.sql.*;
 public class DAO{
+
     public static Connection getConnection() {
 		try {
 			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-			String url="jdbc:sqlserver://DESKTOP-VEK4612\\SQLEXPRESS01:1433;databaseName=baitap5;encrypt=true;trustServerCertificate=true";
+			String url="jdbc:sqlserver://LAPTOP-JFP2HOT9\\SQLEXPRESS"
+                                + ";databaseName=BAITAP6;encrypt=true;trustServerCertificate=true";
 			String userName="sa";
-			String password="123";
+			String password="241103";
 			Connection connection = DriverManager.getConnection(url, userName, password);
 			System.out.println("connect successfully");
 			return connection;

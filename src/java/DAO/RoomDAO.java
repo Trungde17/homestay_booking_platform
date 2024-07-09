@@ -76,6 +76,121 @@ public class RoomDAO extends DAO{
         return 0;
     }
     
+   // Update Room Information including related data
+   public static boolean changeName(int room_id, String name){
+        try(Connection con=getConnection()) {
+            PreparedStatement stmt=con.prepareStatement("Update tblRoom set room_name=? where room_id=?");
+            stmt.setString(1, name);
+            stmt.setInt(2, room_id);
+            stmt.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
+   public static boolean changeStatus(int room_id, boolean status){
+        try(Connection con=getConnection()) {
+            PreparedStatement stmt=con.prepareStatement("update tblRoom set room_status= ? where room_id=?");
+            stmt.setBoolean(1, status);
+            stmt.setInt(2, room_id);
+            stmt.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
+           
+    public static boolean changeDescription(int room_id, String description){
+        try(Connection con=getConnection()) {
+            PreparedStatement stmt=con.prepareStatement("Update tblRoom set room_description=? where room_id=?");
+            stmt.setString(1, description);
+            stmt.setInt(2, room_id);
+            stmt.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
+    
+    
+    public static boolean changeCapaciy(int room_id, int capacity ){
+        try (Connection con=getConnection()){
+            PreparedStatement stmt=con.prepareStatement("Update tblRoom set capacity =? where room_id=?");
+            stmt.setInt(1, capacity);
+            stmt.setInt(2, room_id);
+            stmt.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
+    
+    public static boolean changeSize(int room_id, String size){
+        try (Connection con=getConnection()){
+            PreparedStatement stmt=con.prepareStatement("Update tblRoom set size=? where room_id=?");
+            stmt.setString(1, size);
+            stmt.setInt(2, room_id);
+            stmt.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
+    
+//    public static boolean changeStatus(boolean room_status){
+//        try (Connection con=getConnection()){
+//            PreparedStatement stmt=con.prepareStatement("Update tblRoom set room_status= ?");
+//            stmt.setBoolean(1, room_status);
+//            stmt.executeUpdate();
+//            return true;
+//        } catch (Exception e) {
+//            System.out.println(e);
+//        }
+//        return false;
+//    }
+    // Delete Room
+    public static boolean deleteRoom(int room_id) {
+    try (Connection con = getConnection()) {
+       
+      
+
+        // Delete room images from tblRoomImg
+        PreparedStatement stmtRoomImg = con.prepareStatement("DELETE FROM tblRoomImg WHERE room_id = ?");
+        stmtRoomImg.setInt(1, room_id);
+        stmtRoomImg.executeUpdate();
+
+        // Delete room facilities from tblRoomFacilities
+        PreparedStatement stmtRoomFacilities = con.prepareStatement("DELETE FROM tblFacilitiesOfRoom WHERE room_id = ?");
+        stmtRoomFacilities.setInt(1, room_id);
+        stmtRoomFacilities.executeUpdate();
+
+        // Delete room prices from tblRoomPrice
+        PreparedStatement stmtRoomPrice = con.prepareStatement("DELETE FROM tblRoomPrice WHERE room_id = ?");
+        stmtRoomPrice.setInt(1, room_id);
+        stmtRoomPrice.executeUpdate();
+
+        // Delete room bookings from tblBooking_detail (if any)
+        PreparedStatement stmtBookingDetail = con.prepareStatement("DELETE FROM tblBooking_detail WHERE room_id = ?");
+        stmtBookingDetail.setInt(1, room_id);
+        stmtBookingDetail.executeUpdate();
+        
+          PreparedStatement stmtRoom = con.prepareStatement("DELETE FROM tblRoom WHERE room_id = ?");
+        stmtRoom.setInt(1, room_id);
+        stmtRoom.executeUpdate();
+
+        return true;
+    } catch (Exception e) {
+        System.out.println(e);
+    }
+    return false;
+}
+
+    
     public static int insertIntoBookingDetail(int booking_id,Map<Room, Integer>rooms){
         int number=0;
         try (Connection con=getConnection()){            
@@ -154,7 +269,7 @@ public class RoomDAO extends DAO{
                 ArrayList<RoomFacilities>facilities=RoomFacilitiesDAO.getRoomFacilities(id);
                 ArrayList<RoomPrice>prices=RoomPriceDAO.getRoomPrices(id);
                 boolean status=rs.getBoolean("room_status");
-                Room room = new Room(id, room_name, room_name, capacity, size, beds, imgs, facilities, prices, status);
+                Room room = new Room(id, room_name, dsr, capacity, size, beds, imgs, facilities, prices, status);
                 room.setHt_id(rs.getInt("ht_id"));
                 rooms.add(room);
             }
@@ -165,11 +280,25 @@ public class RoomDAO extends DAO{
         return null;
     }
     public static void main(String[] args) {
-         Map<Room, Integer>rooms=getRoomBookingBasicInfor(5);
-         for (Map.Entry<Room, Integer> entry : rooms.entrySet()) {
-            Room key = entry.getKey();
-             System.out.println(key.getRoom_name());            
-        }
-         
+//         Map<Room, Integer>rooms=getRoomBookingBasicInfor(5);
+//         for (Map.Entry<Room, Integer> entry : rooms.entrySet()) {
+//            Room key = entry.getKey();
+//             System.out.println(key.getRoom_name());            
+//        }
+//        changeSize(6,"3");
+        int testRoomId = 1; // Replace with an actual room_id from your database
+    Room room = getRoomById(testRoomId);
+    
+    if (room != null) {
+        System.out.println("Room ID: " + room.getRoom_id());
+        System.out.println("Room Name: " + room.getRoom_name());
+        System.out.println("Room Description: " + room.getRoom_description());
+        System.out.println("Capacity: " + room.getCapacity());
+        System.out.println("Size: " + room.getSize());
+        // Add other fields as needed
+    } else {
+        System.out.println("Room not found with ID: " + testRoomId);
     }
 }
+    }
+

@@ -10,6 +10,11 @@ public class HomestayImg extends Img{
         super(img_id, img_url);
     }
 
+    public HomestayImg(int img_role, int img_id, String img_url) {
+        super(img_id, img_url);
+        this.img_role = img_role;
+    }
+
     
     public int getImg_role() {
         return img_role;
