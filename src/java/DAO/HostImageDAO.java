@@ -21,7 +21,7 @@ public class HostImageDAO {
     
 
     public static ArrayList<HomestayImg> getHostImgs(int hostId) {
-        String query = "SELECT * FROM tblHostIMG WHERE id = ?";
+        String query = "SELECT * FROM tblHostImg HERE id = ?";
         ArrayList<HomestayImg> imgs = new ArrayList<>();
 
         try (Connection con = getConnection();
@@ -44,7 +44,7 @@ public class HostImageDAO {
     }
 
     public static boolean insertHostImg(int hostId, String url, int imgRole) {
-        String query = "INSERT INTO tblHostIMG(id, img_url, roles) VALUES (?, ?, ?)";
+        String query = "INSERT INTO tblHostImg(id, img_url, roles) VALUES (?, ?, ?)";
         try (Connection con = getConnection();
              PreparedStatement stmt = con.prepareStatement(query)) {
             stmt.setInt(1, hostId);
@@ -59,7 +59,7 @@ public class HostImageDAO {
     }
 
     public static boolean deleteHostImg(int imgId) {
-        String query = "DELETE FROM tblHostIMG WHERE img_id = ?";
+        String query = "DELETE FROM tblHostImg WHERE img_id = ?";
         try (Connection con = getConnection();
              PreparedStatement stmt = con.prepareStatement(query)) {
             stmt.setInt(1, imgId);
@@ -72,7 +72,7 @@ public class HostImageDAO {
     }
 
     public static int countHostImgs(int hostId) {
-        String query = "SELECT COUNT(*) AS number FROM tblHostIMG WHERE id = ?";
+        String query = "SELECT COUNT(*) AS number FROM tblHostImg WHERE id = ?";
         try (Connection con = getConnection();
              PreparedStatement stmt = con.prepareStatement(query)) {
             stmt.setInt(1, hostId);

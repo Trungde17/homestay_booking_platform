@@ -56,15 +56,34 @@ public class AccountDAO extends DAO {
         return accounts;
     }
 
-    public static void updateAccountStatus(int accountId, String newStatus) {
+    public static void updateAccountStatus(int accountId, boolean newStatus) {
         try ( Connection con = getConnection()) {
             PreparedStatement stmt = con.prepareStatement("UPDATE tblAccount SET status = ? WHERE account_id = ?");
-            stmt.setString(1, newStatus);
+            stmt.setBoolean(1, newStatus);
             stmt.setInt(2, accountId);
             stmt.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    
+    public static boolean getAccountStatusById(int accountId) {
+        boolean status=true;
+        String query = "SELECT status FROM tblAccount WHERE account_id = ?";
+
+        try ( Connection con = getConnection();  PreparedStatement stmt = con.prepareStatement(query)) {
+
+            stmt.setInt(1, accountId);
+            try ( ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    status = rs.getBoolean("status");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return status;
     }
 
     private static ArrayList<Account> createAccountFromResultSet(ResultSet rs) {
@@ -78,7 +97,7 @@ public class AccountDAO extends DAO {
                         result.add(new Account(
                                 account_id, rs.getString("email"), rs.getString("password"), rs.getString("first_name"), rs.getString("last_name"),
                                 rs.getString("gender"), rs.getDate("date_of_birth"), rs.getString("phone"), rs.getString("address"), rs.getString("avatar_img"),
-                                payments, rs.getInt("roles_account"), rs.getDate("registration_date")));
+                                payments, rs.getInt("roles_account"), rs.getDate("registration_date"), rs.getBoolean("status")));
                     } catch (Exception e) {
                         System.out.println(e.getMessage());
                     }

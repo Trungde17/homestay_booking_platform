@@ -26,9 +26,9 @@ public class AccountActionServlet extends HttpServlet {
         AccountDAO accountDAO = new AccountDAO();
 
         if ("lock".equals(action)) {
-            accountDAO.updateAccountStatus(accountId, "inactive"); // Lock the account
+            accountDAO.updateAccountStatus(accountId, false); // Lock the account
         } else if ("unlock".equals(action)) {
-            accountDAO.updateAccountStatus(accountId, "active"); // Unlock the account
+            accountDAO.updateAccountStatus(accountId, true); // Unlock the account
         }
 
         response.sendRedirect("./admin/" + page + ".jsp"); // Redirect back to the dashboard

@@ -16,7 +16,7 @@ import DAO.RegisterOwnerDAO;
 
 import java.io.IOException;
 
-@WebFilter(filterName = "checkUpdateOwner", urlPatterns = {"./account/upgradeToHost.jsp"}) 
+@WebFilter(filterName = "checkUpdateOwner", urlPatterns = {"/account/upgradeToHost.jsp"}) 
 public class checkUpdateOwner implements Filter {
 
     public checkUpdateOwner() {
@@ -41,7 +41,7 @@ public class checkUpdateOwner implements Filter {
                 int ownerStatus = RegisterOwnerDAO.getOwnerStatus(currentUser.getAccount_id());
                 if (ownerStatus == 2) {
                     
-                    httpResponse.sendRedirect("./account/update.jsp");
+                    httpResponse.sendRedirect(httpRequest.getContextPath() +"/account/update.jsp");
                     return;
                 }
             }

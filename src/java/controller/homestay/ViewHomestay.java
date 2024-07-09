@@ -34,6 +34,7 @@ public class ViewHomestay extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
+        session.setAttribute("cart", null);
         int ht_id = Integer.parseInt(request.getParameter("homestayId"));
         Homestay homestay = HomestayDAO.getHomestayById(ht_id);
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");

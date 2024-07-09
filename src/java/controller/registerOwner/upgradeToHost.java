@@ -39,15 +39,10 @@ public class upgradeToHost extends HttpServlet {
             response.sendRedirect("./access/login.jsp");
             return;
         }
-//        int ownerStatus = getOwnerStatusForUser(currentUser.getAccount_id());
-//        if ((ownerStatus)== 2) {
-//            request.setAttribute("message", "Tài khoản của bạn đang trong quá trình xác minh. Vui lòng chờ xác minh hoàn tất.");
-//            request.getRequestDispatcher("./account/upgradeToHost.jsp").forward(request, response);          
-//            return;
-//        }
+
         if (isUpgradeRequestPending(currentUser)) {
             request.setAttribute("message", "Tài khoản bạn đang được xác minh, vui lòng chờ.");
-            request.getRequestDispatcher("./account/upgradeToHost.jsp").forward(request, response);
+            request.getRequestDispatcher("/account/upgradeToHost.jsp").forward(request, response);
             return;
         }
 
@@ -78,7 +73,7 @@ public class upgradeToHost extends HttpServlet {
             }
         } catch (IOException e) {
             request.setAttribute("error", "Lỗi khi tải lên tệp. Vui lòng thử lại.");
-            request.getRequestDispatcher("./account/upgradeToHost.jsp").forward(request, response);
+            request.getRequestDispatcher("/account/upgradeToHost.jsp").forward(request, response);
             return;
         }
         
@@ -93,7 +88,7 @@ public class upgradeToHost extends HttpServlet {
             request.setAttribute("error", "Không thể gửi yêu cầu nâng cấp. Vui lòng thử lại.");
         }
 
-        request.getRequestDispatcher("./account/upgradeToHost.jsp").forward(request, response);
+        request.getRequestDispatcher("/account/upgradeToHost.jsp").forward(request, response);
     }
 
     private String uploadToCloudinary(Part filePart) throws IOException {

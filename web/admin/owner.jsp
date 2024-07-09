@@ -111,7 +111,7 @@
                                 <i class="fa fa-chart-area fa-3x text-primary"></i>
                                 <div class="ms-3">
                                     <p class="mb-2">Today Revenue</p>
-                                    <h6 id="today-revenue"class="mb-0"></h6>
+                                    <h6 id="today-revenue" class="mb-0"></h6>
                                 </div>
                             </div>
                         </div>
@@ -152,15 +152,14 @@
                                 </thead>
                                 <tbody>
                                     <%
-                                        List<Account> owners = AccountDAO.getAccountsByRole(2); // Fetch normal customers
-
+                                        List<Account> owners = AccountDAO.getAccountsByRole(2); 
                                         if (owners != null) {
                                             for (Account owner : owners) {
-                                                String status = AccountDAO.getAccountStatusById(owner.getAccount_id());
+                                                boolean status = AccountDAO.getAccountStatusById(owner.getAccount_id());
                                             
-                                                String buttonLabel = status.equals("inactive") ? "Unlock" : "Lock";
-                                                String action = status.equals("inactive") ? "unlock" : "lock";
-                                                String className = status.equals("inactive") ? "btn-primary" : "btn-danger";
+                                                String buttonLabel = !status  ? "Unlock" : "Lock";
+                                                String action = !status ? "unlock" : "lock";
+                                                String className = !status ? "btn-primary" : "btn-danger";
                                     %>
                                     <tr>
                                         <td><%= owner.getEmail() %></td>

@@ -27,10 +27,10 @@
         <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-        <link href="./lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-        <link href="./lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
-        <link href="./css/bootstrap.min.css" rel="stylesheet">
-        <link href="./css/style.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/admin/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/admin/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+        <link href="${pageContext.request.contextPath}/admin/css/bootstrap.min.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/admin/css/style.css" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap5.min.css">
 
     </head>
@@ -56,13 +56,13 @@
                         </div>
                     </div>
                     <div class="navbar-nav w-100">
-                        <a href="index.jsp" class="nav-item nav-link active"><i
+                        <a href="${pageContext.request.contextPath}/admin/index.jsp" class="nav-item nav-link active"><i
                                 class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
 
 <!--                        <a href="widget.html" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Widgets</a>
                         <a href="form.html" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Forms</a>-->
-                        <a href="customer.jsp" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Customers</a>
-                        <a href="owner.jsp" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Owners</a>
+                        <a href="${pageContext.request.contextPath}/admin/customer.jsp" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Customers</a>
+                        <a href="./admin/owner.jsp" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Owners</a>
                         <!--<a href="chart.html" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Charts</a>-->
 
                     </div>
@@ -111,7 +111,7 @@
                                 <i class="fa fa-chart-area fa-3x text-primary"></i>
                                 <div class="ms-3">
                                     <p class="mb-2">Today Revenue</p>
-                                    <h6 id="today-revenue"class="mb-0"></h6>
+                                    <h6 id="today-revenue" class="mb-0"></h6>
                                 </div>
                             </div>
                         </div>

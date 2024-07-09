@@ -47,7 +47,7 @@ public class LoginServlet extends HttpServlet {
                     random.generateRandomPassword(8, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_-+=<>?"),
                     gg_account.getGiven_name(), gg_account.getFamily_name(), 3);
         } else {
-            if (account.getRole_account() == 0) {
+            if (!account.isStatus()) {
                 request.setAttribute("not_allow", "You are not allowed to login to HealingLand.");
                 isError = true;
             }

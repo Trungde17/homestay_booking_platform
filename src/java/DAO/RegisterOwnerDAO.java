@@ -20,7 +20,7 @@ public class RegisterOwnerDAO {
 
     public static boolean submitUpgradeRequest(HostUpgradeRequest request) {
         String ownerQuery = "INSERT INTO tblOwner (account_id, id_number, bank_account, bank_name, account_holder, status, request_date) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        String imgQuery = "INSERT INTO tblHostIMG (id, img_url, roles) VALUES (?, ?, ?)";
+        String imgQuery = "INSERT INTO tblHostImg (id, img_url, roles) VALUES (?, ?, ?)";
 
         try (Connection con = getConnection()) {
             con.setAutoCommit(false);
@@ -135,7 +135,7 @@ public class RegisterOwnerDAO {
 //}
     public static HostUpgradeRequest getRequestById(int requestId) {
         String ownerQuery = "SELECT * FROM tblOwner WHERE id = ?";
-        String imgQuery = "SELECT * FROM tblHostIMG WHERE id = ?";
+        String imgQuery = "SELECT * FROM tblHostImg WHERE id = ?";
 
         try (Connection con = getConnection()) {
             // Retrieve data from tblOwner
@@ -230,35 +230,35 @@ public class RegisterOwnerDAO {
     public static void main(String[] args) {
 
 //        // Create sample ImageHost objects for ID images
-//        ImageHost idImage1 = new ImageHost(1, 1, "http://example.com/id_image1.jpg");
-//        ImageHost idImage2 = new ImageHost(1, 2, "http://example.com/id_image2.jpg");
-//
-//        ArrayList<ImageHost> idImages = new ArrayList<>(Arrays.asList(idImage1, idImage2));
-//        // Create sample ImageHost objects for ownership document images
-//        ImageHost docImage1 = new ImageHost(2, 1, "http://example.com/doc_image1.jpg");
-//        ImageHost docImage2 = new ImageHost(2, 2, "http://example.com/doc_image2.jpg");
-//        ArrayList<ImageHost> docImages = new ArrayList<>(Arrays.asList(docImage1, docImage2));
-//
-//        // Create a sample HostUpgradeRequest object
-//        HostUpgradeRequest request = new HostUpgradeRequest();
-//        request.setId(1);
-//        request.setAccountId(1); // Assuming account_id 1 exists in tblAccount
-//        request.setIdNumber("123456789");
-//        request.setBankAccount("987654321");
-//        request.setBankName("Sample Bank");
-//        request.setAccountHolder("John Doe");
-//        request.setIdImagePath(idImages);
-//        request.setOwnershipDocPath(docImages);
-//
-//        // Call the method to test
-//        boolean success = submitUpgradeRequest(request);
-//
-//        if (success) {
-//            System.out.println("Data inserted successfully!");
-//        } else {
-//            System.out.println("Failed to insert data.");
-//        }
-//
+        ImageHost idImage1 = new ImageHost(1, 1, "http://example.com/id_image1.jpg");
+        ImageHost idImage2 = new ImageHost(1, 2, "http://example.com/id_image2.jpg");
+
+        ArrayList<ImageHost> idImages = new ArrayList<>(Arrays.asList(idImage1, idImage2));
+        // Create sample ImageHost objects for ownership document images
+        ImageHost docImage1 = new ImageHost(2, 1, "http://example.com/doc_image1.jpg");
+        ImageHost docImage2 = new ImageHost(2, 2, "http://example.com/doc_image2.jpg");
+        ArrayList<ImageHost> docImages = new ArrayList<>(Arrays.asList(docImage1, docImage2));
+
+        // Create a sample HostUpgradeRequest object
+        HostUpgradeRequest request = new HostUpgradeRequest();
+        request.setId(1);
+        request.setAccountId(1); // Assuming account_id 1 exists in tblAccount
+        request.setIdNumber("156789");
+        request.setBankAccount("987654321");
+        request.setBankName("Sample Bank");
+        request.setAccountHolder("John Doe");
+        request.setIdImagePath(idImages);
+        request.setOwnershipDocPath(docImages);
+
+        // Call the method to test
+        boolean success = submitUpgradeRequest(request);
+
+        if (success) {
+            System.out.println("Data inserted successfully!");
+        } else {
+            System.out.println("Failed to insert data.");
+        }
+
 //// Assuming the submitUpgradeRequest method is defined elsewhere in the same class
 //        ArrayList<HostUpgradeRequest> pendingRequests = RegisterOwnerDAO.getPendingRequests();
 //
@@ -296,6 +296,7 @@ public class RegisterOwnerDAO {
         // Display results
         System.out.println("Status for accountId1: " + status1);
         System.out.println("Status for accountId2: " + status2);
+        getRequestById(1);
     }}
 
 

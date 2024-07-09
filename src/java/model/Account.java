@@ -22,6 +22,7 @@ public class Account {
     private ArrayList<Payment>payments;
     private int role_account;
     private Date registration_date;
+    private boolean status;
 
     public Account() {
         // TODO Auto-generated constructor stub
@@ -72,7 +73,7 @@ public class Account {
     public Account(int account_id, String email, String password, String first_name, String last_name, String gender,
             Date date_of_birth,
             String phone, String address, String avatar_img, ArrayList<Payment> payments, int role_account,
-            Date registration_date) {
+            Date registration_date, boolean status) {
         this.account_id = account_id;
         this.email = email;
         this.password = password;
@@ -86,6 +87,7 @@ public class Account {
         this.payments = payments;
         this.role_account = role_account;
         this.registration_date = registration_date;
+        this.status = status;
     }
 
     public int getAccount_id() {
@@ -195,6 +197,15 @@ public class Account {
     public String getFullName(){
         return first_name + " " + last_name;
     }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+    
      public String getAge() {
         if (date_of_birth != null) {
             // Tạo đối tượng Calendar cho ngày hiện tại
