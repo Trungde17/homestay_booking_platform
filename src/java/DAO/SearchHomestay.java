@@ -15,7 +15,6 @@ import model.Homestay;
 import model.HomestayFacilities;
 import model.HomestayImg;
 import model.HomestayType;
-import model.Payment;
 
 public class SearchHomestay {
 
@@ -90,7 +89,6 @@ public class SearchHomestay {
         String description = rs.getString("describe");
         District district = DistrictDAO.getDistrictById(rs.getInt("district_id"));
         String addressDetail = rs.getString("address_detail");
-        Payment payment = PaymentDAO.getPaymentById(rs.getInt("payment_id"));
         String rules = rs.getString("ht_rules");
         ArrayList<HomestayImg> imgs = HomestayImgDAO.getHomestayImgs(id);
         ArrayList<HomestayFacilities> facilities = HomestayFacilitiesDAO.getHomestayFacilities(id);

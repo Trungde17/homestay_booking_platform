@@ -64,7 +64,7 @@
     <filter-mapping>
         <filter-name>Homestay_register_filter</filter-name>
         <url-pattern>/homestay/homestay_register/step1.jsp</url-pattern>
-    </filter-mapping>   
+    </filter-mapping>    
     
     <filter>
         <filter-name>Homestay_manage_filter</filter-name>

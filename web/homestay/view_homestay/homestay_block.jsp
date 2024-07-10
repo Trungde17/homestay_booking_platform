@@ -33,7 +33,7 @@
                 <a href="#rules">Rules</a>
                 <a href="#rooms">Rooms</a>
                 <a href="${pageContext.request.contextPath}/homestay/view_homestay/feedback.jsp?ht_id=${homestay.ht_id}#reviews">User Reviews</a>
-                <a href="#" data-toggle="modal" data-target="#contactHostModal">Contact Host</a>
+                <a href="#" data-toggle="modal" data-target="#contactHostModal">Messaging</a>
             </div>
         </div>
        

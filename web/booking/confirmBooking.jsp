@@ -105,7 +105,7 @@
                                         </c:forEach>
                                     </div>
                                 </div>
-                                <p><strong>Total Amount:</strong> <span>${CurrencyUtils.formatCurrency(cart.getTotalAmount() * 1000)}</span></p>
+                                <p><strong>Total Amount:</strong> <span>${CurrencyUtils.formatCurrency(cart.getTotalAmount())}</span></p>
                                 <div class="d-flex justify-content-center mt-4">
                                     <button type="submit" name="action" value="confirm" class="btn btn-success mr-2">Confirm</button>
                                     <a href="${pageContext.request.contextPath}/booking/booking_result.jsp?error=Booking Cancelled." class="btn btn-danger">Cancel</a>

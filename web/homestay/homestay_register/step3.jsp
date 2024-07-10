@@ -147,7 +147,7 @@
                         <div class="col-sm-6" id="priceForTwo" style="display: none;">
                             <div class="form-group">
                                 <label for="nightlyPrice2"><small>Price for 2 (or more) People(1 night)</small></label>
-                                <input name="price_for_more" type="number" class="form-control" id="nightlyPrice2" placeholder="VND" min="1" required>
+                                <input name="price_for_more" type="number" class="form-control" id="nightlyPrice2" placeholder="VND" min="1">
                             </div>              
                         </div>
                     </div>
@@ -162,10 +162,14 @@
                                 function togglePriceForTwo() {
                                     var numGuests = document.getElementById("numGuests").value;
                                     var priceForTwo = document.getElementById("priceForTwo");
+                                    var priceForMoreInput = document.getElementById("nightlyPrice2");
+
                                     if (numGuests > 1) {
                                         priceForTwo.style.display = "block";
+                                        priceForMoreInput.setAttribute("required", "required");
                                     } else {
                                         priceForTwo.style.display = "none";
+                                        priceForMoreInput.removeAttribute("required");
                                     }
                                 }
 

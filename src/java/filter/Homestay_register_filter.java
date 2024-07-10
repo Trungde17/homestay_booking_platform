@@ -109,24 +109,26 @@ public class Homestay_register_filter implements Filter {
         String url = httpRequest.getContextPath() + "/homestay/homestay_register/step1.jsp";
         Homestay homestay_regiter = HomestayDAO.findRegisteredHomestays(owner.getAccount_id());
         if (homestay_regiter != null) {
-            session.setAttribute("homestay_register", homestay_regiter);
-            if (homestay_regiter.getAddress_detail() != null && homestay_regiter.getDistrict() != null && homestay_regiter.getNeighbourhoods() != null) {
-                url = httpRequest.getContextPath() + "/homestay/homestay_register/step3.jsp";
-                if (homestay_regiter.getCommonRules() != null && homestay_regiter.getHomestay_rules() != null) {
-                    url = httpRequest.getContextPath() + "/homestay/homestay_register/step2.jsp";
-                    if (homestay_regiter.getImg() != null && homestay_regiter.getRooms().get(0).getImg() != null) {
-                        url = httpRequest.getContextPath() + "/index.jsp";
+            if (homestay_regiter.getStatus() == 1) {
+                session.setAttribute("homestay_register", homestay_regiter);
+                if (homestay_regiter.getAddress_detail() != null && homestay_regiter.getDistrict() != null && homestay_regiter.getNeighbourhoods() != null) {
+                    url = httpRequest.getContextPath() + "/homestay/homestay_register/step3.jsp";
+                    if (homestay_regiter.getCommonRules().size()>0 && homestay_regiter.getHomestay_rules() != null) {
+                        url = httpRequest.getContextPath() + "/homestay/homestay_register/step2.jsp";
+                        if (homestay_regiter.getImg().size()>0 && homestay_regiter.getRooms().get(0).getImg().size() >0) {
+                            url = httpRequest.getContextPath() + "/index.jsp";
+                        } else {
+                            url = httpRequest.getContextPath() + "/homestay/homestay_register/step5.jsp";
+                        }
                     } else {
-                        url = httpRequest.getContextPath() + "/homestay/homestay_register/step5.jsp";
+                        url = httpRequest.getContextPath() + "/homestay/homestay_register/step4.jsp";
                     }
                 } else {
-                    url = httpRequest.getContextPath() + "/homestay/homestay_register/step4.jsp";
+                    url = httpRequest.getContextPath() + "/homestay/homestay_register/step2.jsp";
                 }
-            } else {
-                url = httpRequest.getContextPath() + "/homestay/homestay_register/step2.jsp";
+                HttpServletResponse httpRespone = (HttpServletResponse) response;
+                httpRespone.sendRedirect(url);
             }
-            HttpServletResponse httpRespone = (HttpServletResponse) response;
-            httpRespone.sendRedirect(url);
         }
 
         Throwable problem = null;

@@ -148,8 +148,6 @@
                                     <input type="hidden" name="homestayId" value="${homestay.getHt_id()}"/>
                                     <button type="submit" class="btn btn-primary">Add favourite</button>
                                 </form>
-
-
                             </div>
                         </div>
                     </div>
@@ -183,7 +181,13 @@
                 </li>
             </ul>
         </nav>
-
+<form id="paginationForm" action="${pageContext.request.contextPath}/searchServlet" method="post" style="display:none;">
+        <input type="hidden" name="page" id="pageInput">
+        <input type="hidden" name="district" value="${districtName}">
+        <input type="hidden" name="checkIn" value="${sessionScope.checkin}">
+        <input type="hidden" name="checkOut" value="${sessionScope.checkout}">
+        <input type="hidden" name="guests" value="${guests}">
+    </form>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
         <script>
                             document.addEventListener('DOMContentLoaded', function () {

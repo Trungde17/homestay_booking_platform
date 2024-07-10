@@ -6,8 +6,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import model.Account;
-import model.Payment;
-
 public class AccountDAO extends DAO {
 
     public static Account verifyTheAccount(String email, String password) {
@@ -93,11 +91,10 @@ public class AccountDAO extends DAO {
                 while (rs.next()) {
                     try {
                         int account_id = rs.getInt("account_id");
-                        ArrayList<Payment>payments=PaymentDAO.getPaymentsOfAccount(account_id);
                         result.add(new Account(
                                 account_id, rs.getString("email"), rs.getString("password"), rs.getString("first_name"), rs.getString("last_name"),
                                 rs.getString("gender"), rs.getDate("date_of_birth"), rs.getString("phone"), rs.getString("address"), rs.getString("avatar_img"),
-                                payments, rs.getInt("roles_account"), rs.getDate("registration_date"), rs.getBoolean("status")));
+                                 rs.getInt("roles_account"), rs.getDate("registration_date"), rs.getBoolean("status")));
                     } catch (Exception e) {
                         System.out.println(e.getMessage());
                     }

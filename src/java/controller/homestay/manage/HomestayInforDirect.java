@@ -34,9 +34,15 @@ public class HomestayInforDirect extends HttpServlet {
         String homestay_id_str=request.getParameter("ht_id");
         int homestay_id = Integer.parseInt(homestay_id_str);
         Homestay homestay=HomestayDAO.getHomestayById(homestay_id);
+        String url="/homestay/homestay_manage/infor.jsp";
+        if(homestay.getStatus()==3){
         HttpSession session = request.getSession();
         session.setAttribute("homestay", homestay);
-        RequestDispatcher rd = getServletContext().getRequestDispatcher("/homestay/homestay_manage/infor.jsp");
+        }
+        else if(homestay.getStatus()==1){
+            url="/homestay/homestay_register/step1.jsp";
+        }
+        RequestDispatcher rd = getServletContext().getRequestDispatcher(url);
         rd.forward(request, response);
     }
 

@@ -19,7 +19,6 @@ public class Account {
     private String phone;
     private String address;
     private String avatar_img;
-    private ArrayList<Payment>payments;
     private int role_account;
     private Date registration_date;
     private boolean status;
@@ -72,7 +71,7 @@ public class Account {
 
     public Account(int account_id, String email, String password, String first_name, String last_name, String gender,
             Date date_of_birth,
-            String phone, String address, String avatar_img, ArrayList<Payment> payments, int role_account,
+            String phone, String address, String avatar_img,  int role_account,
             Date registration_date, boolean status) {
         this.account_id = account_id;
         this.email = email;
@@ -84,7 +83,6 @@ public class Account {
         this.phone = phone;
         this.address = address;
         this.avatar_img = avatar_img;
-        this.payments = payments;
         this.role_account = role_account;
         this.registration_date = registration_date;
         this.status = status;
@@ -144,16 +142,8 @@ public class Account {
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public ArrayList<Payment> getPayments() {
-        return payments;
-    }
-
-    public void setPayment_account(ArrayList<Payment> payments) {
-        this.payments = payments;
-    }
-
+    }  
+   
     public int getRole_account() {
         return role_account;
     }
@@ -238,7 +228,7 @@ public class Account {
     public String toString() {
         return "Account [account_id=" + account_id + ", email=" + email + ", password=" + password + ", first_name="
                 + first_name + ", last_name=" + last_name + ", gender=" + gender + ", phone=" + phone + ", address="
-                + address + ", avatar_img=" + avatar_img + ", payment_account=" + payments + ", role_account="
+                + address + ", avatar_img=" + avatar_img + ", role_account="
                 + role_account + ", registration_date=" + registration_date + "]";
     }
     

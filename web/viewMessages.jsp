@@ -91,7 +91,7 @@
             <c:set var="conversations" value="${MessageDAO.getConversationsByCustomerId(account.account_id)}"/>
         </c:if>
         <c:forEach var="conversation" items="${conversations}">
-            <c:set var="partnerAccount" value="${account.role_account == 2 ? AccountDAO.getAccountById(conversation.customerId) : AccountDAO.getAccountById(conversation.ownerId)}"/>
+<c:set var="partnerAccount" value="${account.role_account == 2 ? AccountDAO.getAccountById(conversation.customerId) : AccountDAO.getAccountById(conversation.ownerId)}"/>
             <div class="chat-container">
                 <h5>
                     <a data-bs-toggle="collapse" href="#conversation-${conversation.conversationId}" role="button" aria-expanded="false" aria-controls="conversation-${conversation.conversationId}">
@@ -101,7 +101,7 @@
                 <div class="collapse" id="conversation-${conversation.conversationId}">
                     <c:forEach var="message" items="${conversation.messages}">
                         <div class="message ${message.senderName == 'Owner' ? 'left' : 'right'}">
-                            <p><strong>${message.senderName}:</strong> ${message.message}</p>
+                            <p><strong>${message.senderFullName}:</strong> ${message.message}</p>  <!-- Hiển thị tên đầy đủ -->
                             <small>${message.timestamp}</small>
                         </div>
                     </c:forEach>

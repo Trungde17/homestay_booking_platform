@@ -43,7 +43,8 @@ public class SendMessageServlet extends HttpServlet {
         }
 
         String senderName = senderAccount.getRole_account() == 2 ? "Owner" : "Customer";
-        Message message = new Message(ownerId, customerId, messageText, LocalDateTime.now(), senderName);
+        String senderFullName = senderAccount.getFullName();  // Lấy tên đầy đủ của người gửi từ tài khoản
+        Message message = new Message(ownerId, customerId, messageText, LocalDateTime.now(), senderName, senderFullName);  // Truyền tên đầy đủ vào tin nhắn
 
         MessageDAO.saveMessage(message);
         response.sendRedirect(request.getContextPath() + "/viewMessages.jsp");

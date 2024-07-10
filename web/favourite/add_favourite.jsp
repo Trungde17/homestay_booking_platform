@@ -48,11 +48,26 @@
             margin-top: 20px;
             margin-bottom: 40px;
         }
+        .back-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1 class="title">Your Favourite Homestays</h1>
+        <div class="d-flex justify-content-center mb-4">
+            <button class="back-button" onclick="goBack()">Back</button>
+        </div>
         <c:if test="${empty favourites}">
             <p class="text-center">No favourites found.</p>
         </c:if>
@@ -88,6 +103,9 @@
         function submitDetailForm(homestayId) {
             document.getElementById('hiddenHomestayId').value = homestayId;
             document.getElementById('detailForm').submit();
+        }
+        function goBack() {
+            window.location.href = "${pageContext.request.contextPath}/homestaySearch/homestaySearch.jsp";
         }
     </script>
 </body>

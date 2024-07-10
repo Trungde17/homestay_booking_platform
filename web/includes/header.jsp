@@ -15,7 +15,7 @@
                     <a class="nav-link" href="#">Destinations</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Inspire Me</a>
+                     <a class="nav-link" href="${pageContext.request.contextPath}/viewMessages.jsp">Messenger</a>
                 </li>                        
                 <li class="nav-item">
                     <a class="nav-link" href="${pageContext.request.contextPath}/help/help.jsp">Help</a>
@@ -54,11 +54,11 @@
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" onclick="toggleDropdown('profileList')" aria-expanded="false">
-                            My Profile
+                            ${account.first_name}
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="profileDropdown" id="profileList" style="display: none;">
                             <li><a class="dropdown-item" href="${pageContext.request.contextPath}/account/personal_profile.jsp">Personal Profile</a></li>
-                            <li><a class="dropdown-item" href="${pageContext.request.contextPath}/booking_history">Booking History</a></li>
+                            <li><a class="dropdown-item" href="${pageContext.request.contextPath}/booking_history">My Booking</a></li>
                             <li class="nav-item">
                         <form action="${pageContext.request.contextPath}/LogoutSeverlet" method="post">
                             <button type="submit" class="nav-link">Log Out</button>
@@ -93,7 +93,7 @@
     function postToManageHomestay(homestayId) {
         const form = document.createElement('form');
         form.method = 'POST';
-        form.action = `${window.location.origin}${pageContext.request.contextPath}/homestay/homestay_manage/approveBookings.jsp`;
+        form.action = `${window.location.origin}${pageContext.request.contextPath}/homestayinfor`;
 
         const hiddenField = document.createElement('input');
         hiddenField.type = 'hidden';

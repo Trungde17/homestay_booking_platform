@@ -12,7 +12,6 @@ public class Homestay {
     private String describe;
     private District district;
     private String address_detail;
-    private Payment payment;
     private String homestay_rules;
     private ArrayList<Rule> commonRules;
     private ArrayList<HomestayImg> img;
@@ -26,14 +25,13 @@ public class Homestay {
     }
 
   
-    public Homestay(String ht_name, Account owner, HomestayType homestayType, String describe, District district, String address_detail, Payment payment, ArrayList<HomestayImg> img, ArrayList<HomestayFacilities> facilities) {
+    public Homestay(String ht_name, Account owner, HomestayType homestayType, String describe, District district, String address_detail, ArrayList<HomestayImg> img, ArrayList<HomestayFacilities> facilities) {
         this.ht_name = ht_name;
         this.owner = owner;
         this.homestayType = homestayType;
         this.describe = describe;
         this.district = district;
         this.address_detail = address_detail;
-        this.payment = payment;
         this.img = img;
         this.facilities = facilities;
     }
@@ -50,7 +48,7 @@ public class Homestay {
     
 
     public Homestay(int ht_id, String ht_name, Account owner, HomestayType homestayType, String describe, 
-            District district, String address_detail, Payment payment, String homestay_rules, ArrayList<Rule>commonRules,
+            District district, String address_detail, String homestay_rules, ArrayList<Rule>commonRules,
             ArrayList<HomestayImg> img, ArrayList<HomestayFacilities> facilities, ArrayList<Neighbourhood> neighbourhoods, 
             Date registration_date, ArrayList<Room>rooms, int status)
     {
@@ -61,7 +59,6 @@ public class Homestay {
         this.describe = describe;
         this.district = district;
         this.address_detail = address_detail;
-        this.payment = payment;
         this.homestay_rules = homestay_rules;
         this.commonRules = commonRules;
         this.img = img;
@@ -128,13 +125,7 @@ public class Homestay {
         this.address_detail = address_detail;
     }
 
-    public Payment getPayment() {
-        return payment;
-    }
-
-    public void setPayment(Payment payment) {
-        this.payment = payment;
-    }
+   
 
     public String getHomestay_rules() {
         return homestay_rules;

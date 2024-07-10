@@ -53,18 +53,17 @@ public class BookingDAO extends DAO {
         }
         return null;
     }
-    public static int insertIntoBooking(int booking_id, int customer_id, Date date_booked, Date date_checkin, Date date_checkout, double paid_amount, int booking_status){
+    public static int insertIntoBooking(int booking_id, int customer_id, Date date_booked, Date date_checkin, Date date_checkout, int booking_status){
         try (Connection con=getConnection()){
             PreparedStatement stmt=con.prepareStatement("insert into tblBooking(booking_id, "
-                    + "customer_id, date_booked, date_checkin, date_checkout, paid_amount, booking_status) values(?, ?, ?, ?, ?, ?, ?)");
+                    + "customer_id, date_booked, date_checkin, date_checkout, booking_status) values(?, ?, ?, ?, ?, ?)");
             
             stmt.setInt(1, booking_id);
             stmt.setInt(2, customer_id);
             stmt.setDate(3, new java.sql.Date(date_booked.getTime()));
             stmt.setDate(4, new java.sql.Date(date_checkin.getTime()));
             stmt.setDate(5, new java.sql.Date(date_checkout.getTime()));
-            stmt.setDouble(6, paid_amount);
-            stmt.setInt(7, booking_status);
+            stmt.setInt(6, booking_status);
             stmt.executeUpdate();
             return 1;
         } catch (Exception e) {
@@ -341,7 +340,7 @@ public class BookingDAO extends DAO {
     }
         public static List<Booking> getBookingsByAccountId(int accountId) {
     List<Booking> bookings = new ArrayList<>();
-    String sql = "SELECT b.booking_id, b.date_booked, b.date_checkin, b.date_checkout, b.paid_amount, b.outstanding_amount, b.booking_status, "
+    String sql = "SELECT b.booking_id, b.date_booked, b.date_checkin, b.date_checkout, b.booking_status, "
                + "r.room_id, r.room_name, r.room_description, r.size "
                + "FROM tblBooking b "
                + "JOIN tblBooking_detail bd ON b.booking_id = bd.booking_id "
@@ -357,8 +356,6 @@ public class BookingDAO extends DAO {
             Date dateBooked = rs.getDate("date_booked");
             Date checkIn = rs.getDate("date_checkin");
             Date checkOut = rs.getDate("date_checkout");
-            double paidAmount = rs.getDouble("paid_amount");
-            double outstandingAmount = rs.getDouble("outstanding_amount");
             int bookingStatus = rs.getInt("booking_status");
 
             Room room = new Room(rs.getInt("room_id"), rs.getString("room_name"), rs.getString("room_description"), rs.getString("size"));
@@ -368,8 +365,6 @@ public class BookingDAO extends DAO {
             booking.setDate_booked(dateBooked);
             booking.setCheck_in(checkIn);
             booking.setCheck_out(checkOut);
-            booking.setPaid_amount(paidAmount);
-            booking.setOutstanding_amount(outstandingAmount*1000);
             booking.setBooking_status(bookingStatus);
 
             if (bookings.contains(booking)) {
