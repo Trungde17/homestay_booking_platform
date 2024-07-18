@@ -12,8 +12,9 @@ import model.RoomFacilities;
 import model.RoomPrice;
 public class RoomDAO extends DAO{
     public static ArrayList<Room> getRoomsOfHomestay(int homestay_id){
-        try(Connection con=getConnection()) {
-            PreparedStatement stmt=con.prepareStatement("select * from tblRoom where ht_id=?");
+        try(Connection con=getConnection();
+                PreparedStatement stmt=con.prepareStatement("select * from tblRoom where ht_id=?");) {
+            
             stmt.setInt(1, homestay_id);
             return createRoomsBaseResultset(stmt.executeQuery());
         } catch (Exception e) {
@@ -23,8 +24,9 @@ public class RoomDAO extends DAO{
         return null;
     }
     public static Room getRoomById(int room_id){
-        try (Connection con=getConnection()){
-            PreparedStatement stmt=con.prepareStatement("select * from tblRoom where room_id=?");
+        try (Connection con=getConnection();
+                PreparedStatement stmt=con.prepareStatement("select * from tblRoom where room_id=?");){
+            
             stmt.setInt(1, room_id);
             return createRoomsBaseResultset(stmt.executeQuery()).get(0);
         } catch (Exception e) {
@@ -33,8 +35,9 @@ public class RoomDAO extends DAO{
         return null;
     }
     public static Map<Room, Integer>getRoomBookingBasicInfor(int booking_id){
-        try (Connection con=getConnection()){
-            PreparedStatement stmt = con.prepareStatement("select * from tblBooking_detail bd join tblRoom r on bd.room_id=r.room_id where booking_id=?");
+        try (Connection con=getConnection();
+                PreparedStatement stmt = con.prepareStatement("select * from tblBooking_detail bd join tblRoom r on bd.room_id=r.room_id where booking_id=?");){
+            
             stmt.setInt(1, booking_id);
             ResultSet rs=stmt.executeQuery();
             Map<Room, Integer>rooms=new LinkedHashMap<>();
@@ -50,8 +53,9 @@ public class RoomDAO extends DAO{
     }
     
     public static ArrayList<Room> getAllHomestayRooms(int homestay_id){
-        try(Connection con=getConnection()) {
-            PreparedStatement stmt=con.prepareStatement("select * from tblRoom where ht_id=?");
+        try(Connection con=getConnection();
+                PreparedStatement stmt=con.prepareStatement("select * from tblRoom where ht_id=?");) {
+            
             stmt.setInt(1, homestay_id);
             return createRoomsBaseResultset(stmt.executeQuery());
         } catch (Exception e) {
@@ -61,9 +65,10 @@ public class RoomDAO extends DAO{
     }
     
     public static int insertRoomOfHomestay(int homestay_id, int room_id, String room_name, int capacity){
-        try (Connection con=getConnection()){
-            PreparedStatement stmt=con.prepareStatement("insert into tblRoom(room_id, room_name, ht_id, capacity)"
-                    + "values(?, ?, ?, ?)");
+        try (Connection con=getConnection();
+                PreparedStatement stmt=con.prepareStatement("insert into tblRoom(room_id, room_name, ht_id, capacity)"
+                    + "values(?, ?, ?, ?)");){
+            
             stmt.setInt(1, room_id);
             stmt.setString(2, room_name);
             stmt.setInt(3, homestay_id);
@@ -78,8 +83,9 @@ public class RoomDAO extends DAO{
     
    // Update Room Information including related data
    public static boolean changeName(int room_id, String name){
-        try(Connection con=getConnection()) {
-            PreparedStatement stmt=con.prepareStatement("Update tblRoom set room_name=? where room_id=?");
+        try(Connection con=getConnection();
+                PreparedStatement stmt=con.prepareStatement("Update tblRoom set room_name=? where room_id=?");) {
+            
             stmt.setString(1, name);
             stmt.setInt(2, room_id);
             stmt.executeUpdate();
@@ -90,8 +96,9 @@ public class RoomDAO extends DAO{
         return false;
     }
    public static boolean changeStatus(int room_id, boolean status){
-        try(Connection con=getConnection()) {
-            PreparedStatement stmt=con.prepareStatement("update tblRoom set room_status= ? where room_id=?");
+        try(Connection con=getConnection();
+                PreparedStatement stmt=con.prepareStatement("update tblRoom set room_status= ? where room_id=?");) {
+            
             stmt.setBoolean(1, status);
             stmt.setInt(2, room_id);
             stmt.executeUpdate();
@@ -103,8 +110,9 @@ public class RoomDAO extends DAO{
     }
            
     public static boolean changeDescription(int room_id, String description){
-        try(Connection con=getConnection()) {
-            PreparedStatement stmt=con.prepareStatement("Update tblRoom set room_description=? where room_id=?");
+        try(Connection con=getConnection();
+                PreparedStatement stmt=con.prepareStatement("Update tblRoom set room_description=? where room_id=?");) {
+            
             stmt.setString(1, description);
             stmt.setInt(2, room_id);
             stmt.executeUpdate();
@@ -117,8 +125,9 @@ public class RoomDAO extends DAO{
     
     
     public static boolean changeCapaciy(int room_id, int capacity ){
-        try (Connection con=getConnection()){
-            PreparedStatement stmt=con.prepareStatement("Update tblRoom set capacity =? where room_id=?");
+        try (Connection con=getConnection();
+                PreparedStatement stmt=con.prepareStatement("Update tblRoom set capacity =? where room_id=?");){
+            
             stmt.setInt(1, capacity);
             stmt.setInt(2, room_id);
             stmt.executeUpdate();
@@ -130,8 +139,9 @@ public class RoomDAO extends DAO{
     }
     
     public static boolean changeSize(int room_id, String size){
-        try (Connection con=getConnection()){
-            PreparedStatement stmt=con.prepareStatement("Update tblRoom set size=? where room_id=?");
+        try (Connection con=getConnection();
+                PreparedStatement stmt=con.prepareStatement("Update tblRoom set size=? where room_id=?");){
+            
             stmt.setString(1, size);
             stmt.setInt(2, room_id);
             stmt.executeUpdate();
@@ -193,8 +203,9 @@ public class RoomDAO extends DAO{
     
     public static int insertIntoBookingDetail(int booking_id,Map<Room, Integer>rooms){
         int number=0;
-        try (Connection con=getConnection()){            
-            PreparedStatement stmt=con.prepareStatement("insert into tblBooking_detail values(?, ?, ?)");
+        try (Connection con=getConnection();
+                PreparedStatement stmt=con.prepareStatement("insert into tblBooking_detail values(?, ?, ?)");){            
+            
             stmt.setInt(1, booking_id);
             for (Map.Entry<Room, Integer> entry : rooms.entrySet()) {
                 try {
@@ -212,8 +223,9 @@ public class RoomDAO extends DAO{
     }
     public static int count(){
         
-        try (Connection con=getConnection()){
-            PreparedStatement stmt=con.prepareStatement("select count(*) number from tblRoom");
+        try (Connection con=getConnection();
+                PreparedStatement stmt=con.prepareStatement("select count(*) number from tblRoom");){
+            
             ResultSet rs=stmt.executeQuery();
             if(rs.next()){
                 return rs.getInt("number");
@@ -225,8 +237,9 @@ public class RoomDAO extends DAO{
     }
     
     public static ArrayList<Room>getRoomsOverlapOfBooking(int booking_id){
-        try (Connection con=getConnection()){
-            PreparedStatement stmt=con.prepareStatement("EXEC dbo.CheckRoomOverlap @booking_id=?");
+        try (Connection con=getConnection();
+                PreparedStatement stmt=con.prepareStatement("EXEC dbo.CheckRoomOverlap @booking_id=?");){
+            
             stmt.setInt(1, booking_id);
             ResultSet rs=stmt.executeQuery();
             ArrayList<Room>roomsOverlap=new ArrayList<>();
@@ -244,8 +257,9 @@ public class RoomDAO extends DAO{
         return null;
     }
     public static ArrayList<Room>getAvailableRoomsOfHomestay(int homestay_id, Date checkin_date, Date checkout_date){
-        try (Connection con=getConnection()){
-            PreparedStatement stmt=con.prepareStatement("EXEC GetAvailableRoomsOfHomestay @homestay_id=?, @date_checkin=?, @date_check_out=?");
+        try (Connection con=getConnection();
+                PreparedStatement stmt=con.prepareStatement("EXEC GetAvailableRoomsOfHomestay @homestay_id=?, @date_checkin=?, @date_check_out=?");){
+            
             stmt.setInt(1, homestay_id);
             stmt.setDate(2, new java.sql.Date(checkin_date.getTime()));
             stmt.setDate(3, new java.sql.Date(checkout_date.getTime()));

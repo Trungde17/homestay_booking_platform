@@ -7,8 +7,9 @@ import model.HomestayImg;
 public class HomestayImgDAO extends DAO {
 
     public static ArrayList<HomestayImg> getHomestayImgs(int homestay_id) {
-        try (Connection con = getConnection()) {
-            PreparedStatement stmt = con.prepareStatement("select * from tblHomestayImg where ht_id=?");
+        try (Connection con = getConnection(); 
+                PreparedStatement stmt = con.prepareStatement("select * from tblHomestayImg where ht_id=?");) {
+            
             stmt.setInt(1, homestay_id);
             ResultSet rs = stmt.executeQuery();
             ArrayList<HomestayImg> imgs = new ArrayList<>();
@@ -24,8 +25,8 @@ public class HomestayImgDAO extends DAO {
 
     
     public static boolean changeImg(int img_id, String url){
-        try (Connection con=getConnection()){
-            PreparedStatement stmt=con.prepareStatement("update tblHomestayImg set image_url=? where img_id=?");
+        try (Connection con=getConnection(); PreparedStatement stmt=con.prepareStatement("update tblHomestayImg set image_url=? where img_id=?");){
+            
             stmt.setString(1, url);
             stmt.setInt(2, img_id);
             stmt.executeUpdate();
@@ -36,8 +37,9 @@ public class HomestayImgDAO extends DAO {
         return false;
     }
     public static int InsertHomestayImg(int homestay_id, String url) {
-        try (Connection con = getConnection()) {
-            PreparedStatement stmt = con.prepareStatement("insert into tblHomestayImg(ht_id, img_id, image_url) values(?, ?, ?)");
+        try (Connection con = getConnection();
+                PreparedStatement stmt = con.prepareStatement("insert into tblHomestayImg(ht_id, img_id, image_url) values(?, ?, ?)");) {
+           
             stmt.setInt(1, homestay_id);
             stmt.setInt(2, count() + 1);
             stmt.setString(3, url);
@@ -51,8 +53,9 @@ public class HomestayImgDAO extends DAO {
 
     public static int count() {
         int number = 0;
-        try (Connection con = getConnection()) {
-            PreparedStatement stmt = con.prepareStatement("select COUNT(*) number FROM tblHomestayImg");
+        try (Connection con = getConnection();
+                PreparedStatement stmt = con.prepareStatement("select COUNT(*) number FROM tblHomestayImg");) {
+            
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 return rs.getInt("number");

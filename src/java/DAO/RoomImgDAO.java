@@ -6,8 +6,9 @@ import java.util.ArrayList;
 import model.Img;
 public class RoomImgDAO extends DAO{
     public static ArrayList<Img>getRoomImgs(int room_id){
-        try (Connection con =getConnection()){
-            PreparedStatement stmt = con.prepareStatement("select * from tblRoomImg where room_id=?");
+        try (Connection con =getConnection();
+                PreparedStatement stmt = con.prepareStatement("select * from tblRoomImg where room_id=?");){
+            
             stmt.setInt(1, room_id);
             ResultSet rs=stmt.executeQuery();
             ArrayList<Img>imgs=new ArrayList<>();
@@ -21,8 +22,9 @@ public class RoomImgDAO extends DAO{
         return null;
     }
     public static int insertRoomImg(int room_id, String url){
-        try (Connection con=getConnection()){
-            PreparedStatement stmt=con.prepareStatement("insert tblRoomImg(room_id, img_id, img_url) values(?, ?, ?)");
+        try (Connection con=getConnection();
+                PreparedStatement stmt=con.prepareStatement("insert tblRoomImg(room_id, img_id, img_url) values(?, ?, ?)");){
+            
             stmt.setInt(1, room_id);
             stmt.setInt(2, count()+1);
             stmt.setString(3, url);
@@ -35,8 +37,9 @@ public class RoomImgDAO extends DAO{
     }
     public static int count(){
         int number=0;
-        try (Connection con=getConnection()){
-            PreparedStatement stmt=con.prepareStatement("select COUNT(*) number from tblRoomImg");
+        try (Connection con=getConnection();
+                PreparedStatement stmt=con.prepareStatement("select COUNT(*) number from tblRoomImg");){
+            
             ResultSet rs=stmt.executeQuery();
             if(rs.next())return rs.getInt("number");
         } catch (Exception e) {
@@ -45,8 +48,9 @@ public class RoomImgDAO extends DAO{
         return number;
     }
       public static boolean changeImg(int img_id, String url){
-        try (Connection con=getConnection()){
-            PreparedStatement stmt=con.prepareStatement("update tblRoomImg set image_url=? where img_id=?");
+        try (Connection con=getConnection();
+                PreparedStatement stmt=con.prepareStatement("update tblRoomImg set image_url=? where img_id=?");){
+            
             stmt.setString(1, url);
             stmt.setInt(2, img_id);
             stmt.executeUpdate();

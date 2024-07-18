@@ -7,9 +7,10 @@ import model.Rule;
 public class RuleDAO extends DAO {
 
     public static ArrayList<Rule> getHomestayRules(int homestay_id) {
-        try (Connection con = getConnection()) {
-            PreparedStatement stmt = con.prepareStatement("select*from tblHomestayRules as hr join tblRules as r "
-                    + "on hr.rule_id=r.rule_id where ht_id=?");
+        try (Connection con = getConnection();
+                PreparedStatement stmt = con.prepareStatement("select*from tblHomestayRules as hr join tblRules as r "
+                    + "on hr.rule_id=r.rule_id where ht_id=?");) {
+            
             stmt.setInt(1, homestay_id);
             return createRulesBaseResultset(stmt.executeQuery());
         } catch (Exception e) {
@@ -19,8 +20,9 @@ public class RuleDAO extends DAO {
     }
 
     public static ArrayList<Rule> getAll() {
-        try (Connection con = getConnection()) {
-            PreparedStatement stmt = con.prepareStatement("select * from tblRules");
+        try (Connection con = getConnection();
+                PreparedStatement stmt = con.prepareStatement("select * from tblRules");) {
+            
             return createRulesBaseResultset(stmt.executeQuery());
         } catch (Exception e) {
             System.out.println(e);
@@ -28,8 +30,9 @@ public class RuleDAO extends DAO {
         return null;
     }
     public static boolean delete(int homestay_id){
-        try (Connection con=getConnection()){
-            PreparedStatement stmt = con.prepareStatement("delete tblHomestayRules where ht_id=?");
+        try (Connection con=getConnection();
+                PreparedStatement stmt = con.prepareStatement("delete tblHomestayRules where ht_id=?");){
+            
             stmt.setInt(1, homestay_id);
             stmt.executeUpdate();
             return true;
@@ -40,8 +43,9 @@ public class RuleDAO extends DAO {
     }
     public static int insertHomestayRules(int homestay_id, int[]rules){
         int number=0;
-        try (Connection con=getConnection()){
-            PreparedStatement stmt=con.prepareStatement("insert into tblHomestayRules(ht_id, rule_id) values(?, ?)");
+        try (Connection con=getConnection();
+                PreparedStatement stmt=con.prepareStatement("insert into tblHomestayRules(ht_id, rule_id) values(?, ?)");){
+            
             stmt.setInt(1, homestay_id);
             for(int rule_id : rules ){
                 stmt.setInt(2, rule_id);

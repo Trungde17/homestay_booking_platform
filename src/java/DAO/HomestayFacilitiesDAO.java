@@ -7,11 +7,15 @@ import model.HomestayFacilities;
 public class HomestayFacilitiesDAO extends DAO {
 
     public static ArrayList<HomestayFacilities> getHomestayFacilities(int homestay_id) {
-        try (Connection con = getConnection()) {
-            PreparedStatement stmt = con.prepareStatement("select * from tblHomestayFacilities as hf join tblFacilitiesOfHomestay as fh "
-                    + "on hf.facility_id=fh.facility_id where ht_id=?");
+        String sql = "select * from tblHomestayFacilities as hf join tblFacilitiesOfHomestay as fh "
+                   + "on hf.facility_id=fh.facility_id where ht_id=?";
+        try (Connection con = getConnection();
+             PreparedStatement stmt = con.prepareStatement(sql)) {
+            
             stmt.setInt(1, homestay_id);
-            return createHomestayFacilitiesBaseResultset(stmt.executeQuery());
+            try (ResultSet rs = stmt.executeQuery()) {
+                return createHomestayFacilitiesBaseResultset(rs);
+            }
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -19,26 +23,32 @@ public class HomestayFacilitiesDAO extends DAO {
     }
 
     public static int insertIntoHomestayFacilities(int homestay_id, int[] facilities_list) {
-        int number=0;
-        try (Connection con = getConnection()) {
+        int number = 0;
+        String sql = "insert into tblFacilitiesOfHomestay(ht_id, facility_id) values(?, ?)";
+        try (Connection con = getConnection();
+             PreparedStatement stmt = con.prepareStatement(sql)) {
+            
             if (facilities_list != null) {
-                PreparedStatement stmt = con.prepareStatement("insert into tblFacilitiesOfHomestay(ht_id, facility_id) values(?, ?)");
                 stmt.setInt(1, homestay_id);
-                for(int facilities_id:facilities_list){
+                for (int facilities_id : facilities_list) {
                     stmt.setInt(2, facilities_id);
                     stmt.executeUpdate();
                     number++;
                 }
             }
         } catch (Exception e) {
+            System.out.println(e);
         }
         return number;
     }
        
     public static ArrayList<HomestayFacilities> getAll() {
-        try (Connection con = getConnection()) {
-            PreparedStatement stmt = con.prepareStatement("select * from tblHomestayFacilities");
-            return createHomestayFacilitiesBaseResultset(stmt.executeQuery());
+        String sql = "select * from tblHomestayFacilities";
+        try (Connection con = getConnection();
+             PreparedStatement stmt = con.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+            
+            return createHomestayFacilitiesBaseResultset(rs);
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -58,19 +68,22 @@ public class HomestayFacilitiesDAO extends DAO {
         return null;
     }
     
-    public static boolean delete(int homestay_id){
-        try(Connection con=getConnection()) {
-            PreparedStatement stmt=con.prepareStatement("delete tblFacilitiesOfHomestay where ht_id=?");
+    public static boolean delete(int homestay_id) {
+        String sql = "delete from tblFacilitiesOfHomestay where ht_id=?";
+        try (Connection con = getConnection();
+             PreparedStatement stmt = con.prepareStatement(sql)) {
+            
             stmt.setInt(1, homestay_id);
             stmt.executeUpdate();
+            return true;
         } catch (Exception e) {
             System.out.println(e);
         }
         return false;
     }
+
     public static void main(String[] args) {
-        int[]list=new int[]{1, 2, 3, 4, 5};
+        int[] list = new int[]{1, 2, 3, 4, 5};
         System.out.println(insertIntoHomestayFacilities(1, list));
     }
-    
 }

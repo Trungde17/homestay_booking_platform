@@ -9,8 +9,8 @@ import model.Account;
 public class AccountDAO extends DAO {
 
     public static Account verifyTheAccount(String email, String password) {
-        try (Connection con = getConnection()) {
-            PreparedStatement stmt = con.prepareStatement("select * from tblAccount where email=? AND password=?");
+        try (Connection con = getConnection();
+                PreparedStatement stmt = con.prepareStatement("select * from tblAccount where email=? AND password=?");) {
             stmt.setString(1, email);
             stmt.setString(2, password);
             ArrayList<Account> accounts = createAccountFromResultSet(stmt.executeQuery());
@@ -22,9 +22,9 @@ public class AccountDAO extends DAO {
     }
     
     public static Account getBasicInforOfAccount(int account_id){
-        try (Connection con = getConnection()) {
-            PreparedStatement stmt = con.prepareStatement("select account_id, email, first_name,"
-                    + "last_name, gender, date_of_birth, phone, address, avatar_img from tblAccount where account_id=?");
+        try (Connection con = getConnection();
+                PreparedStatement stmt = con.prepareStatement("select account_id, email, first_name,"
+                    + "last_name, gender, date_of_birth, phone, address, avatar_img from tblAccount where account_id=?");) {
             stmt.setInt(1, account_id);
             ResultSet rs=stmt.executeQuery();
             if(rs.next()){
@@ -55,8 +55,7 @@ public class AccountDAO extends DAO {
     }
 
     public static void updateAccountStatus(int accountId, boolean newStatus) {
-        try ( Connection con = getConnection()) {
-            PreparedStatement stmt = con.prepareStatement("UPDATE tblAccount SET status = ? WHERE account_id = ?");
+        try ( Connection con = getConnection(); PreparedStatement stmt = con.prepareStatement("UPDATE tblAccount SET status = ? WHERE account_id = ?");) {
             stmt.setBoolean(1, newStatus);
             stmt.setInt(2, accountId);
             stmt.executeUpdate();
@@ -111,8 +110,7 @@ public class AccountDAO extends DAO {
     //hàm kiểm tra email có tồn tại hay không?
 
     public static boolean checkEmail(String email) {
-        try (Connection con = getConnection()) {
-            PreparedStatement stmt = con.prepareStatement("select * from tblAccount where email=?");
+        try (Connection con = getConnection(); PreparedStatement stmt = con.prepareStatement("select * from tblAccount where email=?");) {
             stmt.setString(1, email);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
@@ -126,8 +124,9 @@ public class AccountDAO extends DAO {
     //hàm đếm số lượng account
 
     public static int count() {
-        try (Connection con = getConnection()) {
-            PreparedStatement stmt = con.prepareStatement("select count(*) as number_account from tblAccount");
+        try (Connection con = getConnection();
+                PreparedStatement stmt = con.prepareStatement("select count(*) as number_account from tblAccount");) {
+  
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 return rs.getInt("number_account");
@@ -140,8 +139,8 @@ public class AccountDAO extends DAO {
 
     //hàm signup
     public static Account signupAccount(String email, String password, String first_name, String last_name, int account_role) {
-        try (Connection con = getConnection()) {
-            PreparedStatement stmt = con.prepareStatement("EXEC InsertDataFormSignup @email=?, @password=?, @first_name=?, @last_name=?, @account_role=?");
+        try (Connection con = getConnection(); 
+                PreparedStatement stmt = con.prepareStatement("EXEC InsertDataFormSignup @email=?, @password=?, @first_name=?, @last_name=?, @account_role=?");) {
             stmt.setString(1, email);
             stmt.setString(2, password);
             stmt.setString(3, first_name);
@@ -159,8 +158,8 @@ public class AccountDAO extends DAO {
     }
 
     public static Account getAccountById(int account_id) {
-        try (Connection con = getConnection()) {
-            PreparedStatement stmt = con.prepareStatement("select * from tblAccount where account_id=?");
+        try (Connection con = getConnection(); 
+                PreparedStatement stmt = con.prepareStatement("select * from tblAccount where account_id=?");) {
             stmt.setInt(1, account_id);
             ResultSet rs = stmt.executeQuery();
             return createAccountFromResultSet(rs).get(0);
@@ -184,8 +183,7 @@ public class AccountDAO extends DAO {
     }
 
     public static Account getAccountByEmail(String email) {
-        try (Connection con = getConnection()) {
-            PreparedStatement stmt = con.prepareStatement("select * from tblAccount where email=?");
+        try (Connection con = getConnection(); PreparedStatement stmt = con.prepareStatement("select * from tblAccount where email=?");) {
             stmt.setString(1, email);
             ResultSet rs = stmt.executeQuery();
             return createAccountFromResultSet(rs).get(0);
@@ -196,8 +194,8 @@ public class AccountDAO extends DAO {
     }
 
     public static boolean changePassword(String email, String password) {
-        try (Connection con = getConnection()) {
-            PreparedStatement stmt = con.prepareStatement("UPDATE tblAccount set password=? where email=?");
+        try (Connection con = getConnection(); 
+                PreparedStatement stmt = con.prepareStatement("UPDATE tblAccount set password=? where email=?");) {
             stmt.setString(1, password);
             stmt.setString(2, email);
             stmt.executeUpdate();
@@ -209,8 +207,7 @@ public class AccountDAO extends DAO {
     }   
     
     public static boolean changeAvatar(int account_id, String avatar_img){
-        try (Connection con = getConnection()){
-            PreparedStatement stmt = con.prepareStatement("UPDATE tblAccount set avatar_img=? where account_id =? ");
+        try (Connection con = getConnection(); PreparedStatement stmt = con.prepareStatement("UPDATE tblAccount set avatar_img=? where account_id =? ");){
             stmt.setString(1, avatar_img);
             stmt.setInt(2, account_id);
             stmt.executeUpdate();

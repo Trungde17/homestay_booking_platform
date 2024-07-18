@@ -11,8 +11,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/homestay/manage/menu.css" />
     <script>
         $(document).ready(function () {
+            // Đặt giá trị tối thiểu cho ngày bắt đầu và ngày kết thúc
+            var today = new Date().toISOString().split('T')[0];
+            $('#startDate').attr('min', today);
+            $('#endDate').attr('min', today);
+
             // Hàm để tải lịch của phòng từ servlet
             function loadRoomSchedule(roomId) {
                 if (!roomId) {
@@ -72,6 +78,12 @@
                 const endDate = $('#endDate').val();
                 const action = $('#status').val();
 
+                // Kiểm tra ngày bắt đầu và ngày kết thúc hợp lệ
+                if (!startDate || !endDate || new Date(startDate) > new Date(endDate)) {
+                    alert('Please select valid start and end dates.');
+                    return;
+                }
+
                 const data = {
                     room_id: roomId,
                     start_date: startDate,
@@ -88,60 +100,111 @@
                     },
                     body: JSON.stringify(data)
                 })
-                .then(response => {
-                    if (response.ok) {
-                        loadRoomSchedule(roomId);
-                    } else {
-                        console.error('Failed to save schedule');
-                    }
-                })
-                .catch(error => console.error('Error:', error));
+                    .then(response => {
+                        if (response.ok) {
+                            loadRoomSchedule(roomId);
+                        } else {
+                            console.error('Failed to save schedule');
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+            });
+
+            // Sự kiện thay đổi cho ô nhập ngày bắt đầu và ngày kết thúc
+            $('#startDate').on('change', function () {
+                var startDate = $(this).val();
+                $('#endDate').attr('min', startDate);
+            });
+
+            $('#endDate').on('change', function () {
+                var endDate = $(this).val();
+                $('#startDate').attr('max', endDate);
             });
         });
     </script>
     <style>
         body {
             padding-top: 20px;
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 1200px;
+            margin-top: 40px;
+            background-color: #ffffff;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
         }
         #calendar {
             margin-top: 20px;
         }
+        .form-label {
+            font-weight: bold;
+        }
+        .custom-select, .form-control {
+            border-radius: 0.25rem;
+            height: calc(2.25rem + 2px);
+            padding: 0.375rem 0.75rem;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+            border-radius: 0.25rem;
+            padding: 0.375rem 0.75rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            user-select: none;
+            border: 1px solid transparent;
+            color: #ffffff;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="row mb-4">
-            <div class="col-md-4">
-                <label for="roomSelect" class="form-label">Select Room:</label>
-                <div class="input-group">
-                    <select class="custom-select" id="roomSelect">
-                        <option value="41">Room 1</option>
-                        <!-- Thêm các phòng khác -->
-                    </select>
+    <div class="container-fluid">
+        <div class="row">
+            <nav class="col-md-2 d-none d-md-block sidebar">
+                <jsp:include page="menu.jsp" />
+            </nav>
+            <div class="col-md-9 ml-sm-auto col-lg-10 content">
+                <div class="row mb-4">
+                    <div class="col-md-4">
+                        <label for="roomSelect" class="form-label">Select Room:</label>
+                        <div class="input-group">
+                            <select class="custom-select" id="roomSelect">
+                                <option value="1">Room 1</option>
+                                <!-- Thêm các phòng khác -->
+                            </select>
+                        </div>
+                    </div>
                 </div>
+                <div class="row mb-4">
+                    <div class="col-md-3">
+                        <label for="startDate" class="form-label">Start Date:</label>
+                        <input type="date" class="form-control" id="startDate">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="endDate" class="form-label">End Date:</label>
+                        <input type="date" class="form-control" id="endDate">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="status" class="form-label">Status:</label>
+                        <select class="custom-select" id="status">
+                            <option value="add">Busy</option>
+                            <option value="delete">Available</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 align-self-end">
+                        <button class="btn btn-primary" id="saveScheduleBtn">Save Schedule</button>
+                    </div>
+                </div>
+                <div id="calendar"></div>
             </div>
         </div>
-        <div class="row mb-4">
-            <div class="col-md-3">
-                <label for="startDate" class="form-label">Start Date:</label>
-                <input type="date" class="form-control" id="startDate">
-            </div>
-            <div class="col-md-3">
-                <label for="endDate" class="form-label">End Date:</label>
-                <input type="date" class="form-control" id="endDate">
-            </div>
-            <div class="col-md-3">
-                <label for="status" class="form-label">Status:</label>
-                <select class="custom-select" id="status">
-                    <option value="add">Busy</option>
-                    <option value="delete">Available</option>
-                </select>
-            </div>
-            <div class="col-md-3 align-self-end">
-                <button class="btn btn-primary" id="saveScheduleBtn">Save Schedule</button>
-            </div>
-        </div>
-        <div id="calendar"></div>
     </div>
 </body>
 </html>

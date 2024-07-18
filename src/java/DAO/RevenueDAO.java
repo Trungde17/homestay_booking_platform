@@ -21,8 +21,9 @@ public class RevenueDAO extends DAO{
                   "WHERE Year = ? AND Month = ? AND ht_id = ?";
         }
 
-        try (Connection con=getConnection()){
-            PreparedStatement stmt = con.prepareStatement(sql);
+        try (Connection con=getConnection();
+                PreparedStatement stmt = con.prepareStatement(sql);){
+            
             stmt.setString(1, year);
             if (month != null && !month.isEmpty() && !month.equals("0")) {
                 stmt.setString(2, month);
