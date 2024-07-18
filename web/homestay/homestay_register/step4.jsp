@@ -16,6 +16,12 @@
               href="${pageContext.request.contextPath}/css/homestay/register/header.css" /> 
         <link rel="stylesheet"
               href="${pageContext.request.contextPath}/css/main.css" />
+        <style>
+            /* Điều chỉnh chiều cao của textarea */
+            #homestayRules {
+                min-height: 400px; /* Chiều cao tối thiểu */
+            }
+        </style>
 
     </head>
     <body>
@@ -40,10 +46,7 @@
                         <div class="icon"><i class="fas fa-book"></i></div>
                         <p>Rules</p>
                     </div>
-                    <div class="step">
-                        <div class="icon"><i class="fas fa-user"></i></div>
-                        <p>Host</p>
-                    </div>
+                    
                     <div class="step">
                         <div class="icon"><i class="fas fa-images"></i></div>
                         <p>Photos</p>
@@ -57,7 +60,7 @@
 
                             <div class="form-group">
                                 <label for="homestayRules">Your Homestay Rules</label>
-                                <textarea name="ht_rules" class="form-control" id="homestayRules" rows="4" minlength="100" required></textarea>
+                                <textarea name="ht_rules" class="form-control" id="homestayRules" rows="4" minlength="100"  required></textarea>
                             </div>
                             <div class="mt-5 mb-5">
                                 <c:set var="common_rule_list" value="${RuleDAO.getAll()}"/>
@@ -76,22 +79,7 @@
                         </form>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="sidebar">
-                        <div class="info-box">
-                            <h6>CASH OR TRANSFER?</h6>
-                            <p>Guests usually pay cash on arrival. If you require payment in advance please state how you wish to be paid i.e. by bank transfer or Paypal. If you are collecting payment in advance please also state your cancellation policy.</p>
-                        </div>
-                        <div class="info-box">
-                            <h6>DO'S AND DON'TS</h6>
-                            <p>It's a good idea to list out some general do's and don'ts for guests so that they have an idea of what to expect before booking.</p>
-                        </div>
-                        <div class="mt-3">
-                            <p>QUESTION? GET IN TOUCH:</p>
-                            <p>Email us at <a href="mailto:hostsupport@homestay.com">hostsupport@homestay.com</a></p>
-                        </div>
-                    </div>
-                </div>
+                
             </div>
         </div>
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

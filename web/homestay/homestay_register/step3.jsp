@@ -39,10 +39,7 @@
                         <div class="icon"><i class="fas fa-book"></i></div>
                         <p>Rules</p>
                     </div>
-                    <div class="step">
-                        <div class="icon"><i class="fas fa-user"></i></div>
-                        <p>Host</p>
-                    </div>
+                    
                     <div class="step">
                         <div class="icon"><i class="fas fa-images"></i></div>
                         <p>Photos</p>

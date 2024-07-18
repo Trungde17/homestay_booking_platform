@@ -39,10 +39,7 @@
                         <div class="icon"><i class="fas fa-book"></i></div>
                         <p>Rules</p>
                     </div>
-                    <div class="step">
-                        <div class="icon"><i class="fas fa-user"></i></div>
-                        <p>Host</p>
-                    </div>
+                    
                     <div class="step">
                         <div class="icon"><i class="fas fa-images"></i></div>
                         <p>Photos</p>
@@ -108,26 +105,7 @@
                         </form>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="sidebar">
-                        <div class="info-box">
-                            <h6>HOSTED HOMESTAY EXPERIENCE</h6>
-                            <p>A host lives in every homestay listed on HealingLand.com ? none of our homestays are vacant properties. We understand that you can't be there all the time, but just to welcome and orientate your guests.</p>
-                        </div>
-                        <div class="info-box">
-                            <h6>TIPS FOR A GREAT DESCRIPTION</h6>
-                            <ul class="tips-list">
-                                <li>Is your home in the town, city centre, suburbs or countryside?</li>
-                                <li>Who else lives at home with you?</li>
-                                <li>What type of bedroom(s) are available to guests?</li>
-                                <li>What kind of lounge/living/outdoor areas are there?</li>
-                                <li>Have you or your family any special interests?</li>
-                                <li>Are any other languages spoken at home?</li>
-                            </ul>
-                        </div>
-                        
-                    </div>
-                </div>
+                
             </div>
         </div>
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

@@ -70,6 +70,7 @@ Copy code
                             <option value="4">4 Guests</option>
                             <option value="5">5 Guests</option>
                             <option value="6">6 Guests</option>
+                            <option value="7">7 Guests</option>
                         </select>
                     </div>
                     <div class="col-md-1">
@@ -77,6 +78,7 @@ Copy code
                     </div>
                 </div>
             </form>
+                
         </div>
     </section>
    

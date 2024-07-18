@@ -39,10 +39,7 @@
                         <div class="icon"><i class="fas fa-book"></i></div>
                         <p>Rules</p>
                     </div>
-                    <div class="step">
-                        <div class="icon"><i class="fas fa-user"></i></div>
-                        <p>Host</p>
-                    </div>
+                    
                     <div class="step">
                         <div class="icon"><i class="fas fa-images"></i></div>
                         <p>Photos</p>
@@ -100,29 +97,7 @@
                         </form>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="sidebar">
-                        <div class="info-box">
-                            <h6>TIPS FOR LOCATION DESCRIPTION</h6>
-                            <ul class="tips-list">
-                                <li>Is your home in a quiet or lively neighbourhood?</li>
-                                <li>Are you near the sea, lakes, mountains or river?</li>
-                                <li>Are there any tourist attractions nearby?</li>
-                                <li>What kind of shops, cafï¿½s, bars are there?</li>
-                                <li>What other local amenities are close by?</li>
-                                <li>How is local transport? Bus or train station close by?</li>
-                            </ul>
-                        </div>
-                        <div class="info-box">
-                            <h6>Sample: About the Area</h6>
-                            <p>Our house is located on the north side of the city in a quiet and safe suburb. We are 3 km from the city centre and only 15 minutes drive from the airport. The bus stop is only 2 minutes walk from the house and there are lots of bus options using this stop.</p>
-                        </div>
-                        <div class="mt-3">
-                            <p>QUESTION? GET IN TOUCH:</p>
-                            <p>Email us at <a href="mailto:hostsupport@homestay.com">hostsupport@homestay.com</a></p>
-                        </div>
-                    </div>
-                </div>
+                
             </div>
         </div>
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

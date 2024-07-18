@@ -132,9 +132,9 @@
 
         <!-- Homestay Listings -->
         <div class="container mt-5">
-            <div class="row">
+            <div class="row" id="search-results">
                 <c:forEach var="homestay" items="${homestays}">
-                    <div class="col-md-4 mb-4">
+                    <div class="result-item col-md-4 mb-4">
                         <div class="card hotel-card" data-id="${homestay.getHt_id()}" onclick="submitDetailForm(${homestay.getHt_id()})">
                             <c:if test="${not empty homestay.getImg()}">
                                 <img src="${homestay.img.get(0).getImg_url()}" class="card-img-top" alt="Homestay Image">
@@ -146,7 +146,7 @@
                                 <p class="card-text">Address: <c:out value="${homestay.getFullAddress()}"/></p>
                                 <form action="${pageContext.request.contextPath}/AddFavouriteServlet" method="post">
                                     <input type="hidden" name="homestayId" value="${homestay.getHt_id()}"/>
-                                    <button type="submit" class="btn btn-primary">Add favourite</button>
+                                    <button type="submit" class="btn btn-primary">Add favorites</button>
                                 </form>
                             </div>
                         </div>

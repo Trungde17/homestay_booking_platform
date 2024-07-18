@@ -38,10 +38,7 @@
                         <div class="icon"><i class="fas fa-book"></i></div>
                         <p>Rules</p>
                     </div>
-                    <div class="step inactive">
-                        <div class="icon"><i class="fas fa-user"></i></div>
-                        <p>Profile</p>
-                    </div>
+                    
                     <div class="step active">
                         <div class="icon"><i class="fas fa-images"></i></div>
                         <p>Photos</p>

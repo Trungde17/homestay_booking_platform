@@ -36,7 +36,7 @@
                 <a href="#" data-toggle="modal" data-target="#contactHostModal">Messaging</a>
             </div>
         </div>
-       
+
         <!--HEADER SECTION-->      
         <section>
             <c:set var="owner" value="${homestay.owner}" />
@@ -207,54 +207,59 @@
                             </div>
                             <div style="height: 800px;"></div>
                             <!-- Pricing Summary Section -->
-                            <c:set var="cart" value="${sessionScope.cart}"/>
-                            <c:if test="${cart!=null}">
-                                <div class="fixed-bottom">
-                                    <div class="container">
-                                        <div class="card">
-                                            <div class="card-body d-flex justify-content-between align-items-center booking-cart" style="color: #000;">
-                                                <div>
-                                                    <h5 class="card-title">Pricing Summary</h5>
-                                                    <div class="pricing-summary-content row">
-                                                        <div class="col-sm-12 row">
-                                                            <p class="col-sm-2">Room Name</p>
-                                                            <p class="col-sm-2">Number of Guests</p>
-                                                            <p class="col-sm-2">Price per night</p>
-                                                            <p class="col-sm-2">Date Check In</p>
-                                                            <p class="col-sm-2">Date Check Out</p>
-                                                            <p class="col-sm-2">Total cost</p>
-                                                        </div>
-                                                        <div class="col-sm-12 row">
-                                                            <div class="col-sm-6 row">
-                                                                <c:forEach var="entry" items="${cart.rooms}">
-                                                                    <p class="col-sm-4"><span id="roomType">${entry.key.room_name}</span></p>
-                                                                        <c:set var="number" value="${entry.value}"/>
-                                                                    <p class="col-sm-4"><span id="numGuests">${number}</span></p>
-                                                                        <c:set var="price" value="${entry.key.prices.get(0)}"/>
-                                                                        <c:if test="${number>1}"><c:set var="price" value="${entry.key.prices.get(1)}"/></c:if>
-                                                                    <p class="col-sm-4"><span id="pricePerNight">${CurrencyUtils.formatCurrency(price.getAmount())}</span></p>
-                                                                    </c:forEach>
-                                                            </div>                                                        
-                                                            <p class="col-sm-2"> <span id="totalNights">${cart.getFormattedCheckIn()}</span></p>
-                                                            <p class="col-sm-2"><span id="totalNights">${cart.getFormattedCheckOut()}</span></p>
-                                                            <p class="col-sm-2"><span>${CurrencyUtils.formatCurrency(cart.getTotalAmount())}</span></p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <a href="${pageContext.request.contextPath}/booking/confirmBooking.jsp" class="btn btn-primary">Book Now</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </c:if>
-                            <!-- User Reviews -->
+<c:set var="cart" value="${sessionScope.cart}"/>
+<c:if test="${cart!=null}">
+    <div class="fixed-bottom">
+        <div class="container">
+            <div class="card">
+                <div class="card-body booking-cart" style="color: #000;">
+                    <h5 class="card-title">Pricing Summary</h5>
+                    <div class="pricing-summary-content">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Room Name</th>
+                                    <th>Number of Guests</th>
+                                    <th>Price per night</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach var="entry" items="${cart.rooms}">
+                                    <tr>
+                                        <td>${entry.key.room_name}</td>
+                                        <td>${entry.value}</td>
+                                        <c:set var="price" value="${entry.key.prices.get(0)}"/>
+                                        <c:if test="${entry.value > 1}">
+                                            <c:set var="price" value="${entry.key.prices.get(1)}"/>
+                                        </c:if>
+                                        <td>${CurrencyUtils.formatCurrency(price.getAmount())}</td>
+                                    </tr>                                  
+                                </c:forEach>
+                                    <tr>
+                                        <td colspan="3">
+                                            <strong>Date Check In:</strong> ${cart.getFormattedCheckIn()}
+                                            <strong style="margin-left: 100px">Date Check Out:</strong> ${cart.getFormattedCheckOut()}<br>
+                                            <strong>Total cost:</strong> ${CurrencyUtils.formatCurrency(cart.getTotalAmount())}
+                                        </td>
+                                    </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <a href="${pageContext.request.contextPath}/booking/confirmBooking.jsp" class="btn btn-primary">Book Now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</c:if>
+
+
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
- <!-- Contact Host Modal -->
+        <!-- Contact Host Modal -->
         <div class="modal fade" id="contactHostModal" tabindex="-1" aria-labelledby="contactHostModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">

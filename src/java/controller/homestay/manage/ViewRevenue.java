@@ -65,7 +65,7 @@ public class ViewRevenue extends HttpServlet {
         int year = Integer.parseInt(request.getParameter("year"));
         int month = Integer.parseInt(request.getParameter("month"));
         Homestay homestay = (Homestay)session.getAttribute("homestay");
-        String revenue = CurrencyUtils.formatCurrency(BookingDAO.calculateMonthlyRevenue(year, month, homestay.getHt_id())*1000);
+        String revenue = CurrencyUtils.formatCurrency(BookingDAO.calculateMonthlyRevenue(year, month, homestay.getHt_id()));
         int booking_month_number=BookingDAO.count(year, month, homestay.getHt_id());
         request.setAttribute("revenue", revenue);
         request.setAttribute("booking_month_number", booking_month_number);
