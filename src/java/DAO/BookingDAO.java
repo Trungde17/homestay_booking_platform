@@ -60,8 +60,8 @@ public class BookingDAO extends DAO {
         return null;
     }
     
-    public static int insertIntoBooking(int booking_id, int customer_id, Date date_booked, Date date_checkin, Date date_checkout, int booking_status) {
-        String sql = "insert into tblBooking(booking_id, customer_id, date_booked, date_checkin, date_checkout, booking_status) values(?, ?, ?, ?, ?, ?)";
+    public static int insertIntoBooking(int booking_id, int customer_id, Date date_booked, Date date_checkin, Date date_checkout, double paid_amount, int booking_status) {
+        String sql = "insert into tblBooking(booking_id, customer_id, date_booked, date_checkin, date_checkout, paid_amount, booking_status) values(?, ?, ?, ?, ?, ?, ?)";
         try (Connection con = getConnection();
              PreparedStatement stmt = con.prepareStatement(sql)) {
             
@@ -70,7 +70,8 @@ public class BookingDAO extends DAO {
             stmt.setDate(3, new java.sql.Date(date_booked.getTime()));
             stmt.setDate(4, new java.sql.Date(date_checkin.getTime()));
             stmt.setDate(5, new java.sql.Date(date_checkout.getTime()));
-            stmt.setInt(6, booking_status);
+            stmt.setDouble(6, paid_amount);
+            stmt.setInt(7, booking_status);
             stmt.executeUpdate();
             return 1;
         } catch (Exception e) {
@@ -87,7 +88,7 @@ public class BookingDAO extends DAO {
             
             if (rs.next()) {
                 return rs.getInt("number");
-            }
+            } 
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -316,7 +317,6 @@ public class BookingDAO extends DAO {
                     booking.setCheck_in(rs.getDate("date_checkin"));
                     booking.setCheck_out(rs.getDate("date_checkout"));
                     booking.setPaid_amount(rs.getDouble("paid_amount"));
-                    booking.setOutstanding_amount(rs.getDouble("outstanding_amount"));
                     booking.setBooking_status(rs.getInt("booking_status"));
                     bookings.add(booking);
                 }
@@ -344,7 +344,6 @@ public class BookingDAO extends DAO {
                 booking.setCheck_in(rs.getDate("date_checkin"));
                 booking.setCheck_out(rs.getDate("date_checkout"));
                 booking.setPaid_amount(rs.getDouble("paid_amount"));
-                booking.setOutstanding_amount(rs.getDouble("outstanding_amount"));
                 booking.setBooking_status(rs.getInt("booking_status"));
                 bookings.add(booking);
             }
@@ -428,7 +427,7 @@ public class BookingDAO extends DAO {
         return homestayName;
     }
 
-    public static void main(String[] args) {
+     public static void main(String[] args) {
         System.out.println(calculateMonthlyRevenue(2024, 6, 1));
         System.out.println(count(2024, 7, 1));
         ArrayList<Booking> bookings = getCurrentStayBookings(1);

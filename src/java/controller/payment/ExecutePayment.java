@@ -51,7 +51,7 @@ public class ExecutePayment extends HttpServlet {
                 Booking booking = (Booking) session.getAttribute("cart");
                 booking.setBooking_id(BookingDAO.count() + 1);
 
-                if (BookingDAO.insertIntoBooking(booking.getBooking_id(), account.getAccount_id(), booking.getDate_booked(), booking.getCheck_in(), booking.getCheck_out(), 1) == 1) {
+                if(BookingDAO.insertIntoBooking(booking.getBooking_id(), account.getAccount_id(), booking.getDate_booked(), booking.getCheck_in(), booking.getCheck_out(), booking.getTotalAmount(), 1)==1){
                     RoomDAO.insertIntoBookingDetail(booking.getBooking_id(), booking.getRooms());
                 }
 
