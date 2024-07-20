@@ -142,7 +142,7 @@ public class Room {
         this.prices = prices;
     }
 
-    public boolean isStatus() {
+    public boolean getStatus() {
         return status;
     }
 
@@ -192,7 +192,12 @@ public class Room {
         }
         return result;
     }
-
+ public boolean checkFacilities(int id){
+        for(RoomFacilities hf : facilities){
+            if(hf.getFacilities_id()==id)return true;
+        }
+        return false;
+    }
     @Override
     public int hashCode() {
         int hash = 7;

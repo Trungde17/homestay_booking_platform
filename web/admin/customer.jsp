@@ -27,10 +27,10 @@
         <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-        <link href="./lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-        <link href="./lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
-        <link href="./css/bootstrap.min.css" rel="stylesheet">
-        <link href="./css/style.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/admin/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/admin/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+        <link href="${pageContext.request.contextPath}/admin/css/bootstrap.min.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/admin/css/style.css" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap5.min.css">
 
     </head>
@@ -104,7 +104,7 @@
                                 <i class="fa fa-chart-area fa-3x text-primary"></i>
                                 <div class="ms-3">
                                     <p class="mb-2">Today Revenue</p>
-                                    <h6 id="today-revenue"class="mb-0"></h6>
+                                    <h6 id="today-revenue" class="mb-0"></h6>
                                 </div>
                             </div>
                         </div>
@@ -130,7 +130,7 @@
                             <a href="">Show All</a>
                         </div>
                         <div class="table-responsive">
-                            <table id="customer-table"class="table text-start align-middle table-bordered table-hover mb-0">
+                            <table id="customer-table" class="table text-start align-middle table-bordered table-hover mb-0">
                                 <thead>
                                     <tr class="text-dark">
                                         <th scope="col">Email</th>
@@ -147,11 +147,11 @@
 
                                         if (customers != null) {
                                             for (Account customer : customers) {
-                                                String status = AccountDAO.getAccountStatusById(customer.getAccount_id());
+                                                boolean status = AccountDAO.getAccountStatusById(customer.getAccount_id());
                                             
-                                                String buttonLabel = status.equals("inactive") ? "Unlock" : "Lock";
-                                                String action = status.equals("inactive") ? "unlock" : "lock";
-                                                String className = status.equals("inactive") ? "btn-primary" : "btn-danger";
+                                                String buttonLabel = !status ? "Unlock" : "Lock";
+                                                String action = !status ? "unlock" : "lock";
+                                                String className = !status ? "btn-primary" : "btn-danger";
                                     %>
                                     <tr>
                                         <td><%= customer.getEmail() %></td>

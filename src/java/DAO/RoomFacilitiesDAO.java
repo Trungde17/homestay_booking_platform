@@ -70,9 +70,15 @@ public class RoomFacilitiesDAO extends DAO{
 //        for(RoomFacilities r:list){
 //            System.out.println(r.getFacilities_name());
 //        }
-        ArrayList<RoomFacilities>list=getRoomFacilities(1);
-        for(RoomFacilities r:list){
-            System.out.println(r.getFacilities_name());
+//insertRoomFacilities(1,new int[]{4});
+        ArrayList<RoomFacilities> list = getRoomFacilities(1);
+        if (list != null) {
+            for (RoomFacilities r : list) {
+                System.out.println(r.getFacilities_name());
+            }
+        } else {
+            System.out.println("No facilities found.");
         }
     }
+
 }

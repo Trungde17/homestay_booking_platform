@@ -119,18 +119,27 @@
                                 </c:choose>
 
 
-                                <!-- Room Prices -->
-                                <h3>Prices</h3>
-                                <c:if test="${not empty room.prices}">
-                                    <ul>
-                                        <c:forEach var="price" items="${room.prices}">
-                                            <li><strong>Price:</strong> ${price.amount_per_night}</li>
+
+
+                                <!-- Room PRICE -->
+                                <c:choose>
+                                    <c:when test="${not empty room.prices}">
+                                        <c:set var="roomPrices" value="${RoomPriceDAO.getRoomPrices(room.room_id)}"/>
+                                        <h4>Prices</h4>
+                                        <div class="row">
+                                            <c:forEach var="price" items="${roomPrices}" varStatus="status">
+                                                <div class="col-md-3">
+                                                    <p>${price.getPrice_name()} : ${price.getAmount() } vnd</p>
+                                                </div>
                                             </c:forEach>
-                                    </ul>
-                                </c:if>
-                                <c:if test="${empty room.prices}">
-                                    <p>No prices available.</p>
-                                </c:if>
+                                        </div>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <p>No price available.</p>
+                                    </c:otherwise>
+                                </c:choose>
+
+
 
                                 <!-- Room Beds -->
                                 <h3>Beds</h3>
@@ -155,49 +164,49 @@
                                     <input type="hidden" name="room_id" value="${room.room_id}" />
                                     <input type="submit" value="Update" />
                                 </form>
-                        </c:forEach>
-                 
-                </c:if>
-                <c:if test="${empty homestay.rooms}">
-                    <p>No rooms available.</p>
-                </c:if>
-            </c:if>
+                            </c:forEach>
 
-            <c:if test="${empty homestay}">
-                <p>No homestay information available.</p>
-            </c:if>
+                        </c:if>
+                        <c:if test="${empty homestay.rooms}">
+                            <p>No rooms available.</p>
+                        </c:if>
+                    </c:if>
 
-            <!-- Navigation links -->
-            <div class="navigation-links">
-                <a href="${pageContext.request.contextPath}/homestay/homestay_manage/infor.jsp?ht_id=${homestay.ht_id}">Back to menu</a>
+                    <c:if test="${empty homestay}">
+                        <p>No homestay information available.</p>
+                    </c:if>
 
-            </div>
-        </div>
-        <script>
-            $(document).ready(function () {
-                $('form.delete-room-form').submit(function (event) {
-                    event.preventDefault(); // Prevent the form from submitting the traditional way
+                    <!-- Navigation links -->
+                    <div class="navigation-links">
+                        <a href="${pageContext.request.contextPath}/homestay/homestay_manage/infor.jsp?ht_id=${homestay.ht_id}">Back to menu</a>
 
-                    var form = $(this);
-                    var roomId = form.find('input[name="room_id"]').val();
+                    </div>
+                    </div>
+                    <script>
+                        $(document).ready(function () {
+                            $('form.delete-room-form').submit(function (event) {
+                                event.preventDefault(); // Prevent the form from submitting the traditional way
 
-                    if (confirm('Are you sure you want to delete this room?')) {
-                        // Perform the AJAX request to delete the room
-                        $.ajax({
-                            type: 'POST',
-                            url: form.attr('action'),
-                            data: form.serialize(), // Send the form data
-                            success: function (data) {
-                                // Successfully deleted, update the room list content
-                                $('#roomListContainer').html(data);
-                            },
-                            error: function () {
-                                // Handle error if needed
-                            }
+                                var form = $(this);
+                                var roomId = form.find('input[name="room_id"]').val();
+
+                                if (confirm('Are you sure you want to delete this room?')) {
+                                    // Perform the AJAX request to delete the room
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: form.attr('action'),
+                                        data: form.serialize(), // Send the form data
+                                        success: function (data) {
+                                            // Successfully deleted, update the room list content
+                                            $('#roomListContainer').html(data);
+                                        },
+                                        error: function () {
+                                            // Handle error if needed
+                                        }
+                                    });
+                                }
+                            });
                         });
-                    }
-                });
-            });
-        </script>
-    </body>
-</html>
+                    </script>
+                    </body>
+                    </html>

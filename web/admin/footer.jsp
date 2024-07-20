@@ -1,8 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-</div>
-<!-- /#page-content-wrapper -->
-</div>
-<!-- /#wrapper -->
+
+
 
 <!-- Bootstrap and jQuery -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
