@@ -78,12 +78,28 @@ public class RoomFacilitiesDAO extends DAO {
             System.out.println(e);
         }
         return false;
-    }
+    }}
 
-    public static void main(String[] args) {
-        ArrayList<RoomFacilities> list = getRoomFacilities(1);
-        for (RoomFacilities r : list) {
-            System.out.println(r.getFacilities_name());
-        }
-    }
-}
+//    public static void main(String[] args) {
+//
+//        ArrayList<RoomFacilities> list = getRoomFacilities(1);
+//        for (RoomFacilities r : list) {
+//            System.out.println(r.getFacilities_name());
+//
+////        ArrayList<RoomFacilities>list=getAll();
+////        for(RoomFacilities r:list){
+////            System.out.println(r.getFacilities_name());
+////        }
+////insertRoomFacilities(1,new int[]{4});
+////        ArrayList<RoomFacilities> list = getRoomFacilities(1);
+////        if (list != null) {
+////            for (RoomFacilities r : list) {
+////                System.out.println(r.getFacilities_name());
+////            }
+////        } else {
+////            System.out.println("No facilities found.");
+////
+////        }
+////    }
+//
+//}

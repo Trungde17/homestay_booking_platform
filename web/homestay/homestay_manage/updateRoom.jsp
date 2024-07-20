@@ -1,5 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.*, java.sql.*, model.*, DAO.*" %>
+<%@ page import="DAO.RoomPriceDAO "%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -25,10 +27,12 @@
                     <!-- Room Name and Description -->
                     <div class="form-section">
                         <h4>Basic Information</h4>
+
                         <div>
                             <div class="form-row">
                                 <form action="${pageContext.request.contextPath}/editRoom?action=name" method="POST" class="form-group col-md-6">
                                     <label for="roomName">Name</label>
+
                                     <input name="room_name" type="text" class="form-control" id="roomName" placeholder="Enter Room Name" value="${room.room_name}">
                                     <button type="submit" class="btn btn-primary mt-2">Save</button>
                                 </form>
@@ -43,46 +47,70 @@
 
                     <!-- Room Capacity and Size -->
                     <div class="form-section">
-                        
+
                         <div>
                             <div class="form-row">
                                 <form action="${pageContext.request.contextPath}/editRoom?action=capacity" method="POST" class="form-group col-md-6">
-                                    
-                                        <label for="roomCapacity">Capacity</label>
-                                        <input name="capacity" type="number" class="form-control" id="roomCapacity" placeholder="Enter capacity" value="${room.capacity}">
-                                    
+
+                                    <label for="roomCapacity">Capacity</label>
+                                    <input name="capacity" type="number" class="form-control" id="roomCapacity" placeholder="Enter capacity" value="${room.capacity}">
+
                                     <button type="submit" class="btn btn-primary mt-2">Save</button>
                                 </form>
 
-                               
+
                                 <form action="${pageContext.request.contextPath}/editRoom?action=size" method="POST" class="form-group col-md-6">
-                                    
-                                        <label for="roomSize">Size</label>
-                                        <input name="size" type="text" class="form-control" id="roomSize" value="${room.size}">
+
+                                    <label for="roomSize">Size</label>
+                                    <input name="size" type="text" class="form-control" id="roomSize" value="${room.size}">
 
                                     <button type="submit" class="btn btn-primary mt-2">Save</button>
                                 </form>
                             </div>
                         </div>
                     </div>
-
+     
                     <!-- facilites-->
                     <div class="form-section">
-                        <c:set var="fa" value="${RoomFacilitiesDAO.getRoomFacilities(room.room_id)}"/>
+                        <c:set var="fa_list" value="${RoomFacilitiesDAO.getAll()}"/>
                         <h4>Facilities</h4>
                         <form action="${pageContext.request.contextPath}/editRoom?action=facilities" method="POST">
                             <div class="row">
-                                <c:forEach var="fa" items="${fa}" varStatus="status">
+                                <c:forEach var="fa" items="${fa_list}" varStatus="status">
                                     <div class="form-check col-md-3">
-                                        <input class="form-check-input" type="checkbox" id="facility ${fa.facilities_id}" name="facilities" value="${fa.facilities_id}"
+                                        <input class="form-check-input" type="checkbox" id="facility${fa.facilities_id}" name="facilities" value="${fa.facilities_id}"
                                                ${room.checkFacilities(fa.facilities_id) ? 'checked' : ''}>
-                                        <label class="form-check-label" for="${fa.facilities_id}">${fa.facilities_name}</label>
+                                        <label class="form-check-label" for="facility${fa.facilities_id}">${fa.facilities_name}</label>
                                     </div>
                                 </c:forEach>
                             </div>
                             <button type="submit" class="btn btn-primary mt-3">Save</button>
                         </form>
                     </div>
+                    <!-- price-->
+ <!-- Room Prices -->
+                <div class="form-section">
+                    <c:set var="price_list" value="${RoomPriceDAO.getRoomPrices(room.room_id)}"/>
+                    <h4>Room Prices</h4>
+                    <form action="${pageContext.request.contextPath}/editRoom?action=prices" method="POST">
+                        <input type="hidden" name="room_id" value="${room.room_id}">
+                        <div class="row">
+                            <c:forEach var="price" items="${price_list}" varStatus="status">
+                                <div class="form-group col-md-6">
+                                    <label for="price${price.price_id}">${price.price_name}</label>
+                                    <input type="hidden" name="price_id" value="${price.price_id}">
+                                    <input type="text" class="form-control" id="price${price.price_id}" name="amount" value="${price.getAmount()}">
+                                </div>
+                            </c:forEach>
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-3">Save</button>
+                    </form>
+                </div>
+
+                   
+            
+
+
 
 
                     <!-- Room IMage -->
@@ -110,64 +138,121 @@
                     </div>
 
                     <!-- Room bed  -->
-                    <div class="form-section">
-                        <h4>Beds</h4>
-                        <c:set var="roomBeds" value="${BedDAO.getBedsOfRoom(room.room_id)}"/>
-                        <form action="${pageContext.request.contextPath}/editRoom?action=beds" method="POST">
-                            <input type="hidden" name="room_id" value="${room.room_id}">
-                            <div class="row">
-                                <c:forEach var="entry" items="${roomBeds}" varStatus="status">
-                                    <div class="col-md-3">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" 
-                                                   id="${entry.key.bed_type_id}" 
-                                                   name="beds" 
-                                                   value="${entry.key.bed_type}"
-                                                   ${entry.value > 0 ? 'checked' : ''}>
-                                            <label class="form-check-label" for="bed${entry.key.bed_id}">
-                                                ${entry.key.bed_type}
-                                            </label>
-                                            <input type="number" name="bedCount${entry.key.bed_id}" 
-                                                   value="${entry.value}" min="0" max="10" 
-                                                   ${entry.value > 0 ? '' : 'disabled'}>
-                                        </div>
+                      <!-- Room Beds -->
+                <div class="form-section">
+                    <h4>Beds</h4>
+                    <c:set var="allBeds" value="${BedDAO.getAllBedType()}" />
+                    <form action="${pageContext.request.contextPath}/editRoom?action=beds" method="POST">
+                        <input type="hidden" name="room_id" value="${room.room_id}">
+                        <div class="row">
+                            <c:set var="roomBeds" value="${BedDAO.getBedsOfRoom(room.room_id)}" />
+                            <c:forEach var="bed" items="${allBeds}" varStatus="status">
+                                <div class="col-md-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="bed${bed.bed_id}" name="bed_id" value="${bed.bed_id}"
+                                               ${roomBeds[bed] != null && roomBeds[bed] > 0 ? 'checked' : ''} onchange="toggleQuantityInput(this)">
+                                        <label class="form-check-label" for="bed${bed.bed_id}">${bed.bed_type}</label>
+                                        <input type="number" name="quantity" id="quantity${bed.bed_id}" value="${roomBeds[bed] != null ? roomBeds[bed] : 0}" min="0" max="10"
+                                               ${roomBeds[bed] != null && roomBeds[bed] > 0 ? '' : 'disabled'}>
                                     </div>
-                                </c:forEach>
-                            </div>
-                            <button type="submit" class="btn btn-primary mt-3">Save</button>
-                        </form></div>
+                                </div>
+                            </c:forEach>
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-3">Save</button>
+                    </form>
+                </div>
+
+
+
+
+
+
+
                     <!-- status  -->
                     <div class="form-section">
                         <h4>Status</h4>
                         <form action="${pageContext.request.contextPath}/editRoom?action=status" method="POST" class="d-flex align-items-center">
-                            <input type="hidden" name="room_status" value="true">
-                            <input type="checkbox" name="room_status" value="false" ${room.status == true ? 'checked' : ''} data-toggle="toggle" data-on="Active" data-off="Inactive" data-onstyle="success" data-offstyle="danger">
+                            <input type="checkbox" name="room_status" ${room.status == true ? 'checked' : ''} data-toggle="toggle" data-on="Active" data-off="Inactive" data-onstyle="success" data-offstyle="danger">
                             <button type="submit" class="btn btn-primary ml-2">Save</button>
                         </form>
                     </div>
 
 
-                </div>
-                <script>
-                    function handleImageChange(event, imgId) {
-                        const input = event.target;
-                        const reader = new FileReader();
-                        reader.onload = function () {
-                            const img = document.getElementById(imgId);
-                            img.src = reader.result;
-                        };
-                        reader.readAsDataURL(input.files[0]);
-                    }
+                    <script>
 
-                    function removeImage(event, imgId, inputId) {
-                        event.stopPropagation(); // Prevent the parent click event
-                        document.getElementById(imgId).src = '';
-                        document.getElementById(inputId).value = '';
-                    }
-                </script>
-                <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-                <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-                <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
-                </body>
-                </html>
+                        function toggleQuantityInput(checkbox) {
+                            const quantityInput = document.getElementById(`quantity${checkbox.value}`);
+                            quantityInput.disabled = !checkbox.checked;
+                            if (!checkbox.checked) {
+                                quantityInput.value = 0;
+                            }
+                        }
+
+                        function updateCheckbox(quantityInput) {
+                            const checkbox = document.getElementById(`bed${quantityInput.id.replace('quantity', '')}`);
+                            if (quantityInput.value > 0) {
+                                checkbox.checked = true;
+                                quantityInput.disabled = false;
+                            } else {
+                                checkbox.checked = false;
+                                quantityInput.disabled = true;
+                            }
+                        }
+
+                        document.addEventListener('DOMContentLoaded', function () {
+                            document.querySelectorAll('input[type="number"]').forEach(input => {
+                                if (input.value >= 0) {
+                                    input.disabled = false;
+                                }
+                            });
+                        });
+
+
+                        function toggleQuantityInput(checkbox) {
+                            const quantityInput = document.getElementById(`quantity${checkbox.value}`);
+                            quantityInput.disabled = !checkbox.checked;
+                            if (!checkbox.checked) {
+                                quantityInput.value = 0;
+                            }
+                        }
+
+                        function updateCheckbox(quantityInput) {
+                            const checkbox = document.getElementById(`bed${quantityInput.id.replace('quantity', '')}`);
+                            if (quantityInput.value > 0) {
+                                checkbox.checked = true;
+                            } else {
+                                checkbox.checked = false;
+                            }
+                        }
+
+                        // Enable quantity input fields initially if they have a value greater than 0
+                        document.addEventListener('DOMContentLoaded', function () {
+                            document.querySelectorAll('input[type="number"]').forEach(input => {
+                                if (input.value > 0) {
+                                    input.disabled = false;
+                                }
+                            });
+                        });
+
+                        function handleImageChange(event, imgId) {
+                            const input = event.target;
+                            const reader = new FileReader();
+                            reader.onload = function () {
+                                const img = document.getElementById(imgId);
+                                img.src = reader.result;
+                            };
+                            reader.readAsDataURL(input.files[0]);
+                        }
+
+                        function removeImage(event, imgId, inputId) {
+                            event.stopPropagation(); // Prevent the parent click event
+                            document.getElementById(imgId).src = '';
+                            document.getElementById(inputId).value = '';
+                        }
+                    </script>
+                    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+                    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+                    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+                    </body>
+                    </html>

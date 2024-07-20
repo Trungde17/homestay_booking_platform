@@ -152,53 +152,52 @@ public class RoomDAO extends DAO{
         return false;
     }
     
-//    public static boolean changeStatus(boolean room_status){
-//        try (Connection con=getConnection()){
-//            PreparedStatement stmt=con.prepareStatement("Update tblRoom set room_status= ?");
-//            stmt.setBoolean(1, room_status);
-//            stmt.executeUpdate();
-//            return true;
-//        } catch (Exception e) {
-//            System.out.println(e);
-//        }
-//        return false;
+// public static boolean changeStatus(int roomId, boolean status) {
+//        String query = "UPDATE rooms SET status = ? WHERE room_id = ?";
+//        try (Connection con = getConnection();
+//             PreparedStatement preparedStatement = con.prepareStatement(query)) {
+//            preparedStatement.setBoolean(1, status);
+//            preparedStatement.setInt(2, roomId);
+//            preparedStatement.executeUpdate();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }}
+//    // Delete Room
+//    public static boolean deleteRoom(int room_id) {
+//    try (Connection con = getConnection()) {
+//       
+//      
+//
+//        // Delete room images from tblRoomImg
+//        PreparedStatement stmtRoomImg = con.prepareStatement("DELETE FROM tblRoomImg WHERE room_id = ?");
+//        stmtRoomImg.setInt(1, room_id);
+//        stmtRoomImg.executeUpdate();
+//
+//        // Delete room facilities from tblRoomFacilities
+//        PreparedStatement stmtRoomFacilities = con.prepareStatement("DELETE FROM tblFacilitiesOfRoom WHERE room_id = ?");
+//        stmtRoomFacilities.setInt(1, room_id);
+//        stmtRoomFacilities.executeUpdate();
+//
+//        // Delete room prices from tblRoomPrice
+//        PreparedStatement stmtRoomPrice = con.prepareStatement("DELETE FROM tblRoomPrice WHERE room_id = ?");
+//        stmtRoomPrice.setInt(1, room_id);
+//        stmtRoomPrice.executeUpdate();
+//
+//        // Delete room bookings from tblBooking_detail (if any)
+//        PreparedStatement stmtBookingDetail = con.prepareStatement("DELETE FROM tblBooking_detail WHERE room_id = ?");
+//        stmtBookingDetail.setInt(1, room_id);
+//        stmtBookingDetail.executeUpdate();
+//        
+//          PreparedStatement stmtRoom = con.prepareStatement("DELETE FROM tblRoom WHERE room_id = ?");
+//        stmtRoom.setInt(1, room_id);
+//        stmtRoom.executeUpdate();
+//
+//        return true;
+//    } catch (Exception e) {
+//        System.out.println(e);
 //    }
-    // Delete Room
-    public static boolean deleteRoom(int room_id) {
-    try (Connection con = getConnection()) {
-       
-      
-
-        // Delete room images from tblRoomImg
-        PreparedStatement stmtRoomImg = con.prepareStatement("DELETE FROM tblRoomImg WHERE room_id = ?");
-        stmtRoomImg.setInt(1, room_id);
-        stmtRoomImg.executeUpdate();
-
-        // Delete room facilities from tblRoomFacilities
-        PreparedStatement stmtRoomFacilities = con.prepareStatement("DELETE FROM tblFacilitiesOfRoom WHERE room_id = ?");
-        stmtRoomFacilities.setInt(1, room_id);
-        stmtRoomFacilities.executeUpdate();
-
-        // Delete room prices from tblRoomPrice
-        PreparedStatement stmtRoomPrice = con.prepareStatement("DELETE FROM tblRoomPrice WHERE room_id = ?");
-        stmtRoomPrice.setInt(1, room_id);
-        stmtRoomPrice.executeUpdate();
-
-        // Delete room bookings from tblBooking_detail (if any)
-        PreparedStatement stmtBookingDetail = con.prepareStatement("DELETE FROM tblBooking_detail WHERE room_id = ?");
-        stmtBookingDetail.setInt(1, room_id);
-        stmtBookingDetail.executeUpdate();
-        
-          PreparedStatement stmtRoom = con.prepareStatement("DELETE FROM tblRoom WHERE room_id = ?");
-        stmtRoom.setInt(1, room_id);
-        stmtRoom.executeUpdate();
-
-        return true;
-    } catch (Exception e) {
-        System.out.println(e);
-    }
-    return false;
-}
+//    return false;
+//}
 
     
     public static int insertIntoBookingDetail(int booking_id,Map<Room, Integer>rooms){
@@ -300,19 +299,22 @@ public class RoomDAO extends DAO{
 //             System.out.println(key.getRoom_name());            
 //        }
 //        changeSize(6,"3");
-        int testRoomId = 1; // Replace with an actual room_id from your database
-    Room room = getRoomById(testRoomId);
-    
-    if (room != null) {
-        System.out.println("Room ID: " + room.getRoom_id());
-        System.out.println("Room Name: " + room.getRoom_name());
-        System.out.println("Room Description: " + room.getRoom_description());
-        System.out.println("Capacity: " + room.getCapacity());
-        System.out.println("Size: " + room.getSize());
-        // Add other fields as needed
-    } else {
-        System.out.println("Room not found with ID: " + testRoomId);
+//        int testRoomId = 1; // Replace with an actual room_id from your database
+//    Room room = getRoomById(testRoomId);
+//    
+//    if (room != null) {
+//        System.out.println("Room ID: " + room.getRoom_id());
+//        System.out.println("Room Name: " + room.getRoom_name());
+//        System.out.println("Room Description: " + room.getRoom_description());
+//        System.out.println("Capacity: " + room.getCapacity());
+//        System.out.println("Size: " + room.getSize());
+//     
+//        // Add other fields as needed
+//    } else {
+//        System.out.println("Room not found with ID: " + testRoomId);
+//    }
+//}
+changeStatus(1,true);
     }
-}
     }
 

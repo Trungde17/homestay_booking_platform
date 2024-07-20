@@ -25,13 +25,32 @@
                 </li>
             </ul>
         </li>
+        
+         
+        
         <li class="nav-item">
             <a class="nav-link" href="${pageContext.request.contextPath}/homestay/homestay_manage/revenue.jsp">Homestay revenue</a>
         </li>
+        
+         <li class="nav-item">
+            <a id="roomsLink" class="nav-link" href="javascript:void(0);" onclick="toggleSubmenu('roomsSubmenu')">Rooms</a>
+            <ul id="roomsSubmenu" class="nav flex-column ml-3" style="display: none;">
+                <li class="nav-item">
+                    <a class="nav-link" href="${pageContext.request.contextPath}/owner/addRoom.jsp">Add Rooms</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="${pageContext.request.contextPath}/owner/Room_Information.jsp">Update Rooms</a>
+                </li>
+            </ul>
+        </li>
+        <!--
 
           <li class="nav-item">
             <a class="nav-link" href="${pageContext.request.contextPath}/owner/Room_Information.jsp"> Rooms</a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="${pageContext.request.contextPath}/owner/addRoom.jsp">Add Rooms</a>
+        </li>-->
         <li class="nav-item">
             <a class="nav-link" href="${pageContext.request.contextPath}/index.jsp">Back to home</a>
         </li>
@@ -41,6 +60,14 @@
 <script>
     function toggleSubmenu() {
         var submenu = document.getElementById("bookingsSubmenu");
+        if (submenu.style.display === "none") {
+            submenu.style.display = "block";
+        } else {
+            submenu.style.display = "none";
+        }
+    }
+     function toggleSubmenu(id) {
+        var submenu = document.getElementById(id);
         if (submenu.style.display === "none") {
             submenu.style.display = "block";
         } else {
