@@ -78,7 +78,17 @@ Copy code
                     </div>
                 </div>
             </form>
-                
+                </form>
+                <form action="${pageContext.request.contextPath}/searchByNameServlet" method="post" class="search-bar mt-4">
+                    <div class="row g-2 align-items-center">
+                    <div class="col-md-10">
+                        <input type="text" id="homestayName" class="form-control" name="homestayName" placeholder="Search by Homestay Name">
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-primary w-100">Search</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </section>
    

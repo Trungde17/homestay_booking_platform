@@ -306,6 +306,20 @@ public class HomestayDAO extends DAO {
             e.printStackTrace();
         }
     }
+      public static ArrayList<Homestay> searchHomestayByName(String homestayName) {
+        ArrayList<Homestay> homestays = new ArrayList<>();
+        String query = "SELECT * FROM tblHomestay WHERE ht_name LIKE ?";
+        
+        try (Connection con = getConnection(); PreparedStatement ps = con.prepareStatement(query)) {
+            ps.setString(1, "%" + homestayName + "%");
+            ResultSet rs = ps.executeQuery();
+            homestays = createHomestayBaseResultSet(rs);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return homestays;
+    }
     public static void main(String[] args) {
     }
 

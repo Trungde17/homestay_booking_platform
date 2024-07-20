@@ -13,25 +13,22 @@ import java.sql.*;
 public class DAO {
 
     public static Connection getConnection() {
+        try {
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            String url = "jdbc:sqlserver://DESKTOP-TH6U346\\SQLEXPRESS:1433;databaseName=booking_11;encrypt=true;trustServerCertificate=true";
+            String userName = "sa";
+            String password = "123";
+            Connection connection = DriverManager.getConnection(url, userName, password);
+            System.out.println("Connect successfully");
+            return connection;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
 
-   
-		try {
-			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-			String url="jdbc:sqlserver://LAPTOP-JFP2HOT9\\SQLEXPRESS"
-                                + ";databaseName=Baitaap9;encrypt=true;trustServerCertificate=true";
-			String userName="sa";
-			String password="241103";
-			Connection connection = DriverManager.getConnection(url, userName, password);
-			System.out.println("connect successfully");
-			return connection;
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-		return null;
-	}
-	public static void main(String[] args) {
-		getConnection();
-	}
-
+    public static void main(String[] args) {
+        getConnection();
+    }
 
 }
